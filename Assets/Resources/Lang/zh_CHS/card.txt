@@ -1,0 +1,23 @@
+﻿{
+	"structure": "建筑",	  
+	"material": "材料",
+	"machine": "机械",
+	"industry":"工业",
+	"engine":"引擎",
+	"power": "电力",
+	"signal":"电子",
+	"sensor":"传感器",
+	"logical":"运算",
+	"nuclear":"核能",		
+	"other":"其他",
+
+	"geometry":"基础",
+	"light":"照明",
+	"transmission":"传动",
+	"submarine":"潜艇",
+	"ship":"船舶",
+	"weapon":"武器",
+	"prefab":"预制",
+	"default":"自定义",
+	"function":"功能"
+}

@@ -1,0 +1,48 @@
+﻿{
+	"deepLv1": "Deep I",	  
+	"deepLv1.condition":"Dive depth reached2000m",
+	"deepLv1.describe":"I have just throw a stone.",
+
+	"deepLv2": "Deep II",	  
+	"deepLv2.condition":"Dive depth reached6000m",
+	"deepLv2.describe":"This is incredible！",
+
+	"deepLv3": "Deep III",	  
+	"deepLv3.condition":"Dive depth reached20000m",
+	"deepLv3.describe":"This is impossible！！！",
+
+	"deepStayLv1": "Beautiful view in sea",	  
+	"deepStayLv1.condition":"Dive depth reached2000m and keep vertical speed<0m/s",
+	"deepStayLv1.describe":"Enjoy the beautiful view！",
+
+	"deepStayLv2": "Sailing in deep sea",	  
+	"deepStayLv2.condition":"Dive depth reached6000m and keep vertical speed<0m/s",
+	"deepStayLv2.describe":"Do you see that shark？",
+
+	"deepStayLv3": "Emergency braking！",	  
+	"deepStayLv3.condition":"Dive depth reached20000m and keep vertical speed<0m/s",
+	"deepStayLv3.describe":"Does it stop？！",
+
+	"deepBackLv1": "Deep return I",	  
+	"deepBackLv1.condition":Dive depth reached2000m and return to 0m",
+	"deepBackLv1.describe":"It is easy.",
+
+	"deepBackLv2": "Deep return II",	  
+	"deepBackLv2.condition":"Dive depth reached6000m and return to 0m",
+	"deepBackLv2.describe":"It is not impossible.",
+
+	"deepBackLv3": "Deep return III",	  
+	"deepBackLv3.condition":"Dive depth reached20000m and return to 0m",
+	"deepBackLv3.describe":"It is very hard！",
+	"speedLv1": "Speedboat",	  
+	"speedLv1.condition":"Speed reach20m/s",
+	"speedLv1.describe":"Faster than torpedo！",
+
+	"speedLv2": "This is a rocket",	  
+	"speedLv2.condition":"Speed reach100m/s",
+	"speedLv2.describe":"A rocket is behind me！",
+
+	"speedLv3": "Hypersonic speed",	  
+	"speedLv3.condition":"Speed reach340m/s",
+	"speedLv3.describe":"What are you saying,I can't hear you！"
+}

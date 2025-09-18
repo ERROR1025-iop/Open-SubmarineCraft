@@ -1,0 +1,49 @@
+﻿{
+	"deepLv1": "初探深海",	  
+	"deepLv1.condition":"下潜深度达到2000m",
+	"deepLv1.describe":"随手扔了块石头下去。",
+
+	"deepLv2": "深不见底",	  
+	"deepLv2.condition":"下潜深度达到6000m",
+	"deepLv2.describe":"原来还能潜那么深？",
+
+	"deepLv3": "海底两万米",	  
+	"deepLv3.condition":"下潜深度达到20000m",
+	"deepLv3.describe":"向凡尔纳致敬！",
+
+	"deepStayLv1": "海底美景",	  
+	"deepStayLv1.condition":"下潜深度达到2000m，并保持垂直速度>0m/s",
+	"deepStayLv1.describe":"摄像机准备好了么，开始欣赏海底的美景吧！",
+
+	"deepStayLv2": "深海迷航",	  
+	"deepStayLv2.condition":"下潜深度达到6000m，并保持垂直速度>0m/s",
+	"deepStayLv2.describe":"看见那只深海狗母鱼了吗？",
+
+	"deepStayLv3": "紧急刹车！",	  
+	"deepStayLv3.condition":"下潜深度达到20000m，并保持垂直速度>0m/s",
+	"deepStayLv3.describe":"停下来了吗？！",
+
+	"deepBackLv1": "收集样本",	  
+	"deepBackLv1.condition":"下潜深度达到2000m，并返回海面",
+	"deepBackLv1.describe":"听说过海底的黄金吗，价值连城呢！",
+
+	"deepBackLv2": "海底打捞",	  
+	"deepBackLv2.condition":"下潜深度达到6000m，并返回海面",
+	"deepBackLv2.describe":"我刚买的绝世好剑掉水里了，我都把位置刻在船上了，你从这下去帮我打捞下。",
+
+	"deepBackLv3": "深空海妖",	  
+	"deepBackLv3.condition":"下潜深度达到20000m，并返回海面",
+	"deepBackLv3.describe":"听说没有潜艇能从20000m返回。",
+
+	"speedLv1": "极速快艇",	  
+	"speedLv1.condition":"速度达到20m/s",
+	"speedLv1.describe":"鱼雷都追不上！",
+
+	"speedLv2": "这是火箭",	  
+	"speedLv2.condition":"速度达到100m/s",
+	"speedLv2.describe":"火箭在我后面呢！",
+
+	"speedLv3": "超音速",	  
+	"speedLv3.condition":"速度达到340m/s",
+	"speedLv3.describe":"你说什么，我听不见！"
+}

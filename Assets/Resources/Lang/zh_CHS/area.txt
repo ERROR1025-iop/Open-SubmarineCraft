@@ -1,0 +1,11 @@
+﻿{
+	"Haikal Archipelago": "海加尔群岛",  
+	"Dongquan Mine Cave": "冬泉矿洞",  
+	"Necromancy Fortress": "亡灵要塞",  
+	"Zoram": "佐拉姆",  
+	"Port of Nicaral": "尼加尔港",  
+	"Burning Island": "灼热群岛",  
+	"Stonehammer Island": "石槌岛",  
+	"Sea of oracles": "神谕之海",  
+	"Sea of Fadil": "法迪尔之海"
+}

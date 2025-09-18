@@ -1,0 +1,11 @@
+﻿{
+	"tap0": "Protect the wireless receiver because it is the heart of the submarine.",
+	"tap1": "Installing more rudders can speed up the turning speed, but it will cause a large forward resistance",
+	"tap2": "The direction of the yellow water pump is the water outlet.",
+	"tap3": "Don't stop below the enemy ship.",
+	"tap4": "It is easy to push and pull the blocks with a crane.",
+	"tap5": "The bottom of the sea is too dark? Try the advanced terrain sonar.",
+	"tap6": "Clicking on the engine body can also be turned on and off.",
+	"tap7": "The buoyancy is determined by the amount of gas in the submarine.",
+	"tap8": "The weight of the torpedo is very large."
+}

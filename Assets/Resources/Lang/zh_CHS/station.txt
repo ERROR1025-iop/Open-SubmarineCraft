@@ -1,0 +1,16 @@
+﻿{
+	"warehouse 01":"仓库 1",	  
+	"wharf 01":"码头 1",
+	"planting house 01":"种植屋 1",
+	"warehouse 02":"仓库 2",	 
+	"warehouse 03":"仓库 3",	 
+	"warehouse 04":"仓库 4",	 
+	"warehouse 05":"仓库 5",	 
+	"warehouse 06":"仓库 6",	 
+	"batterhouse 01":"蓄电房 1",	 
+	"batterhouse 02":"蓄电房 2",	 
+	"road 01":"道路 1",
+	"oil tank 01":"储油罐 1",
+	"oil tank 02":"储油罐 2",
+	"solar power 01":"太阳能电站 1"
+}

@@ -1,0 +1,11 @@
+﻿{
+	"Haikal Archipelago": "Haikal Archipelago",  
+	"Dongquan Mine Cave": "Winter Mine Cave",  
+	"Necromancy Fortress": "Necromancy Fortress",  
+	"Zoram": "Zoram",  
+	"Port of Nicaral": "Port of Nicaral",  
+	"Burning Island": "Burning Island",  
+	"Stonehammer Island": "Stonehammer Island",  
+	"Sea of oracles": "Sea of oracles",  
+	"Sea of Fadil": "Sea of Fadil"
+}

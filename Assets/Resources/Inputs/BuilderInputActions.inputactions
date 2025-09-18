@@ -1,0 +1,65 @@
+{
+    "name": "BuilderInputActions",
+    "maps": [
+        {
+            "name": "BuilderMap",
+            "id": "b7aaeb78-750a-41cf-9e98-2f581d0d6847",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "053f48b6-577a-4cf3-98bd-0094cce6d6ab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Position",
+                    "type": "Button",
+                    "id": "38fdae12-f0f3-4d56-98fe-e064602994bd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "57fe0a5c-5d44-4cfb-8332-31edc10929a9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7252de2c-4e2e-4cbf-8263-9e82d600adaf",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b969bd2c-0767-4437-8891-194922ca6aa5",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

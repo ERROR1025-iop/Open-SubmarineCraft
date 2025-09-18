@@ -1,0 +1,13 @@
+﻿{
+	"turret_1": "The range is proportional to the volume, power:20, filling time:25t, base range:25",
+	"turret_2": "The range is proportional to the volume, power:20, filling time:20t, base range:20",
+	"turret_3": "The range is proportional to the volume, power:5, filling time:2t, base range:18",
+	"turret_4": "The range is proportional to the volume, power:20, filling time:10t, base range:20",
+	"light_spot_decorate_1":"Decorative searchlight, only material lighting, does not really illuminate surrounding objects.",
+	"sub_rudder_1": "Torque is proportional to volume",
+	"sub_rudder_2": "Torque is proportional to volume",
+	"sub_rudder_3": "Torque is proportional to volume",
+	"sub_rudder_4": "Torque is proportional to volume",
+	"cargo_hold_1":"The blocks corresponding to the 2D drawing will be set to the cargo blocks"
+
+}

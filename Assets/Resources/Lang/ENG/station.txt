@@ -1,0 +1,16 @@
+﻿{
+	"warehouse 01":"Warehouse 1",	  
+	"wharf 01":"Wharf 1",
+	"planting house 01":"Planting house 1",
+	"warehouse 02":"Warehouse 2",	 
+	"warehouse 03":"Warehouse 3",	 
+	"warehouse 04":"Warehouse 4",	 
+	"warehouse 05":"Warehouse 5",	 
+	"warehouse 06":"Warehouse 6",	 
+	"batterhouse 01":"Power storage 1",	 
+	"batterhouse 02":"Power storage 2",	 
+	"road 01":"Road 1",
+	"oil tank 01":"liquid tank 1",
+	"oil tank 02":"liquid tank 2",
+	"solar power 01":"solar power 1"
+}

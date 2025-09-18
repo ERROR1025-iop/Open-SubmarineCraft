@@ -1,0 +1,23 @@
+﻿{
+	"structure": "Structure",	  
+	"material": "Material",
+	"machine": "Machine",
+	"industry":"Industry",
+	"engine":"Engine",
+	"power": "Power",
+	"signal":"Signal",
+	"sensor":"Sensor",
+	"logical":"Logical",
+	"nuclear":"Nuclear",		
+	"other":"Other",
+
+	"geometry":"Geometry",
+	"light":"Light",
+	"transmission":"Transmission",
+	"submarine":"Submarine",
+	"ship":"Ship",
+	"weapon":"Weapon",
+	"prefab":"Prefab",
+	"default":"Default",
+	"function":"Function"
+}

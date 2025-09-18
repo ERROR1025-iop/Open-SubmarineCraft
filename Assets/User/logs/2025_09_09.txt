@@ -1,0 +1,279 @@
+
+============================
+[time]:2025/9/9 22:17:44
+[scene]:Menu
+[type]:Exception
+[exception message]:InvalidOperationException: Insecure connection not allowed
+[stack trace]:UnityEngine.Networking.UnityWebRequest.SendWebRequest () (at <3a94c981a38444d3b3e2dd398a606a0a>:0)
+UnityEngine.WWW..ctor (System.String url) (at <31b1af0c285f42c39139659b94874e90>:0)
+Scraft.Tutorial.openWikiWeb () (at Assets/Scripts/Tutorial/Tutorial.cs:54)
+Scraft.MainMenu.onWikiButtonClick () (at Assets/Scripts/Menu/MainMenu.cs:115)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:17:45
+[scene]:Menu
+[type]:Exception
+[exception message]:InvalidOperationException: Insecure connection not allowed
+[stack trace]:UnityEngine.Networking.UnityWebRequest.SendWebRequest () (at <3a94c981a38444d3b3e2dd398a606a0a>:0)
+UnityEngine.WWW..ctor (System.String url) (at <31b1af0c285f42c39139659b94874e90>:0)
+Scraft.Tutorial.openWikiWeb () (at Assets/Scripts/Tutorial/Tutorial.cs:54)
+Scraft.MainMenu.onWikiButtonClick () (at Assets/Scripts/Menu/MainMenu.cs:115)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:17:45
+[scene]:Menu
+[type]:Exception
+[exception message]:InvalidOperationException: Insecure connection not allowed
+[stack trace]:UnityEngine.Networking.UnityWebRequest.SendWebRequest () (at <3a94c981a38444d3b3e2dd398a606a0a>:0)
+UnityEngine.WWW..ctor (System.String url) (at <31b1af0c285f42c39139659b94874e90>:0)
+Scraft.Tutorial.openWikiWeb () (at Assets/Scripts/Tutorial/Tutorial.cs:54)
+Scraft.MainMenu.onWikiButtonClick () (at Assets/Scripts/Menu/MainMenu.cs:115)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:17:47
+[scene]:Menu
+[type]:Exception
+[exception message]:InvalidOperationException: Insecure connection not allowed
+[stack trace]:UnityEngine.Networking.UnityWebRequest.SendWebRequest () (at <3a94c981a38444d3b3e2dd398a606a0a>:0)
+UnityEngine.WWW..ctor (System.String url) (at <31b1af0c285f42c39139659b94874e90>:0)
+Scraft.MainMenu.onThanksButtonClick () (at Assets/Scripts/Menu/MainMenu.cs:109)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:27:24
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:27:27
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:28:00
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:30:47
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:32:02
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:06
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:09
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:10
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:11
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:11
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:39:13
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:41:15
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
+
+============================
+[time]:2025/9/9 22:43:15
+[scene]:Pooler
+[type]:Exception
+[exception message]:NullReferenceException: Object reference not set to an instance of an object
+[stack trace]:Scraft.DpartSpace.PropellerRS.OnCustom1ButtonClick () (at Assets/Scripts/Dparts/Scripts/PropellerRS.cs:57)
+Scraft.PoolerItemSelector.onCustom1ButtonClick () (at Assets/Scripts/Pooler/Gui/PoolerItemSelector.cs:119)
+UnityEngine.Events.InvokableCall.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.Events.UnityEvent.Invoke () (at <9abcb063327f4befb6ae8615dcf16958>:0)
+UnityEngine.UI.Button.Press () (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:70)
+UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs:114)
+UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:57)
+UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/ExecuteEvents.cs:272)
+UnityEngine.EventSystems.EventSystem:Update() (at ./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs:530)
+
