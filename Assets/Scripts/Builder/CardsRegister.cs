@@ -30,7 +30,7 @@ namespace Scraft
         void registerCards()
         {
             cardCount = 0;
-            cardInfos = new List<CardInfo>();            
+            cardInfos = new List<CardInfo>();
 
             registerCard("structure", "Blocks/steel", 0);
             registerCard("material", "Blocks/water", 1);
@@ -55,8 +55,8 @@ namespace Scraft
 
         public CardInfo getCardInfoByName(string name)
         {
-            foreach(CardInfo info in cardInfos)
-            {              
+            foreach (CardInfo info in cardInfos)
+            {
                 if (info.name.Equals(name))
                 {
                     return info;
@@ -65,6 +65,8 @@ namespace Scraft
             return null;
         }
     }
+    
+  
 
     public class CardInfo
     {

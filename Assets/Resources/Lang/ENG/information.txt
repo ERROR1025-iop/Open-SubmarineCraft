@@ -1,7 +1,7 @@
 ﻿{   		
 	"dieselEngine":"Absorb surrounding liquid fuel to generate mechanical energy",
 	"electorEngine":"Convert electric energy into mechanical energy",
-	"torpedpTube":"The steering angle of the torpedo can be controlled by inputting a digital signal",
+	"torpedpTube":"The steering angle of the torpedo can be controlled by inputting a digital signal. The target depth can be set, and when<0, the current depth of the submarine will be used as the target depth",
 	"stirlingEngine":"Generate mechanical energy according to the temperature difference between the upper and lower blocks",
 	"neutron":"Activate nuclear fuel",
 	"uranium":"Can be activated by neutrons to generate a large amount of heat.It will slowly release neutron itself ",
@@ -86,8 +86,11 @@
 	"charcoal":"The wood is heated to 400 degrees under anaerobic conditions and has more calorific value than wood",
 	"mineralDetector":"Obtain the enrichment of minerals in the current area",
 	"sampleCollector":"Used to obtain scientific points",
-	"temperatureSensor":"Used to obtain scientific points",
+	"thermometer":"Used to obtain scientific points",
 	"advElectorHeater":"Can be heated to higher temperatures",
 	"depthCharge":"It provides 3 charge",
-	"depthChargeThrowerCore":"Need to align the thrower in the 3D view. You can input a digital signal to control the thrower"
+	"depthChargeThrowerCore":"Need to align the thrower in the 3D view. You can input a digital signal to control the thrower",
+
+	"itemExtractor":"When docked at the station, extracts items (matching the blue side block) from the station warehouse and places them at the yellow side, consuming power",
+	"itemDepositor":"When docked at the station, deposits blocks from the yellow side into the station warehouse, consuming power"
 }

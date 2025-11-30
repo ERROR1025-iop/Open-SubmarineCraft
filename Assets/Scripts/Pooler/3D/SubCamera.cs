@@ -26,7 +26,8 @@ namespace Scraft
         Quaternion lastRotation;
 
         Camera camera3D;
-        new Light light;
+        new Light light;        
+        Transform buildPointTrans;
         Vector3 lastPos;
         bool lockRotate;
         bool isPointGUI;        
@@ -39,14 +40,19 @@ namespace Scraft
         Vector3 lastPonitPos;
         Vector3 center;
 
+        private Rigidbody _rigidbody;
+
         float speed = 1f;
         float horizontal;
         float vertical;
+        static public float seaLevel;
 
         void Awake()
         {
             camera3D = GetComponent<Camera>();
             light = GetComponent<Light>();
+            _rigidbody = GetComponent<Rigidbody>();
+            buildPointTrans = GameObject.Find("pool_preb/3d protagonist/3D FollowSub/BuildPoint").transform;
             lockRotate = false;
             instance = this;
             isAimMode = false;
@@ -165,11 +171,12 @@ namespace Scraft
             if (isBuildStationMode)
             {
                 canScale = false;
-                canMove = false;
-                canRotate = false;
+                canMove = true;
+                canRotate = true;
                 lastPosition = transform.localPosition;
                 lastRotation = transform.localRotation;
 
+                transform.SetParent(buildPointTrans, true);
                 transform.position = position + new Vector3(0,50,0);
                 transform.eulerAngles = new Vector3(89, -89, 0);
                 if(World.activeCamera < 2)
@@ -204,7 +211,7 @@ namespace Scraft
             setRadarLineAngle();
 
             //防止摄像机翻滚
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
 
             if (World.activeCamera < 2)
             {
@@ -215,6 +222,13 @@ namespace Scraft
             move();
             rotate();
             pcScale();
+            sendSeaLevelData();
+        }
+
+        void sendSeaLevelData()
+        {
+            seaLevel = Buoyancy.getWaterHeight(transform.position);
+            Shader.SetGlobalFloat("_CameraSeaLevel", seaLevel);
         }
 
         void move()
@@ -252,13 +266,8 @@ namespace Scraft
             {
                 return;
             }
-
+            
             if (isPointGUI && Input.GetMouseButtonDown(0))
-            {
-                lockRotate = true;
-            }
-
-            if (PoolerItemSelector.instance.joystick1.isPointed)
             {
                 lockRotate = true;
             }
@@ -267,7 +276,7 @@ namespace Scraft
             {
                 if (World.activeCamera >= 2)
                 {
-                    if (!GameSetting.isAndroid || Input.touchCount == 1)
+                    if (!GameSetting.isAndroid || Input.touchCount <= 1)
                     {
                         rotateX();
                         rotateY();                        
@@ -296,11 +305,11 @@ namespace Scraft
             float speed = isAimMode ? camera3D.fieldOfView * 0.5f : 30;
             if (lastPos.x == 0)
             {
-                lastPos.x = IUtils.reviseMousePos(Input.mousePosition).x;
+                lastPos.x = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).x;
             }
-            float dy = (IUtils.reviseMousePos(Input.mousePosition).x - lastPos.x) * 0.005f * speed;
+            float dy = (IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).x - lastPos.x) * 0.005f * speed;
             transform.RotateAround(rotateCenterTrans.position, Vector3.up, dy * 3f);
-            lastPos.x = IUtils.reviseMousePos(Input.mousePosition).x;
+            lastPos.x = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).x;
 
         }
 
@@ -309,20 +318,19 @@ namespace Scraft
             float speed = isAimMode ? camera3D.fieldOfView * 0.5f : 30;
             if (lastPos.y == 0)
             {
-                lastPos.y = IUtils.reviseMousePos(Input.mousePosition).y;
+                lastPos.y = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).y;
             }
-            float dx = (IUtils.reviseMousePos(Input.mousePosition).y - lastPos.y) * 0.005f * speed;
+            float dx = (IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).y - lastPos.y) * 0.005f * speed;
             transform.RotateAround(rotateCenterTrans.position, transform.right, -dx * 3f);
-            lastPos.y = IUtils.reviseMousePos(Input.mousePosition).y;
-
+            lastPos.y = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).y;
         }
 
         void pcScale()
         {
-            if (GameSetting.isAndroid)
-            {
-                return;
-            }
+            // if (GameSetting.isAndroid)
+            // {
+            //     return;
+            // }
 
             if (isAimMode)
             {

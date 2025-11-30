@@ -152,7 +152,7 @@ namespace Scraft.BlockSpace
                     }
                     else
                     {
-                        blocksEngine.createBlock(inBlock.getCoor(), air, false);
+                        blocksEngine.createBlockBase(inBlock.getCoor(), air, false);
                     }
 
                 }
@@ -167,7 +167,7 @@ namespace Scraft.BlockSpace
                     }
                     else
                     {
-                        blocksEngine.createBlock(inBlock.getCoor(), air, false);
+                        blocksEngine.createBlockBase(inBlock.getCoor(), air, false);
                     }
                 }
             }
@@ -184,7 +184,7 @@ namespace Scraft.BlockSpace
                 }
                 else
                 {
-                    blocksEngine.createBlock(inBlock.getCoor(), blocksEngine.getBlocksManager().air, false);
+                    blocksEngine.createBlockBase(inBlock.getCoor(), blocksEngine.getBlocksManager().air, false);
                 }
             }
         }

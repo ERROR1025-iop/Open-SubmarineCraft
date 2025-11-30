@@ -60,7 +60,7 @@ namespace Scraft.BlockSpace
         public override void onCollectScientific(CollectedScientificInfo csInfo)
         {
             base.onCollectScientific(csInfo);
-            collectedScientific = csInfo.area.layeredScientific * 1.5f;
+            collectedScientific = csInfo.point * 1.5f;
         }
     }
 }

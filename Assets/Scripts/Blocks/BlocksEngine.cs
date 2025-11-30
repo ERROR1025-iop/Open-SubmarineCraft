@@ -118,7 +118,7 @@ namespace Scraft.BlockSpace
         /// <summary>
         /// 创建（放置）方块
         /// </summary>    
-        public Block createBlock(IPoint createCoor, Block blockStatic, bool clearUp)
+        public Block createBlockBase(IPoint createCoor, Block blockStatic, bool clearUp)
         {
             Block oldBlock = getBlock(createCoor);
             if (clearUp)
@@ -150,7 +150,8 @@ namespace Scraft.BlockSpace
         public Block createBlockWithNotPlace(Block blockStatic, Block creator)
         {
             Block newBlock = blockStatic.clone(blocksParentObject, blocksManager, getUnusedBlockObject(), creator.getCoor(), mapSize);
-            newBlock.setTemperature(creator.getTemperature());
+            //计算newBlock在creator方块的温度下需要的热量，然后给予newBlock该热量，然后creator减去该热量lock (this)
+            PreBlockTemperature.SeparationTemperatureCalculation(creator, newBlock);
             newBlock.setPress(creator.getPress());
             newBlock.setBlockVisible(false);
             return newBlock;
@@ -181,18 +182,29 @@ namespace Scraft.BlockSpace
         /// <summary>
         /// 创建（放置）方块
         /// </summary>    
-        public Block createBlock(IPoint createCoor, Block blockStatic)
+        public Block createBlock(IPoint createCoor, Block blockStatic,
+            bool autoAdjustHeatCapacity = false)
         {
-            return createBlock(createCoor, blockStatic, true);
+            Block oldBlock = getBlock(createCoor);
+            Block newBlock = createBlockBase(createCoor, blockStatic, true);
+            if (oldBlock != null)
+            {
+                newBlock.inheritHeatQuantity(oldBlock);
+                if (autoAdjustHeatCapacity)
+                {
+                    newBlock.heatCapacity = oldBlock.density * oldBlock.heatCapacity / newBlock.density;
+                }
+            }
+            return newBlock;
         }
 
         /// <summary>
         /// 创建（放置）方块
         /// </summary>    
-        public Block createBlock(IPoint createCoor, Block blockStatic, float temperature, float press)
+        public Block createBlock(IPoint createCoor, Block blockStatic, float press,
+            bool autoAdjustHeatCapacity = false)
         {
-            Block new_block = createBlock(createCoor, blockStatic);
-            new_block.setTemperature(temperature);
+            Block new_block = createBlock(createCoor, blockStatic, autoAdjustHeatCapacity);
             new_block.setPress(press);
             return new_block;
         }
@@ -226,7 +238,7 @@ namespace Scraft.BlockSpace
         public Block removeBlock(IPoint removeCoor, bool clearUp, float press)
         {
             Block old_block = getBlock(removeCoor);
-            Block new_block = createBlock(removeCoor, blocksManager.air, clearUp);
+            Block new_block = createBlockBase(removeCoor, blocksManager.air, clearUp);
             new_block.setTemperature(old_block.getTemperature());
             new_block.setPress(press);
             return new_block;

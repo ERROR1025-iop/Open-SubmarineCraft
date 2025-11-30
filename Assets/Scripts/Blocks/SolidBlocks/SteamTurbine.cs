@@ -79,7 +79,10 @@ namespace Scraft.BlockSpace
                     inBlock.setTemperature(inBlock.getTemperature() - dt);
                     inBlock.setPress(100);
                     inBlock.moveTo(outBlock.getCoor());
-                    output = (dt * 2 + dp) * (inBlock.isFire() ? 30 : 150);
+                    float outputT = inBlock.heatCapacity * inBlock.density * dt;
+                    float outputP = Mathf.Abs(dp - 100) * 10;
+                    output = outputT + outputP;
+                    Debug.Log("outputT:" + outputT + ",outputP:" + outputP  + ",output:" + output);
                 }
                 else if (inBlock.equalPState(PState.liquild) || inBlock.equalPState(PState.mushy))
                 {

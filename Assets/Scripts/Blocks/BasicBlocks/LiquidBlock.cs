@@ -135,9 +135,7 @@ namespace Scraft.BlockSpace
                 if (neighborBlock.equalBlock(air))
                 {
                     Block child = popLastCompressChild();
-                    //child.setTemperature(temperature);
-                    decPress(100);
-                    //Debug.Log("liquid-100");                   
+                    decPress(100);            
                     blocksEngine.placeBlock(neighborBlock.getCoor(), child);
                 }
             }
@@ -202,7 +200,7 @@ namespace Scraft.BlockSpace
             base.clear(destroy);
         }
 
-        protected void realseAllCompressChild()
+        public void realseAllCompressChild()
         {
             for (int i = 0; i < MAX_COM_CHILDREN; i++)
             {
@@ -222,13 +220,17 @@ namespace Scraft.BlockSpace
             if (mushyBlockStatic != null && temperature > dynamicBoilingPoint)
             {
                 //Debug.Log("temperature:" + temperature + ",dynamicBoilingPoint" + dynamicBoilingPoint);
-                MushyBlock mushyBlock = blocksEngine.createBlock(getCoor(), mushyBlockStatic, temperature, press) as MushyBlock;
+                MushyBlock mushyBlock = blocksEngine.createBlock(getCoor(), mushyBlockStatic, press, true) as MushyBlock;
+                if (mushyBlock == null)
+                {
+                    Debug.Log("mushyBlock == null");
+                }
                 mushyBlock.setDensity(density - 0.1f);
                 mushyBlock.setTransmissivity(transmissivity);
                 mushyBlock.setCalorific(calorific);
                 mushyBlock.setGasChildCount(gasChildCount);
                 mushyBlock.setHeatCapacity(heatCapacity);
-                mushyBlock.setTemperature(temperature);
+                mushyBlock.setHeatQuantity(heatQuantity);
                 mushyBlock.setCompressChild(compressChildren, compressChildrenStack);
                 return true;
             }
@@ -242,7 +244,7 @@ namespace Scraft.BlockSpace
         {
             if (solidBlockStatic != null && temperature < freezingPoint)
             {
-                blocksEngine.createBlock(getCoor(), solidBlockStatic, temperature, press);
+                blocksEngine.createBlock(getCoor(), solidBlockStatic, press, true);
                 return true;
             }
             return false;
@@ -274,29 +276,23 @@ namespace Scraft.BlockSpace
 
             if (down_block.equalPState(PState.gas))
             {
+                //if(equalPState(PState.mushy))Debug.Log("liquid-down for gravity");
                 moveTo(getCoor().getDirPoint(gravityDown));
                 moveTrend = 0;
             }
             else if (up_block.isLiquidOrMushy() && up_block.getCompressChildrenCount() < getCompressChildrenCount())
             {
+                //if(equalPState(PState.mushy))Debug.Log("liquid-up for Compress");
                 moveTo(getCoor().getDirPoint(gravityUp));
                 moveTrend = 0;
                 setLimitMoved(true);
             }
-            else if (up_block.isFluid() && up_block.getDensity() > density)
+            else if (up_block.equalPState(PState.liquild) && up_block.getDensity() > density)
             {
+                //if(equalPState(PState.mushy))Debug.Log("liquid-up for density");
                 moveTo(getCoor().getDirPoint(gravityUp));
                 moveTrend = 0;
                 setLimitMoved(true);
-            }
-            else if (up_block.isFluid() && temperature > up_block.getTemperature())
-            {
-                if (up_block.equalBlock(this) || equalPState(PState.mushy))
-                {
-                    moveTo(getCoor().getDirPoint(gravityUp));
-                    moveTrend = 0;
-                    setLimitMoved(true);
-                }
             }
             else if ((left_block.isAir() && right_block.isAir()) ||
                 left_block.isFluid() && right_block.isFluid())
@@ -331,18 +327,19 @@ namespace Scraft.BlockSpace
             }
             else if (MainSubmarine.pitch <= 0.2f && MainSubmarine.pitch >= -0.2f && Random.value > 0.5f)
             {
-                if (left_block.isAir()){
+                if (left_block.isAir())
+                {
                     moveTo(getCoor().getDirPoint(Dir.left));
                     moveTrend = Dir.left;
                 }
-                else if(right_block.isAir())
+                else if (right_block.isAir())
                 {
                     moveTo(getCoor().getDirPoint(Dir.right));
                     moveTrend = Dir.right;
                 }
             }
             else if ((left_block.equalPState(PState.gas) && MainSubmarine.pitch <= 0.2f) || (left_block.isFluid() && left_block.getDensity() > density))
-            {               
+            {
                 moveTo(getCoor().getDirPoint(Dir.left));
                 moveTrend = Dir.left;
             }
@@ -351,6 +348,17 @@ namespace Scraft.BlockSpace
                 moveTo(getCoor().getDirPoint(Dir.right));
                 moveTrend = Dir.right;
             }
+            
+            // if (!limitMoved && up_block.isFluid() && temperature > up_block.getTemperature())
+            // {
+            //     if (up_block.equalBlock(this) || equalPState(PState.mushy))
+            //     {
+            //         Debug.Log("liquid-up for temperature");
+            //         moveTo(getCoor().getDirPoint(gravityUp));
+            //         moveTrend = 0;
+            //         setLimitMoved(true);
+            //     }
+            // }
         }
 
         public bool isHasCompressChildren()

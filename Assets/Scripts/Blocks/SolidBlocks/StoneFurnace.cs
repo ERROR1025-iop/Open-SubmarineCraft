@@ -11,7 +11,6 @@ namespace Scraft.BlockSpace{ public class StoneFurnace : IronFurnace
             initBlock("stoneFurnace", "industry");
             transmissivity = 1.72f;
             density = 13.5f;
-            unityFuelRate = 0.30f;
             isCanbeCorrosion = false;
         }
 

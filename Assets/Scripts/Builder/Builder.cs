@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Scraft.BlockSpace;
 using Scraft.DpartSpace;
+using UnityEngine.SceneManagement;
 
 namespace Scraft
 {
@@ -55,6 +56,7 @@ namespace Scraft
             dpartsEngine = new DpartsEngine(World.dpartParentObject);
 
             blocksManager.loadStationInfos();
+            blocksManager.loadUnlockData();
 
             GameObject.Find("Canvas/bander/save").GetComponent<Button>().onClick.AddListener(onSaveButtonClick);
             GameObject.Find("Canvas/bander/load").GetComponent<Button>().onClick.AddListener(onLoadButtonClick);
@@ -112,7 +114,10 @@ namespace Scraft
 
         public void Update()
         {           
-            loadSelector.updata();
+            if (loadSelector != null)
+            {                
+                loadSelector.updata();
+            }
         }
 
         void onSaveButtonClick()
@@ -532,7 +537,10 @@ namespace Scraft
                 if (GameSetting.isCareer && !blocksManager.getIsUnlock(blockId))
                 {
                     isHasLockBlock = true;
-                    continue;
+                    if (!Application.isEditor)
+                    {
+                        continue;
+                    }                    
                 }
                 int x = IUtils.getJsonValue2Int(blockData, "x");
                 int y = IUtils.getJsonValue2Int(blockData, "y");
@@ -737,13 +745,15 @@ namespace Scraft
                 if (!isGraphConnected)
                 {
                     IToast.instance.show("Please connect all the blocks.", 100);
-                    return;
                 }
                 int negativeBlockId = checkHasNegativeCargoCounts();
                 if (negativeBlockId != -1)
                 {
                     IToast.instance.showWithoutILang(string.Format("{0}({1}){2}", ILang.get("Inadequate blocks"), blocksManager.getBlockById(negativeBlockId).getLangName(), ILang.get(", Unable to build.")), 100);
-                    return;
+                    if (!Application.isEditor)
+                    {
+                        return;
+                    }
                 }               
                 Pooler.mainStationRemaindeCargoCounts = blocksManager.getRemaindeCargoCounts();
                 saveRemaindeCargoCounts();
@@ -754,14 +764,7 @@ namespace Scraft
                 {
                     ITutorial.tutorialStep++;
                 }
-                if (GameSetting.isAndroid)
-                {
-                    AsyncLoadScene.asyncloadScene("Pooler");
-                }
-                else
-                {
-                    Application.LoadLevel("Pooler");
-                }
+                SceneManager.LoadScene("Pooler");
                 
             }
         }
@@ -789,7 +792,7 @@ namespace Scraft
 
         void saveRemaindeCargoCounts()
         {
-            if (GameSetting.isCareer && !GameSetting.isAndroid)
+            if (GameSetting.isCareer)
             {
                 JsonWriter writer = new JsonWriter();
                 writer.WriteObjectStart();

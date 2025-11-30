@@ -209,6 +209,8 @@ namespace Scraft.BlockSpace
         public Block remoteSignalTransmitter;
         public Block neutronReflector;
         public Block uraniumGas;
+        public Block itemExtractor;
+        public Block itemDepositor;
 
         void registerBlocks()
         {
@@ -391,6 +393,9 @@ namespace Scraft.BlockSpace
             remoteSignalReceiver = registerBlock(new RemoteSignalReceiver(getUnuserId(), null, null));//175         
             neutronReflector = registerBlock(new NeutronReflector(getUnuserId(), null, null));
             uraniumGas = registerBlock(new UraniumGas(getUnuserId(), null, null));
+            itemExtractor = registerBlock(new ItemExtractor(getUnuserId(), null, null));
+            itemDepositor = registerBlock(new ItemDepositor(getUnuserId(), null, null));
+            
         }
 
         static public BlocksManager get()
@@ -424,6 +429,7 @@ namespace Scraft.BlockSpace
             int id = block.getId();
             blocksArr[id] = block;
             blockCount++;
+            Debug.Log(string.Format("{0}, heatCapacity:{1}", block.getName(), block.heatCapacity));
             return block;
         }
 
@@ -450,7 +456,7 @@ namespace Scraft.BlockSpace
             }
         }
 
-        void loadUnlockData()
+        public void loadUnlockData()
         {
             ISecretLoad.init();
             unlockData = ISecretLoad.loadResearch();
@@ -519,7 +525,7 @@ namespace Scraft.BlockSpace
         {
             cargosCount[8] = 24;//转轴
             cargosCount[10] = 6;//水泵
-            cargosCount[16] = 3;//无线电接收器
+            cargosCount[16] = 5;//无线电接收器
             cargosCount[65] = 200;//木头
             cargosCount[66] = 40;//煤炭
             cargosCount[67] = 32;//蒸汽引擎
@@ -673,8 +679,8 @@ namespace Scraft.BlockSpace
                 IUtils.keyValue2Writer(writer, GameSetting.lang == 0 ? "pstate_eng" : "pstate", PState.getPStateLangName(block.getPState()));
                 IUtils.keyValue2Writer(writer, "mass", block.getMass());
                 IUtils.keyValue2Writer(writer, "storeAir", block.getCanStoreAir());
-                IUtils.keyValue2Writer(writer, "heatCapacity", block.getHeatCapacity());               
-                IUtils.keyValue2Writer(writer, "transmissivity", block.getTransmissivity());
+                //IUtils.keyValue2Writer(writer, "heatCapacity", block.getHeatCapacity());               
+                IUtils.keyValue2Writer(writer, "transmissivity", block.transmissivity);
                 IUtils.keyValue2Writer(writer, "calorific", block.getCalorific());
                 IUtils.keyValue2Writer(writer, "burningPoint", block.getBurningPoint());
                 IUtils.keyValue2Writer(writer, "meltingPoint", block.getMeltingPoint());

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -41,14 +42,7 @@ namespace Scraft
             assembler.saveDpart("Last Ship");
             assembler.createThumbnailFile("Last Ship", GamePath.assemblerThumbnailFolder);
             Pooler.IS_Form_StationCenter = false;
-            if (GameSetting.isAndroid)
-            {
-                AsyncLoadScene.asyncloadScene("Pooler");
-            }
-            else
-            {
-                Application.LoadLevel("Pooler");
-            }
+            SceneManager.LoadScene("Pooler");
         }
 
         public void onBuilderButtonClick()

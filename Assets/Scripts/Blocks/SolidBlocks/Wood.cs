@@ -27,7 +27,7 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
             burningPoint = 270;
             isBurning = false;
             calorific = 395;
-            unityCalorific = 4;
+            unityCalorific = 15;
 
             m_normalSpriteIndex = 0;
             m_buringSpriteIndex = 1;
@@ -81,7 +81,7 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
             {
                 if(noOxygenBurningTime > carbonizationMaxTime)
                 {
-                    blocksEngine.createBlock(getCoor(), BlocksManager.instance.charcoal);
+                    blocksEngine.createBlock(getCoor(), BlocksManager.instance.charcoal, true);
                 }
                 else
                 {
@@ -105,12 +105,11 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
                     {
                         heatNeighborBlock(blocksEngine);
                         createFireMethod(blocksEngine);
-                        calorific -= unityCalorific;
                     }
                     else
                     {
                         Block air = blocksEngine.getBlocksManager().air;
-                        blocksEngine.createBlock(getCoor(), air, temperature, press);
+                        blocksEngine.createBlock(getCoor(), air, press);
                         return true;
                     }
                 }
@@ -141,12 +140,12 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
             Block upBlock = getNeighborBlock(Dir.up);
             if (upBlock.equalBlock(blocksEngine.getBlocksManager().air))
             {
-
                 if (Random.value > 0.5f)
                 {
                     Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                    Fire fire = blocksEngine.createBlock(upBlock.getCoor(), fireBlockStatic, temperature, press) as Fire;
-                    fire.initFire(blocksEngine.getBlocksManager(), "null", 130, 13, burningPoint);
+                    Fire fire = blocksEngine.createBlock(upBlock.getCoor(), fireBlockStatic, press) as Fire;
+                    fire.initFire("null", unityCalorific, burningPoint);
+                    calorific -= unityCalorific;
                     return true;
                 }
             }
@@ -154,12 +153,12 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
             Block leftBlock = getNeighborBlock(Dir.left);
             if (leftBlock.equalBlock(blocksEngine.getBlocksManager().air))
             {
-
                 if (Random.value > 0.9f)
                 {
                     Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                    Fire fire = blocksEngine.createBlock(leftBlock.getCoor(), fireBlockStatic, temperature, press) as Fire;
-                    fire.initFire(blocksEngine.getBlocksManager(), "null", 130, 13, burningPoint);
+                    Fire fire = blocksEngine.createBlock(leftBlock.getCoor(), fireBlockStatic, press) as Fire;
+                    fire.initFire("null", unityCalorific, burningPoint);
+                    calorific -= unityCalorific;
                     return true;
                 }
             }
@@ -167,12 +166,12 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
             Block rightBlock = getNeighborBlock(Dir.right);
             if (rightBlock.equalBlock(blocksEngine.getBlocksManager().air))
             {
-
                 if (Random.value > 0.9f)
                 {
                     Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                    Fire fire = blocksEngine.createBlock(rightBlock.getCoor(), fireBlockStatic, temperature, press) as Fire;
-                    fire.initFire(blocksEngine.getBlocksManager(), "null", 130, 13, burningPoint);
+                    Fire fire = blocksEngine.createBlock(rightBlock.getCoor(), fireBlockStatic, press) as Fire;
+                    fire.initFire("null", unityCalorific, burningPoint);
+                    calorific -= unityCalorific;
                     return true;
                 }
             }
@@ -182,13 +181,9 @@ namespace Scraft.BlockSpace{ public class Wood : SolidBlock
 
         protected virtual void heatNeighborBlock(BlocksEngine blocksEngine)
         {
-            float dt = unityCalorific * 3000;
-
+            float dt = Fire.C2HQ(unityCalorific);
+            calorific -= unityCalorific;
             addHeatQuantity(dt);
-            getNeighborBlock(Dir.up).addHeatQuantity(dt);
-            getNeighborBlock(Dir.right).addHeatQuantity(dt);
-            getNeighborBlock(Dir.down).addHeatQuantity(dt);
-            getNeighborBlock(Dir.left).addHeatQuantity(dt);
         }
 
         public override bool isRootUnlock()

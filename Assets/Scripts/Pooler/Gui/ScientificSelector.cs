@@ -7,29 +7,30 @@ using LitJson;
 
 namespace Scraft
 {
-    public class ScientificSelector 
+    public class ScientificSelector : MonoBehaviour
     {
-        static public ScientificSelector intance;
+        static public ScientificSelector instance;
 
         Transform objectTrans;
         PoolerInput poolerInput;      
         
         Text nameText;
-        Text layeredText;
+        Text layeredText1;
         Text valueText;
 
         Area stayArea;
         SolidBlock selectBlock;
 
-        public ScientificSelector(PoolerInput poolerInput)
+        SciArea staySciArea;
+
+        void Awake()
         {
-            intance = this;
-            this.poolerInput = poolerInput;
-            objectTrans = GameObject.Find("Canvas/Scientific selector").transform;
+            instance = this;
+            objectTrans = gameObject.transform;
             objectTrans.GetChild(0).GetComponent<Button>().onClick.AddListener(onCollectButtonClick);
             objectTrans.GetChild(1).GetComponent<Button>().onClick.AddListener(onCancelButtonClick);
             nameText = objectTrans.GetChild(2).GetComponent<Text>();
-            layeredText = objectTrans.GetChild(3).GetComponent<Text>();
+            layeredText1 = objectTrans.GetChild(3).GetComponent<Text>();
             valueText = objectTrans.GetChild(4).GetComponent<Text>();           
 
             show(false, null);
@@ -37,16 +38,31 @@ namespace Scraft
 
         void onCollectButtonClick()
         {
-            if(stayArea == null)
+            var bcsid = selectBlock.getCollectedScientificId();
+
+            if(staySciArea != null)
             {
-                return;
+                if (staySciArea.getIsCollectedScientific(bcsid))
+                {
+                    IToast.instance.show("No scientific points can be collected in this area.", 50);
+                    return;
+                }
             }
 
-            if (stayArea.getIsCollectedScientific(selectBlock.getCollectedScientificId()))
+            if(stayArea != null)
             {
-                IToast.instance.show("No scientific points can be collected in this area.", 50);
+                if (stayArea.getIsCollectedScientific(bcsid))
+                {
+                    IToast.instance.show("No scientific points can be collected in this area.", 50);
+                    return;
+                }
+            }
+
+            if (staySciArea == null && stayArea == null)
+            {
                 return;
             }
+            
 
             if(selectBlock.getCollectedScientific() > 0)
             {
@@ -59,23 +75,80 @@ namespace Scraft
           
         }
 
+        public void OnSciAreaEnter(SciArea sciArea)
+        {
+            staySciArea = sciArea;
+            AreaNameView.instance.SetSciString(sciArea.GetLangName());
+            UpdateAreaValue();
+        }
+
+        public void OnSciAreaLeave(SciArea sciArea)
+        {
+            staySciArea = null;
+            AreaNameView.instance.SetSciString(null);
+            UpdateAreaValue();
+        }
+
+        public void OnAreaEnter(Area area)
+        {
+            stayArea = area;
+            UpdateAreaValue();
+        }
+
+        public void OnAreaLeave(Area area)
+        {
+            stayArea = null;
+            UpdateAreaValue();
+        }
+
         void onCollectComfirmClick()
         {
-            selectBlock.onCollectScientific(new CollectedScientificInfo(stayArea));
-            updateBlockValue();
-            stayArea.addCollectedScientificLayered(selectBlock.getCollectedScientificId());
+            CollectedScientificInfo csi = null;
+            int bcsid = selectBlock.getCollectedScientificId();
+            if (staySciArea != null)
+            {
+                csi = new CollectedScientificInfo(staySciArea.name, staySciArea.baseSicPoint, 0);
+                staySciArea.addCollectedScientificLayered(bcsid);
+
+            }else if(stayArea != null)
+            {
+                csi = new CollectedScientificInfo(stayArea.name, stayArea.layeredScientific, stayArea.stayLayered);                
+                stayArea.addCollectedScientificLayered(bcsid);                
+            }
+
+            if (csi != null)
+            {
+                selectBlock.onCollectScientific(csi);
+                updateBlockValue();
+            }
         }
+        
 
         void onCancelButtonClick()
         {
             show(false, null);
         }
 
-        public void updateAreaValue(Area stayArea)
-        {
-            this.stayArea = stayArea;
-            nameText.text = stayArea.getLangName();
-            layeredText.text = stayArea.getLayeredName();            
+        public void UpdateAreaValue()
+        {            
+            if (staySciArea != null)
+            {
+                nameText.text = staySciArea.GetLangName();
+                layeredText1.text = "";
+            }
+            else
+            {
+                if (stayArea == null)
+                {
+                    nameText.text = "";
+                    layeredText1.text = "";
+                    AreaNameView.instance.SetAreaString("");
+                    return;
+                }
+                nameText.text = stayArea.getLangName();
+                layeredText1.text = stayArea.getLayeredName();
+                AreaNameView.instance.SetAreaString(stayArea.getLangName() + " " + stayArea.getLayeredName());
+            }
         }
 
         public void updateBlockValue()
@@ -99,24 +172,20 @@ namespace Scraft
 
     public class CollectedScientificInfo
     {
-        public Area area;
+        public string name;
         public int layered;
+        public float point;
 
-        public CollectedScientificInfo(Area area)
+        public CollectedScientificInfo(string name, float point, int layered=0)
         {
-            this.area = area;
-            layered = area.stayLayered;
-        }
-
-        public CollectedScientificInfo(Area area, int layered)
-        {
-            this.area = area;
+            this.name = name;
+            this.point = point;
             this.layered = layered;
         }
 
         public void onSave(JsonWriter writer)
         {
-            IUtils.keyValue2Writer(writer, "a", area.name);
+            IUtils.keyValue2Writer(writer, "a", name);
             IUtils.keyValue2Writer(writer, "l", layered);
         }
 
@@ -124,13 +193,7 @@ namespace Scraft
         {
             string name = IUtils.getJsonValue2String(jsonData, "a");
             int layered = IUtils.getJsonValue2Int(jsonData, "l");
-            GameObject gameObject = GameObject.Find("Aresa/" + name);
-            if(gameObject != null)
-            {
-                Area area = gameObject.GetComponent<Area>();
-                return new CollectedScientificInfo(area, layered);
-            }
-            return null;
+            return new CollectedScientificInfo(name, layered);
         }
     }
 }

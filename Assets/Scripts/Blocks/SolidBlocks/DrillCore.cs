@@ -9,7 +9,7 @@ namespace Scraft.BlockSpace
         static public List<DrillCore> drillCores;
 
         public float speed;
-        public bool m_isAttachDrillRS;
+        public bool isAttachDrillRS;
 
         public DrillCore(int id, GameObject parentObject, GameObject blockObject)
                 : base(id, parentObject, blockObject)
@@ -18,7 +18,7 @@ namespace Scraft.BlockSpace
 
             thumbnailColor = new Color(0.4286f, 0.4286f, 0.4286f);
             density = 13.1f;
-            m_isAttachDrillRS = false;
+            isAttachDrillRS = false;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -84,22 +84,12 @@ namespace Scraft.BlockSpace
             speed = me;
         }
 
-        public void onAttachDrillRS()
-        {
-            m_isAttachDrillRS = true;
-        }
-
-        public bool isAttachDrillRS()
-        {
-            return m_isAttachDrillRS;
-        }
-
         public float getSpeed()
         {
             return speed / 100;
         }
 
-        public override bool isCanReceiveMe()
+        public override bool isCanReceiveMe(Block putter)
         {
             return true;
         }

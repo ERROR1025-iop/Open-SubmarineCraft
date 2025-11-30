@@ -5,8 +5,7 @@ using UnityEngine;
 namespace Scraft
 {
     public class GamePath
-    {
-        public static string MID = "7B94042G464FA171B0C31BC6B2C04911";
+    {  
         public static string SDPATH = "";
         public static string logFolder;
         public static string shipsFolder;
@@ -26,7 +25,7 @@ namespace Scraft
 
         static bool isInit = false;
 
-        static public void init(string Mid)
+        static public void init()
         {
             if (!isInit)
             {
@@ -35,7 +34,6 @@ namespace Scraft
                 string sdpath = System.IO.Path.Combine(writablePath, "SubmarineCraft") + "/";
 
                 SDPATH = sdpath;
-                MID = Mid;
 
                 logFolder = registerFolder(SDPATH + "logs/");
                 shipsFolder = registerFolder(SDPATH + "ships/");

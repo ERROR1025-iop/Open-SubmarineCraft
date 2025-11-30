@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1498894121781270972}
   - component: {fileID: 3550949849120655596}
   - component: {fileID: 2977898565279739384}
+  - component: {fileID: 510689603365647399}
   m_Layer: 0
   m_Name: Box025
   m_TagString: Untagged
@@ -28,12 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498894121781270960}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.000000087422784, w: 1}
   m_LocalPosition: {x: 0, y: -0.0053, z: -0.0120538315}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1498894123248485451}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1498894121781270973
 MeshFilter:
@@ -54,9 +56,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -68,6 +73,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -80,6 +86,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1498894121781270972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,11 +117,19 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498894121781270960}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 5
   m_Convex: 1
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300050, guid: ce42ee674047fd64b969e806c5987c3d, type: 3}
 --- !u!114 &2977898565279739384
 MonoBehaviour:
@@ -132,13 +147,9 @@ MonoBehaviour:
   Selected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Battlehub.RTCommon.ExposeToEditorUnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   Unselected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Battlehub.RTCommon.ExposeToEditorUnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   BoundsObject: {fileID: 0}
   BoundsType: 0
   CustomBounds:
@@ -147,6 +158,18 @@ MonoBehaviour:
   CanSelect: 1
   CanSnap: 1
   AddColliders: 1
+--- !u!114 &510689603365647399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498894121781270960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4947d41544699f34c946678d891bfc93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1498894123248485454
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,13 +200,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498894123248485454}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 1.117, y: 3.8077645, z: 9.80146}
   m_LocalScale: {x: 2.54, y: 2.54, z: 2.54}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1498894121781270975}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 270, y: 270, z: 0}
 --- !u!114 &75165878790505535
 MonoBehaviour:
@@ -219,9 +243,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -233,6 +260,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -245,6 +273,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &1498894123248485431
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -253,11 +282,19 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498894123248485454}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 5
   m_Convex: 1
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300044, guid: ce42ee674047fd64b969e806c5987c3d, type: 3}
 --- !u!114 &1498894123248485448
 MonoBehaviour:
@@ -275,13 +312,9 @@ MonoBehaviour:
   Selected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Battlehub.RTCommon.ExposeToEditorUnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   Unselected:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Battlehub.RTCommon.ExposeToEditorUnityEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   BoundsObject: {fileID: 0}
   BoundsType: 0
   CustomBounds:
@@ -302,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b860f21834c2e734aa6878444977c3a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMirrorCanNegativeScale: 1
 --- !u!114 &1498894123248485450
 MonoBehaviour:
   m_ObjectHideFlags: 0

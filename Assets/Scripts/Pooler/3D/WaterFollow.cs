@@ -14,7 +14,7 @@ namespace Scraft
 
         void Update()
         {
-            transform.localPosition = new Vector3(selfSubTrans.position.x, 0, selfSubTrans.position.z);
+            transform.localPosition = new Vector3(selfSubTrans.position.x, -0.02f, selfSubTrans.position.z);
         }
     }
 }

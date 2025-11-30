@@ -146,7 +146,7 @@ namespace Scraft.BlockSpace
             return base.getThumbnailColor(blockData);
         }
 
-        public override bool isCanReceiveMe()
+        public override bool isCanReceiveMe(Block putter)
         {
             return true;
         }

@@ -20,7 +20,7 @@ namespace Scraft.BlockSpace
             thumbnailColor = new Color(0.902f, 0.902f, 0.902f);
             transmissivity = 4.2f;
             density = 10.85f;
-            m_MaxElectric = 1400;
+            m_MaxElectric = 1400 * 2;
             m_storeElectric = 0;
             max_storeAir = 0;
         }

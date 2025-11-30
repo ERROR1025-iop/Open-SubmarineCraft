@@ -44,7 +44,7 @@ namespace Scraft
 
         void init()
         {
-            rectTrans.anchoredPosition = new Vector2(1000, rectTrans.anchoredPosition.y);
+            rectTrans.anchoredPosition = new Vector2(1380, rectTrans.anchoredPosition.y);
             step = 0;
             showStack = 0;
         }
@@ -78,7 +78,7 @@ namespace Scraft
                 }
                 else if (step == 3)
                 {
-                    if (rectTrans.anchoredPosition.x >= -1000)
+                    if (rectTrans.anchoredPosition.x >= -1380)
                     {
                         rectTrans.anchoredPosition = new Vector2(rectTrans.anchoredPosition.x - speed * Time.deltaTime, rectTrans.anchoredPosition.y);
                     }

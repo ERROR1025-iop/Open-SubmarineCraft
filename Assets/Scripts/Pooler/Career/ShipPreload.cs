@@ -34,12 +34,38 @@ namespace Scraft
             shipPreloads.Add(this);
             icon3D = GetComponent<Icon3D>();
             distance = 400;
-            interval_time = (int)(Random.value * 80f);
+            interval_time = (int)(Random.value * 80f);            
         }
 
         private void OnDestroy()
         {
             shipPreloads.Remove(this);
+        }
+
+        public void SetAllDescendantsToSelfShipTag()
+        {
+            // 设自身Tag
+            gameObject.tag = "preload ship";
+            // 递归遍历所有子物体（含孙物体等所有层级）
+            foreach (Transform child in transform)
+            {
+                child.gameObject.tag = "preload ship";
+                // 递归处理子物体的子物体
+                foreach (Transform grandChild in child)
+                {
+                    SetAllDescendantsToSelfShipTagRecursive(grandChild);
+                }
+            }
+        }
+
+        // 内部递归辅助（必须保留，否则无法遍历多层级，且不额外暴露给外部）
+        private void SetAllDescendantsToSelfShipTagRecursive(Transform current)
+        {
+            current.gameObject.tag = "preload ship";
+            foreach (Transform child in current)
+            {
+                SetAllDescendantsToSelfShipTagRecursive(child);
+            }
         }
 
         public void OnLoaded(JsonData shipData)
@@ -58,7 +84,6 @@ namespace Scraft
             gameObject.name = string.Format("preload ship({0})", realName);
             transform.position = position;
             transform.eulerAngles = eulerAngle;
-
             
         }
 
@@ -165,6 +190,8 @@ namespace Scraft
             Dpart dpart;
             Transform parentTrans = gameObject.transform;
 
+            Rigidbody rigidbody = gameObject.AddComponent<Rigidbody>();
+
             for (int i = 0; i < blocksCount; i++)
             {
                 dpartData = blocksArrData[i];
@@ -187,28 +214,31 @@ namespace Scraft
                      
             MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
             gameObject.AddComponent<MeshRenderer>();
-            Rigidbody rigidbody = gameObject.AddComponent<Rigidbody>();
+
             rigidbody.useGravity = false;
             rigidbody.mass = mass;
-            rigidbody.centerOfMass = massCenter;          
+            rigidbody.centerOfMass = massCenter; 
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
-            Collider[] colliders = gameObject.GetComponentsInChildren<Collider>();
-            foreach (Collider collider in colliders)
-            {
-                Destroy(collider);
-            }
+            // Collider[] colliders = gameObject.GetComponentsInChildren<Collider>();
+            // foreach (Collider collider in colliders)
+            // {
+            //     Destroy(collider);
+            // }
           
             IUtils.centerOnChildrens(gameObject, new Vector3(0, 0, 0));           
-            combineRenderMeshes(gameObject);         
-            Bounds bounds = meshFilter.mesh.bounds;
-            BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-            boxCollider.center = bounds.center;
-            boxCollider.size = bounds.size;
+            //combineRenderMeshes(gameObject);         
+            //Bounds bounds = meshFilter.mesh.bounds;
+            // BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+            // boxCollider.center = bounds.center;
+            // boxCollider.size = bounds.size;
             transform.position = position;
             transform.eulerAngles = eulerAngle;
 
             LowBuoyancy lowBuoyancy = gameObject.AddComponent<LowBuoyancy>();
             lowBuoyancy.Initialized(tonnage, massCenter, shipOffsetY);
+            
+            SetAllDescendantsToSelfShipTag();
         }
 
         static void combineRenderMeshes(GameObject gos)

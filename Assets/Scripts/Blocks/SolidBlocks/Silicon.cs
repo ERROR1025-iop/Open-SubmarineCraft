@@ -40,7 +40,7 @@ namespace Scraft.BlockSpace
         {
             if (temperature > 2000)
             {
-                blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().siliconCarbide, temperature, press);
+                blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().siliconCarbide, press);
             }
             return false;
         }

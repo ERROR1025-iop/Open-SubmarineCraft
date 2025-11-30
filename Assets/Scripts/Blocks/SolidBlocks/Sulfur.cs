@@ -21,6 +21,11 @@ namespace Scraft.BlockSpace
             isCanbeCorrosion = false;
         }
 
+        public override SyntInfo[] getSyntInfo(BlocksManager blocksManager)
+        {            
+            return null;
+        }
+
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
         {
             Sulfur block = new Sulfur(blockId, parentObject, blockObject);

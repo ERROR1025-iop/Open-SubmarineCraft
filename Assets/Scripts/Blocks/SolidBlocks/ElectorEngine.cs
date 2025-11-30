@@ -23,7 +23,7 @@ namespace Scraft.BlockSpace
             thumbnailColor = new Color(0.2509f, 0.7294f, 0.8509f);
             transmissivity = 3.2f;
             density = 10.3f;
-            currentSettingValue = 7600;
+            currentSettingValue = 11000;
 
             outputMe = 0;
             outPutAcc = 0;
@@ -103,6 +103,14 @@ namespace Scraft.BlockSpace
             }
         }
 
+        public override void onPreesButtonClick(bool isClick)
+        {
+            if (isClick)
+            {                
+                onWorldModeClick();
+            }
+        }
+
         public override void onPowerBarPush(float value)
         {
             powerBarValue = value;
@@ -121,7 +129,7 @@ namespace Scraft.BlockSpace
             if (getIsBroken())
             {
                 blocksEngine.putMe(this, getPutMeCoor(), 0);
-                PoolerEngineSound.dieselEngineVolume = 0;
+                //PoolerEngineSound.dieselEngineVolume = 0;
                 return;
             }
 
@@ -147,7 +155,7 @@ namespace Scraft.BlockSpace
         public override void onWorldModeDestroy()
         {
             base.onWorldModeDestroy();
-            PoolerEngineSound.dieselEngineVolume = 0;            
+            //PoolerEngineSound.dieselEngineVolume = 0;            
         }
 
         protected virtual bool putMeRule(BlocksEngine blocksEngine)
@@ -198,7 +206,7 @@ namespace Scraft.BlockSpace
 
         public override int[] getBindArr()
         {
-            return new int[1] { 3 };
+            return new int[3] { 3, 4, 5 };
         }
 
         public override int isCanSettingValue()

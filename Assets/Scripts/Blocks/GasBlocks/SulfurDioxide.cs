@@ -54,7 +54,7 @@ namespace Scraft.BlockSpace
             IPoint reactionCoor = getCoor().getDirPoint(dir);
             if (blocksEngine.getBlock(reactionCoor).equalBlock(reaction))
             {
-                blocksEngine.createBlock(reactionCoor, product);
+                blocksEngine.createBlock(reactionCoor, product, true);
                 blocksEngine.removeBlock(getCoor());
                 return true;
             }

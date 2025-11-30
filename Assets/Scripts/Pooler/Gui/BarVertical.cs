@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Scraft
 {
@@ -20,11 +21,11 @@ namespace Scraft
 
         float hight;
         float startPos;
-
+        CanvasScaler canvasScaler;        
         void Start()
-        {
+        {            
             RectTransform rt = transform.GetComponent<RectTransform>();
-            rect = new Rect(new Vector2(800 + rt.anchoredPosition.x, rt.anchoredPosition.y), rt.sizeDelta);
+            rect = new Rect(new Vector2(PoolerUI.canvasW + rt.anchoredPosition.x, rt.anchoredPosition.y), rt.sizeDelta);
             hight = rt.sizeDelta.y;
             startPos = rt.anchoredPosition.y;
             m_isReturnCenten = true;
@@ -64,13 +65,15 @@ namespace Scraft
         {
             if (Input.GetMouseButtonDown(0))
             {
-                isClickBar = rect.Contains(IUtils.reviseMousePos(Input.mousePosition));
+                var p = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW);
+                isClickBar = rect.Contains(p);
+                //Debug.Log("p:" + p + ", rect:" + rect + ", isClickBar:" + isClickBar);
             }
             if (Input.GetMouseButton(0))
             {
                 if (isClickBar)
                 {
-                    float barY = IUtils.reviseMousePos(Input.mousePosition).y - startPos;
+                    float barY = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).y - startPos;
                     if (barY < 0)
                     {
                         barRectTrans.anchoredPosition = new Vector2(barRectTrans.anchoredPosition.x, 0);

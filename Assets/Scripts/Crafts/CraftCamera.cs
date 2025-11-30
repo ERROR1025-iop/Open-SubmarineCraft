@@ -60,7 +60,7 @@ namespace Scraft {
             if (Physics.Raycast(ray, out hit))
             {
 
-                bool isPointGUI = GameSetting.isAndroid ? Input.touchCount > 0 ? EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) : false : EventSystem.current.IsPointerOverGameObject();
+                bool isPointGUI = IUtils.isPointGUI();
                 if (isPointGUI)
                 {
                     return false;

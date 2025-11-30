@@ -18,8 +18,9 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
             pState = PState.particle;
             life = 50;
             canStoreInTag = 0;
+            heatCapacity = 1012f;
+            transmissivity = 21f;
             max_storeAir = 1000;
-            transmissivity = 0.01f;
         }
 
         public void initParticleBlock(BlocksManager blocksManager)
@@ -33,12 +34,12 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
 
             if (particleDisappearRule(blocksEngine)) return;
             particleMoveRule(blocksEngine);
+            transmissivity = Mathf.Clamp(press * 0.21f, 0.001f, 22f);
         }        
 
         public void insideUpdate(BlocksEngine blocksEngine, Block insideBlock)
         {
             particleInsideMoveRule(blocksEngine, insideBlock);
-            particleTemperatureRule();
 
         }        
 
@@ -62,8 +63,8 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
             Block forwardBlock = getNeighborBlock(moveDir);
             if (!forwardBlock.isAir())
             {
-                if(Random.value > forwardBlock.getPenetrationRate())
-                {                    
+                if (Random.value > forwardBlock.getPenetrationRate())
+                {
                     moveDir = (int)(Random.value * 4);
                 }
                 else
@@ -71,16 +72,23 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
                     forwardBlock.particleMoveIn(this, false);
                     forwardBlock.onParticleCollide(this);
                 }
-           
+
             }
             else
             {
-                moveTo(forwardBlock.getCoor());                                    
+                moveTo(forwardBlock.getCoor());
+                setAttr(forwardBlock);
             }
-            setTemperature(forwardBlock.getTemperature());
-            setPress(forwardBlock.getPress());
             setLimitMoved(true);
             life--;
+        }
+        
+        private void setAttr(Block forwardBlock)
+        {
+            setPress(forwardBlock.getPress());
+            setDensity(forwardBlock.getDensity());
+            setTransmissivity(forwardBlock.transmissivity);
+            setTemperature(forwardBlock.getTemperature());
         }
 
         public void particleInsideMoveRule(BlocksEngine blocksEngine, Block insideBlock)
@@ -98,12 +106,13 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
                     moveDir = Dir.addDir(moveDir, 2);
                     Block backBlock = insideBlock.getNeighborBlock(moveDir);
                     jumpToOtherBlock(insideBlock, backBlock);
-                    forwardBlock.onParticleCollide(this);
+                    backBlock.onParticleCollide(this);
                 }
                 else
                 {
                     jumpToOtherBlock(insideBlock, forwardBlock);
                     forwardBlock.onParticleCollide(this);
+                    setAttr(forwardBlock);
                 }
 
             }
@@ -113,19 +122,20 @@ namespace Scraft.BlockSpace{ public class ParticleBlock : Block
             }
             else
             {
-                insideBlock.particleMoveOut(forwardBlock);
-            }
+                if (Random.value > insideBlock.getPenetrationRate())
+                {
+                    moveDir = Dir.addDir(moveDir, 2);
+                    Block backBlock = insideBlock.getNeighborBlock(moveDir);
+                    jumpToOtherBlock(insideBlock, backBlock);
+                    backBlock.onParticleCollide(this);
+                }
+                else
+                {
+                    insideBlock.particleMoveOut(forwardBlock);
+                }                
+            }            
             setLimitMoved(true);
             life--;
-        }
-
-        public void particleTemperatureRule()
-        {
-            if (isInsideOtherBlock)
-            {
-                //setTemperature(parasiticBlock.getTemperature());
-                //setPress(parasiticBlock.getPress());
-            }
         }
 
         public void collideRule()

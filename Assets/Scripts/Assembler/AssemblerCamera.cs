@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 namespace Scraft
@@ -16,15 +17,19 @@ namespace Scraft
         float speed = 1f;
         float horizontal;
         float vertical;
+        public static float canvasW;
 
         void Start()
         {
             lastPonitPos = Vector3.zero;
+            var canvasScaler = GameObject.Find("Canvas").GetComponent<CanvasScaler>();
+            canvasW = canvasScaler.referenceResolution.x;
         }
 
 
         void Update()
         {
+
             if (joystick.isPointed)
             {
                 rotate();
@@ -112,11 +117,11 @@ namespace Scraft
         {
             if (lastPonitPos.x == 0)
             {
-                lastPonitPos.x = IUtils.reviseMousePos(Input.mousePosition).x;
+                lastPonitPos.x = IUtils.reviseMousePos(Input.mousePosition, canvasW).x;
             }
-            float dy = (IUtils.reviseMousePos(Input.mousePosition).x - lastPonitPos.x) * 0.2f * speed;
+            float dy = (IUtils.reviseMousePos(Input.mousePosition, canvasW).x - lastPonitPos.x) * 0.2f * speed;
 
-            lastPonitPos.x = IUtils.reviseMousePos(Input.mousePosition).x;
+            lastPonitPos.x = IUtils.reviseMousePos(Input.mousePosition, canvasW).x;
             transform.RotateAround(center, Vector3.up, dy);
         }
 
@@ -124,11 +129,11 @@ namespace Scraft
         {
             if (lastPonitPos.y == 0)
             {
-                lastPonitPos.y = IUtils.reviseMousePos(Input.mousePosition).y;
+                lastPonitPos.y = IUtils.reviseMousePos(Input.mousePosition, canvasW).y;
             }
-            float dy = (IUtils.reviseMousePos(Input.mousePosition).y - lastPonitPos.y) * 0.2f * speed;
+            float dy = (IUtils.reviseMousePos(Input.mousePosition, canvasW).y - lastPonitPos.y) * 0.2f * speed;
 
-            lastPonitPos.y = IUtils.reviseMousePos(Input.mousePosition).y;
+            lastPonitPos.y = IUtils.reviseMousePos(Input.mousePosition, canvasW).y;
             transform.RotateAround(center, transform.right, -dy);
         }
     }

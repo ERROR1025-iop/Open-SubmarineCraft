@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Fish
   - 3D
   - Dpart Invisible
   - 3D Terrain
@@ -27,9 +27,9 @@ TagManager:
   - 3D Item
   - 2D Collider
   - 3D DrillPoint
-  - 
-  - 
-  - 
+  - unsee
+  - 3D only Ray
+  - MagneticConnector
   - 
   - 
   - 

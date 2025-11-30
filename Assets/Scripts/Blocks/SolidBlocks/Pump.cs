@@ -118,14 +118,14 @@ namespace Scraft.BlockSpace
             {
                 if (((LiquidBlock)outBlock).addCompressChild(inBlock))
                 {
-                    blocksEngine.createBlock(inBlock.getCoor(), air, false);
+                    blocksEngine.createBlockBase(inBlock.getCoor(), air, false); 
                 }
             }
             else if (outBlock.equalPState(PState.gas))
             {
                 if (((GasBlock)outBlock).addCompressChild(inBlock))
                 {
-                    blocksEngine.createBlock(inBlock.getCoor(), air, false);
+                    blocksEngine.createBlockBase(inBlock.getCoor(), air, false); 
                 }
             }
         }

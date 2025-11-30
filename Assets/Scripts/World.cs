@@ -50,7 +50,7 @@ namespace Scraft
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             instance = this;
 
-            GamePath.init("7B94042C464FA171B0C41BC6B2C04911");
+            GamePath.init();
             ISecretLoad.init(); 
 
             achManager = new ACManager();
@@ -60,7 +60,7 @@ namespace Scraft
             blocksEngine = new BlocksEngine(GameObject.Find("2D Builder Map"), mapSize);
             dpartParentObject = GameObject.Find("3D DParts Map");
 
-            GameMode = gameMode;          
+            GameMode = gameMode;
             
         }
 

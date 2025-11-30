@@ -89,7 +89,7 @@ namespace Scraft
                 }
                 else if (other.tag == "other ship")
                 {
-                    other.gameObject.GetComponent<AISubMono>().onBehit((int)(5 + Random.value * power));
+                    other.gameObject.GetComponent<AISubMono>()?.onBehit((int)(5 + Random.value * power));
                 }
             }
         }

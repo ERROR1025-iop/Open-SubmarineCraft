@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scraft
 {
@@ -34,8 +35,8 @@ namespace Scraft
         public float maxCameraZ = -2f;
 
         [Header("调试选项")]
-        public bool enableDebugLogs = true;
-        public bool enableGizmos = true;
+        public bool enableDebugLogs = false;
+        public bool enableGizmos = false;
         public Color gizmoColor = new Color(0f, 1f, 0f, 0.3f);
 
         // 内部状态
@@ -59,6 +60,8 @@ namespace Scraft
         private bool isDragCaptured = false; // 是否已捕获拖动（即使鼠标移出区域）
 
         #region 生命周期
+
+        public static float canvasW;
 
         private void Awake()
         {
@@ -85,6 +88,9 @@ namespace Scraft
                 return;
             }
 
+            var canvasScaler = GameObject.Find("Canvas").GetComponent<CanvasScaler>();
+            canvasW = canvasScaler.referenceResolution.x;
+
             Vector2 anchoredPos = rt.anchoredPosition;
             Vector2 size = rt.sizeDelta;
             rect = new Rect(anchoredPos.x, anchoredPos.y, size.x, size.y);
@@ -107,7 +113,7 @@ namespace Scraft
         private void Update()
         {
             Vector3 rawMouse = Input.mousePosition;
-            Vector3 processedMouse = IUtils.reviseMousePos(rawMouse);
+            Vector3 processedMouse = IUtils.reviseMousePos(rawMouse, canvasW);
             isMouseOver = rect.Contains(processedMouse);
 
             // ✅ 关键：只要捕获了拖动，或鼠标在区域内按下，就处理
@@ -241,7 +247,7 @@ namespace Scraft
                 camera3DTrans.Translate(0, 0, dy*0.1f);
                 lastSize3D = camera3DTrans.localPosition.z;
             }
-            lastPos = IUtils.reviseMousePos(Input.mousePosition);
+            lastPos = IUtils.reviseMousePos(Input.mousePosition, canvasW);
         }
     
     
@@ -271,6 +277,7 @@ namespace Scraft
 
         private void OnGUI()
         {
+            if (!enableGizmos || !Application.isPlaying) return;
             GUILayout.BeginArea(new Rect(10, 10, 300, 200));
             GUILayout.Box("IZoomBar 状态", GUILayout.ExpandWidth(false));
             GUILayout.Label($"鼠标在区域内: {isMouseOver}");

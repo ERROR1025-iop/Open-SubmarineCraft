@@ -25,7 +25,9 @@ namespace Scraft
             while (true)
             {
                 float randomRange = Mathf.Clamp(MainSubmarine.speed, 0, 50) * 0.01f;
-                transform.position = new Vector3(SubFoamSpawn.frontPoint.x + Random.Range(-randomRange, randomRange), 0, SubFoamSpawn.frontPoint.z + Random.Range(-randomRange, randomRange)) + MainSubmarine.transform.right * offsetX;
+                transform.position = new Vector3(
+                    SubFoamSpawn.frontPoint.x + Random.Range(-randomRange, randomRange), 0,
+                    SubFoamSpawn.frontPoint.z + Random.Range(-randomRange, randomRange)) + MainSubmarine.transform.right * offsetX;
                 transform.eulerAngles = new Vector3(0, SubFoamSpawn.angle, 0);
                 particleSystem.enableEmission = SubFoamSpawn.enableEmission;
                 particleSystem.startSpeed = SubFoamSpawn.startSpeed;

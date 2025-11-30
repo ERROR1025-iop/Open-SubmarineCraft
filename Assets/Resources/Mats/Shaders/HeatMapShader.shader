@@ -21,7 +21,7 @@
 
 			struct appdata
 			{
-				float4 vertex : POSITION;	
+				float4 vertex : POSITION;	 
 				fixed4 color : COLOR;
 			};
 

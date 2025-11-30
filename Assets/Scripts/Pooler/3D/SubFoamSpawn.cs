@@ -7,6 +7,8 @@ namespace Scraft
     {
         static public Vector3 frontPoint;
         public GameObject foam;
+        public GameObject foam_normal;
+        public GameObject foam_wave;
 
         [Range(0, 15)]
         public float emission;
@@ -63,7 +65,9 @@ namespace Scraft
 
         void addFoam(float offset)
         {
-            SubFoam subFoam = (Instantiate(foam) as GameObject).GetComponent<SubFoam>();
+            //SubFoam subFoam = (Instantiate(foam) as GameObject).GetComponent<SubFoam>();
+            SubFoam subFoam = (Instantiate(GameSetting.waveMode > 0 ? foam_wave : foam_normal) as GameObject).GetComponent<SubFoam>();
+            subFoam.transform.SetParent(GameObject.Find("runtime_gen").transform, true);
             subFoam.gameObject.layer = 8;
             subFoam.offsetX = offset;
         }

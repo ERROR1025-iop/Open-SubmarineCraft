@@ -21,7 +21,7 @@ Shader "Scraft/WaterUpShader" {
 		CGPROGRAM
 
 		// Apparently need to add this declaration 
-		#pragma multi_compile_fwdbase	
+		#pragma multi_compile_fwdbase	 
 
 		#pragma vertex vert
 		#pragma fragment frag

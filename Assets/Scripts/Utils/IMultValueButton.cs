@@ -25,7 +25,10 @@ namespace Scraft
         public void init(int valueCount)
         {
             this.valueCount = valueCount;
-            values = new string[valueCount];
+            if(values == null || values.Length == 0)
+            {
+                values = new string[valueCount];
+            }
             handle = 0;
             stack = 0;
         }

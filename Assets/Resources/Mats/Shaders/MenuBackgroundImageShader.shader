@@ -17,7 +17,7 @@
 
 				sampler2D _MainTex;
 				sampler2D _DistortionMap;				
-				fixed4 _ColorMask;
+				fixed4 _ColorMask; 
 
 				struct v2f {
 					float4 pos : SV_POSITION;

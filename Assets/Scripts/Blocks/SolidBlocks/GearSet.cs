@@ -7,7 +7,7 @@ namespace Scraft.BlockSpace
     public class GearSet : SolidBlock
     {
         bool isReceiveMe;
-        int ConnectCount;
+        int connectCount;
 
         int updataFrameDelayPerUnit;
         int updataFrameDelayStack;
@@ -24,7 +24,7 @@ namespace Scraft.BlockSpace
             thumbnailColor = new Color(0.4286f, 0.4286f, 0.4286f);
             density = 13.1f;
             isReceiveMe = false;
-            ConnectCount = 1;
+            connectCount = 1;
 
             updataFrameStack = 0;
             updataFrameDelayPerUnit = 30000;
@@ -108,15 +108,16 @@ namespace Scraft.BlockSpace
             targetSpeed = me;
             if (!isReceiveMe)
             {
-                if (ConnectCount > 0)
+                if (connectCount <= 0)
                 {
-                    me = me / ConnectCount;
-                    ConnectCount = 0;
-                    putMeMethod(me, Dir.left, putterDir);
-                    putMeMethod(me, Dir.right, putterDir);
-                    putMeMethod(me, Dir.up, putterDir);
-                    putMeMethod(me, Dir.down, putterDir);
+                    connectCount = 4;
                 }
+                me = me / connectCount;
+                connectCount = 0;
+                putMeMethod(me, Dir.left, putterDir);
+                putMeMethod(me, Dir.right, putterDir);
+                putMeMethod(me, Dir.up, putterDir);
+                putMeMethod(me, Dir.down, putterDir);
                 isReceiveMe = true;
             }
         }
@@ -126,15 +127,15 @@ namespace Scraft.BlockSpace
             if (outputDir != putterDir)
             {
                 Block block = BlocksEngine.instance.getBlock(getCoor().getDirPoint(outputDir));
-                if (block.isCanReceiveMe())
+                if (block.isCanReceiveMe(this))
                 {
                     BlocksEngine.instance.putMe(this, block.getCoor(), me);
-                    ConnectCount++;
+                    connectCount++;
                 }
             }
         }
 
-        public override bool isCanReceiveMe()
+        public override bool isCanReceiveMe(Block putter)
         {
             return true;
         }

@@ -6,12 +6,9 @@ namespace Scraft.BlockSpace
 {
     public class Fire : GasBlock
     {
-
-        protected float unityCalorific;
-
         protected Block gasBlockStatic;
         protected Block burnedBlockStatic;
-
+        float unityCalorific;
         float burningPoint;
         float burningAir;
 
@@ -21,6 +18,8 @@ namespace Scraft.BlockSpace
             initBlock("fire", "null");
             max_storeAir = 1000;
             canStoreInTag = 0;
+            density = 0.0129f;
+            heatCapacity = 1012f;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -30,18 +29,27 @@ namespace Scraft.BlockSpace
             return block;
         }
 
-        public virtual void initFire(BlocksManager blocksManager, string gasBlockName, float calorific, float unityCalorific, float burningPoint)
+        public virtual void initFire(string gasBlockName, float calorific, float burningPoint=0)
         {
-            gasBlockStatic = blocksManager.getBlockByName(gasBlockName);
+            gasBlockStatic = BlocksManager.instance.getBlockByName(gasBlockName);
+            if(gasBlockStatic != null)
+            {
+                setDensity(gasBlockStatic.density);
+                setHeatCapacity(gasBlockStatic.heatCapacity);
+            }
             setCalorific(calorific);
-            this.unityCalorific = unityCalorific;
-            this.burningPoint = burningPoint;
+            unityCalorific = calorific / 20;
             burningAir = unityCalorific;
+            this.burningPoint = burningPoint;
+            calorific -= unityCalorific * 5;
+            setHeatQuantity(C2HQ(unityCalorific * 5));
         }
 
         public void setBurnedBlock(Block burnedBlockStatic)
         {
             this.burnedBlockStatic = burnedBlockStatic;
+            setDensity(burnedBlockStatic.getDensity());
+            setHeatCapacity(burnedBlockStatic.heatCapacity);
         }
 
         public void setFireColor(int spriteIndex)
@@ -73,11 +81,11 @@ namespace Scraft.BlockSpace
                         if(burnedBlockStatic == null)
                         {
                             Block air = blocksEngine.getBlocksManager().air;
-                            blocksEngine.createBlock(getCoor(), air, temperature, press);
+                            blocksEngine.createBlock(getCoor(), air, press);
                         }
                         else
                         {
-                            blocksEngine.createBlock(getCoor(), burnedBlockStatic, temperature, press);
+                            blocksEngine.createBlock(getCoor(), burnedBlockStatic, press);
                         }
                        
                         return true;
@@ -99,27 +107,42 @@ namespace Scraft.BlockSpace
 
         void coolingMehtod(BlocksEngine blocksEngine)
         {
-            if (gasBlockStatic != null)
-            {
-                blocksEngine.createBlock(getCoor(), gasBlockStatic, temperature, press);
-            }
-            else
-            {
-                blocksEngine.removeBlock(getCoor(), true, press);
-            }
+            // if (gasBlockStatic != null)
+            // {
+            //     Block newBlock = blocksEngine.createBlock(getCoor(), gasBlockStatic, press); 
+            //     newBlock.setCalorific(calorific);
+            // }
+            // else
+            // {
+            //     blocksEngine.removeBlock(getCoor(), true, press);
+            // }
+            blocksEngine.removeBlock(getCoor(), true, press);
         }
 
         void heatNeighborBlock(BlocksEngine blocksEngine)
         {
 
-            float dt = unityCalorific * 2000;
+            float dt = C2HQ(unityCalorific);
 
             addHeatQuantity(dt);
-            getNeighborBlock(Dir.up).addHeatQuantity(dt);
-            getNeighborBlock(Dir.right).addHeatQuantity(dt);
-            getNeighborBlock(Dir.down).addHeatQuantity(dt);
-            getNeighborBlock(Dir.left).addHeatQuantity(dt);
 
+        }
+
+        static public float C2HQ(float calorific)
+        {
+            if (calorific > 0)
+            {
+                return calorific * 1000 * 12;
+            }
+            return 0;
+        }
+        static public float HQ2C(float hq)
+        {
+            if (hq > 0)
+            {
+                return hq / 1000 / 12; 
+            }
+            return 0;
         }
     }
 }

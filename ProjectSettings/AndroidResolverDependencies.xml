@@ -6,8 +6,8 @@
   </packages>
   <files />
   <settings>
-    <setting name="androidAbis" value="armeabi-v7a,x86" />
-    <setting name="bundleId" value="cool.aipie.scraft" />
+    <setting name="androidAbis" value="arm64-v8a" />
+    <setting name="bundleId" value="com.miaoyue91.submarine" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="True" />

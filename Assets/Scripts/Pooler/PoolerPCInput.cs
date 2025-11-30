@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using InsaneSystems.InputManager;
@@ -18,47 +18,111 @@ namespace Scraft
 
         void Update()
         {
+            float x = 0;
+            float y = 0;
+            bool flag = false;
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 PoolerUI.instance.onMenuButtonClick();
             }
 
-            if (InputController.GetKeyActionIsDown("Turn left"))
+            if (InputController.GetKeyActionIsActive("Turn left"))
             {
-                PoolerUI.instance.rudder.setValue(0);
-                PoolerUI.instance.onRudderPush();
+                x = -0.5f;
+                flag = true;
             }
-            else if (InputController.GetKeyActionIsDown("Turn right"))
+            else if (InputController.GetKeyActionIsActive("Turn right"))
             {
-                PoolerUI.instance.rudder.setValue(1);
-                PoolerUI.instance.onRudderPush();
+                x = 0.5f;
+                flag = true;
             }
 
             if (InputController.GetKeyActionIsUp("Turn left") || InputController.GetKeyActionIsUp("Turn right"))
             {
-                PoolerUI.instance.rudder.setValue(0.5f);
-                PoolerUI.instance.onRudderPush();
+                x = 0f;
+                flag = true;
             }
-
-            if (InputController.GetKeyActionIsDown("Pitch up"))
+            if (InputController.GetKeyActionIsActive("Pitch up"))
             {
-                PoolerUI.instance.pitchBar.setValue(0);
-                PoolerUI.instance.onPitchBarPush();
-                isPitchBarClick = true;
+                y = -0.5f;
+                flag = true;
             }
-            else if (InputController.GetKeyActionIsDown("Pitch down"))
+            else if (InputController.GetKeyActionIsActive("Pitch down"))
             {
-                PoolerUI.instance.pitchBar.setValue(1);
-                PoolerUI.instance.onPitchBarPush();
-                isPitchBarClick = true;
+                y = 0.5f;
+                flag = true;
             }
-
             if (InputController.GetKeyActionIsUp("Pitch up") || InputController.GetKeyActionIsUp("Pitch down"))
             {
-                PoolerUI.instance.pitchBar.setValue(0.5f);
-                PoolerUI.instance.onPitchBarPush();
-                isPitchBarClick = false;
+                y = 0f;
+                flag = true;
             }
+
+            if (flag)
+            {                
+                PoolerUI.instance.dirController.SetValue(x, y);
+                PoolerUI.instance.dirController.changing = true;
+            }
+
+            if (InputController.GetKeyActionIsActive("Roll Left"))
+            {
+                PoolerUI.instance.rollBar.setValue(0);
+                PoolerUI.instance.onRollBarPush();
+            }
+            else if (InputController.GetKeyActionIsActive("Roll Right"))
+            {
+                PoolerUI.instance.rollBar.setValue(1);
+                PoolerUI.instance.onRollBarPush();
+            }
+            if (InputController.GetKeyActionIsUp("Roll Left") || InputController.GetKeyActionIsUp("Roll Right"))
+            {
+                PoolerUI.instance.rollBar.setValue(0.5f);
+                PoolerUI.instance.onRollBarPush();
+            }
+
+            flag = false;
+            x = 0;
+            y = 0;
+            if (InputController.GetKeyActionIsActive("Joint 1 Up"))
+            {
+                y = 0.5f;
+                flag = true;
+            }
+            if (InputController.GetKeyActionIsActive("Joint 1 Down"))
+            {
+                y = -0.5f;
+                flag = true;
+            }
+            if (InputController.GetKeyActionIsUp("Joint 1 Up") || InputController.GetKeyActionIsUp("Joint 1 Down"))
+            {
+                y = 0f;
+                flag = true;
+            }
+
+            if (InputController.GetKeyActionIsActive("Joint 1 Left"))
+            {
+                x = -0.5f;
+                flag = true;
+            }
+            if (InputController.GetKeyActionIsActive("Joint 1 Right"))
+            {
+                x = 0.5f;
+                flag = true;
+            }
+            if (InputController.GetKeyActionIsUp("Joint 1 Left") || InputController.GetKeyActionIsUp("Joint 1 Right"))
+            {
+                x = 0f;
+                flag = true;
+            }
+
+
+            if (flag)
+            {       
+                var joy1 = PoolerItemSelector.instance.GetJoystick1();         
+                joy1.SetValue(x, y);
+                joy1.changing = true;
+            }
+
 
             if (InputController.GetKeyActionIsDown("Fire"))
             {

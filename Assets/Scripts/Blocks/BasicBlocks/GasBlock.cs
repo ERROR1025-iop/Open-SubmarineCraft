@@ -103,7 +103,7 @@ namespace Scraft.BlockSpace{
         /// </summary>        
         public void gasTemperaturePressRule()
         {
-            tiPress =  press + temperature * 0.37f;
+            tiPress = press + temperature * 0.37f;
         }
 
         public override float getTiPress()
@@ -156,9 +156,7 @@ namespace Scraft.BlockSpace{
                 if (neighborBlock.equalBlock(air))
                 {
                     Block child = popLastCompressChild();
-                    //child.setTemperature(temperature);
-                    decPress(100);
-                    //Debug.Log("gas-100");                   
+                    decPress(100);                 
                     blocksEngine.placeBlock(neighborBlock.getCoor(), child);
                 }
             }
@@ -236,7 +234,7 @@ namespace Scraft.BlockSpace{
                 Block airBlockStatic = blocksEngine.getBlocksManager().air;
                 if (atChildrensIndex == 1)
                 {
-                    LiquidBlock liquidBlock = blocksEngine.createBlock(getCoor(), liquidBlockStatic, temperature, press) as LiquidBlock;
+                    LiquidBlock liquidBlock = blocksEngine.createBlock(getCoor(), liquidBlockStatic, press) as LiquidBlock;
                     liquidBlock.setCalorific(calorific);
                     liquidBlock.setCompressChildren(compressChildren, compressChildrenStack);
                 }
@@ -250,7 +248,7 @@ namespace Scraft.BlockSpace{
                     }
                     else
                     {
-                        blocksEngine.createBlock(getCoor(), airBlockStatic, temperature, press);
+                        blocksEngine.createBlock(getCoor(), airBlockStatic, press);
                     }
                 }
 
@@ -343,7 +341,12 @@ namespace Scraft.BlockSpace{
                 return;
             }*/
 
-            
+            if(coor.equal(new IPoint(96, 113)))
+            {
+                var a = 0;
+            }
+
+
             if (up_block.isAir())
             {
                 moveTo(getCoor().getDirPoint(gravityUp));
@@ -357,10 +360,10 @@ namespace Scraft.BlockSpace{
             {
                 moveTo(getCoor().getDirPoint(gravityDown));
             }
-            else if (down_block.equalBlock(this) && temperature < down_block.getTemperature())
-            {
-                moveTo(getCoor().getDirPoint(gravityDown));
-            }
+            // else if (down_block.equalBlock(this) && temperature < down_block.getTemperature())
+            // {
+            //     moveTo(getCoor().getDirPoint(gravityDown));
+            // }
             else if ((left_block.isAir() && right_block.isAir()) ||
                 left_block.isFluid() && right_block.isFluid())
             {
@@ -370,8 +373,6 @@ namespace Scraft.BlockSpace{
                 }
                 else if (moveTrend == 0)
                 {
-
-
                     if (right_block.getPress() < press)
                     {
                         moveTo(getCoor().getDirPoint(Dir.right));
@@ -391,6 +392,10 @@ namespace Scraft.BlockSpace{
                 {
                     moveTo(getCoor().getDirPoint(Dir.right));
                 }
+                else if (moveTrend == -1)
+                {
+                    moveTrend = 0;
+                }
 
             }
             else if (Random.value > 0.9f)
@@ -399,16 +404,20 @@ namespace Scraft.BlockSpace{
             }
             else if (MainSubmarine.pitch <= 0.2f && MainSubmarine.pitch >= -0.2f)
             {
-                if (left_block.isAir())
+                if (left_block.isAir() || left_block.isFluid())
                 {
                     moveTo(getCoor().getDirPoint(Dir.left));
                     moveTrend = Dir.left;
                 }
-                else if (right_block.isAir())
+                else if (right_block.isAir() || right_block.isFluid())
                 {
                     moveTo(getCoor().getDirPoint(Dir.right));
                     moveTrend = Dir.right;
                 }
+            }
+            else if (left_block is Pump || right_block is Pump)
+            {
+                moveTrend = -1;
             }
             else if ((left_block.isAir() && MainSubmarine.pitch >= -0.2f) || (left_block.isFluid() && left_block.getDensity() < density))
             {
@@ -434,11 +443,6 @@ namespace Scraft.BlockSpace{
         void setLimitMoved(bool limit)
         {
             limitMoved = limit;
-        }
-
-        public void setDensity(float d)
-        {
-            density = d;
         }
 
         public override JsonWriter onWorldModeSave(JsonWriter writer)

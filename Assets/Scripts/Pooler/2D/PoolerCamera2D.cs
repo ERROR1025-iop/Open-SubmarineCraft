@@ -16,7 +16,7 @@ namespace Scraft
         public float maxOrthoSize = 15.8f;
 
         [Header("调试")]
-        public bool enableDebug = true;
+        public bool enableDebug = false;
 
         public Camera mainCamera;
         private float currentSize;
@@ -33,12 +33,12 @@ namespace Scraft
 
             // ✅ 从当前摄像机读取 orthographicSize，而不是硬编码
             currentSize = mainCamera.orthographicSize;
-            Debug.Log($"[CameraMove] 初始化缩放值: {currentSize:F2}");
+            //Debug.Log($"[CameraMove] 初始化缩放值: {currentSize:F2}");
 
-            if (GameSetting.isAndroid)
-            {
-                enabled = false;
-            }
+            // if (GameSetting.isAndroid)
+            // {
+            //     enabled = false;
+            // }
         }
 
         void Update()
@@ -58,7 +58,8 @@ namespace Scraft
             }
 
             // 仅当鼠标不在UI上时处理滚轮
-            if (!EventSystem.current.IsPointerOverGameObject())
+            bool isPointGUI = IUtils.isPointGUI();
+            if (!isPointGUI)
             {
                 float scroll = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
                 if (scroll != 0f)
@@ -69,7 +70,7 @@ namespace Scraft
 
                     if (enableDebug)
                     {
-                        Debug.Log($"[CameraMove] 滚轮缩放: {mainCamera.orthographicSize:F2}");
+                        //Debug.Log($"[CameraMove] 滚轮缩放: {mainCamera.orthographicSize:F2}");
                     }
                 }
             }
@@ -80,7 +81,7 @@ namespace Scraft
 
         private void HandleMovement()
         {
-            bool isPointGUI = GameSetting.isAndroid ? Input.touchCount > 0 ? EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) : false : EventSystem.current.IsPointerOverGameObject();
+            bool isPointGUI = IUtils.isPointGUI();
             if (!isPointGUI)
             {
                 if ((GameSetting.isAndroid && Input.touchCount == 2) || Input.GetMouseButton(1))
@@ -95,7 +96,7 @@ namespace Scraft
                 }
             }
                
-            if (GameSetting.isAndroid && Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+            if ((GameSetting.isAndroid && Input.GetMouseButtonUp(0)) || Input.GetMouseButtonUp(1))
             {
                 lastPonitPos = Vector3.zero;
             }

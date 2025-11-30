@@ -17,10 +17,14 @@ namespace Scraft.BlockSpace
         protected int powerDirection;
         protected int storeSteam;
         protected int storeWater;
-        protected float steam_temperature;
+        protected float waterTemperature;
+        protected float genGasTemperature;
         protected int childOneStack;
         protected float fuelTotalCalorific;
         protected float comsumeAir;
+        protected float workHq;
+        protected float lastOutput;
+        protected float currentOutput;
 
         public SteamEngine(int id, GameObject parentObject, GameObject blockObject)
             : base(id, parentObject, blockObject)
@@ -40,6 +44,7 @@ namespace Scraft.BlockSpace
             storeWater = 0;
             childOneStack = 0;
             comsumeAir = 100;
+            currentOutput = 0;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -123,59 +128,58 @@ namespace Scraft.BlockSpace
         protected void steamEngineRule(BlocksEngine blocksEngine)
         {
             furnaceGetFuelWaterMethod(blocksEngine);
-            if (storeFuel > 0)
+            bool canHeat = false;
+
+            if (storeFuel > 0 && powerBarValue > 0.05f)
             {
-                if(powerBarValue > 0.05f)
+                float receive = Pooler.instance.requireAir(comsumeAir * powerBarValue);
+                if (receive > comsumeAir * 0.9f)
                 {
-                    float receive = Pooler.instance.requireAir(comsumeAir);
-                    if (receive > comsumeAir * 0.9f)
-                    {
-                        float unityFuel = fuelTotalCalorific * 0.002f;
-                        storeFuel -= unityFuel * 0.2f;
-                        steam_temperature += unityFuel * 1.1f;
-                        setSteamTexture(true);
-                    }
-                    else
-                    {
-                        if (steam_temperature > getTemperature())
-                        {
-                            steam_temperature -= 1;
-                        }
-                        setSteamTexture(false);
-                    }
+                    canHeat = true;
                 }
-                else
-                {
-                    if (steam_temperature > getTemperature())
-                    {
-                        steam_temperature -= 1;
-                    }
-                    setSteamTexture(false);
-                }
-                
             }
-            else 
+
+            if (canHeat)
             {
-                if (steam_temperature > getTemperature())
+                float unityFuel = fuelTotalCalorific * powerBarValue / 300;
+                storeFuel -= unityFuel;
+                waterTemperature += Fire.C2HQ(unityFuel) * 0.6f / 4180f;
+                setSteamTexture(true);
+            }
+            else
+            {
+                if (waterTemperature > getTemperature())
                 {
-                    steam_temperature -= 1;
+                    waterTemperature -= 1;
                 }
                 setSteamTexture(false);
-            }          
+            }
 
-            if (steam_temperature > 100)
+            if (waterTemperature > 120)
             {
-                if (storeWater > 0 && storeSteam < 50)
+                if (storeWater > 0 && storeSteam < 20)
                 {
-                    storeWater--;
+                    genGasTemperature = waterTemperature;
                     storeSteam++;
+                    storeWater--;
+                    workHq = (waterTemperature - 25) * 4180f * 0.2f;
+                    waterTemperature -= workHq * 1.13f / 4180f;
                 }
             }
 
-            if (steam_temperature > meltingPoint)
+            if (waterTemperature > meltingPoint * 1.1f)
             {
-                setTemperature(steam_temperature * 9);
+                setTemperature(meltingPoint * 1.1f);
             }
+            
+            float output = currentOutput;
+            float realOutPut = Mathf.Abs(Mathf.Lerp(lastOutput, output, 0.01f));
+            blocksEngine.putMe(this, getPutMeCoor(), realOutPut);
+            Debug.Log("Steam Eng output:" + output + ",realOutPut:" + realOutPut);
+            lastOutput = realOutPut;
+            currentOutput = 0;
+
+            Debug.Log("waterTemperature:" + waterTemperature);
         }
 
         protected virtual void furnaceGetFuelWaterMethod(BlocksEngine blocksEngine)
@@ -201,7 +205,7 @@ namespace Scraft.BlockSpace
                 compressSteamMethod(blocksEngine, Dir.up, originBlock);
                 compressSteamMethod(blocksEngine, Dir.right, originBlock);
                 compressSteamMethod(blocksEngine, Dir.left, originBlock);
-                compressSteamMethod(blocksEngine, Dir.down, originBlock);
+                compressSteamMethod(blocksEngine, Dir.down, originBlock);               
 
 
                 absorbWater:
@@ -212,17 +216,16 @@ namespace Scraft.BlockSpace
             }
         }
 
-        protected virtual bool compressSteamMethod(BlocksEngine blocksEngine, int dir, SteamEngine originBlock)
+        protected virtual void compressSteamMethod(BlocksEngine blocksEngine, int dir, SteamEngine originBlock)
         {
             Block block = getNeighborBlock(dir);
             if (block.isAir())
             {
                 if (originBlock.storeSteam > 0)
-                {
-                    float org_t = block.getTemperature();
-                    GasBlock steamBlock = blocksEngine.createBlock(block.getCoor(), blocksEngine.getBlocksManager().waterGas) as GasBlock;
-                    steamBlock.setTemperature((originBlock.steam_temperature + org_t) * 0.5f);
-                    if (originBlock.childOneStack == 50)
+                {      
+                    GasBlock steamBlock = blocksEngine.createBlock(block.getCoor(), blocksEngine.getBlocksManager().waterGas) as GasBlock;    
+                    steamBlock.addTemperature(originBlock.genGasTemperature);
+                    if (originBlock.childOneStack == 20)
                     {
                         originBlock.childOneStack = 0;
                         steamBlock.setAtChildrensIndex(1);
@@ -232,18 +235,11 @@ namespace Scraft.BlockSpace
                         originBlock.childOneStack++;
                         steamBlock.setAtChildrensIndex(3);
                     }
-
-                    if (originBlock.storeFuel > 0)
-                    {
-                        originBlock.steam_temperature -= (originBlock.steam_temperature - 90) * 0.05f;
-                    }
                     originBlock.storeSteam--;
-                    float output = originBlock.steam_temperature * 20 * originBlock.getEfficiency() * originBlock.powerBarValue * originBlock.powerDirection;
-                    blocksEngine.putMe(originBlock, getPutMeCoor(), output);
+                    float output = originBlock.workHq * 0.13f * originBlock.getEfficiency() * originBlock.powerDirection;
+                    originBlock.currentOutput += output;
                 }
-                return true;
-            }
-            return false;
+            }          
         }
 
         IPoint getPutMeCoor()
@@ -258,7 +254,8 @@ namespace Scraft.BlockSpace
             {
                 if (originBlock.storeWater <= 0)
                 {
-                    originBlock.storeWater += 50;
+                    originBlock.storeWater += 20;
+                    originBlock.waterTemperature = block.getTemperature();
                     blocksEngine.removeBlock(block.getCoor());
                 }
                 return true;

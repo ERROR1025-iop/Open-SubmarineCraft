@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using InsaneSystems.InputManager;
 using InsaneSystems.InputManager.UI;
+using UnityEngine.SceneManagement;
 namespace Scraft
 {
     public class SettingControl : MonoBehaviour
@@ -21,7 +22,7 @@ namespace Scraft
         void onConfirmButtonClick()
         {
             setting.SaveSettings();
-            //Application.LoadLevel("Setting");
+            SceneManager.LoadScene("Setting");
         }
 
         void onResetButtonClick()

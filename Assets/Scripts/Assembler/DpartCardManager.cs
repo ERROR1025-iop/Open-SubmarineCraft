@@ -41,10 +41,7 @@ namespace Scraft
             setDrawerActivited(0);
             selectDPartStatic = null;
 
-            if (!GameSetting.isAndroid)
-            {
-                createThumbnailImage();
-            }
+            createThumbnailImage();
         }
 
         void registerCards()

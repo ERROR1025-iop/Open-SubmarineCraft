@@ -18,7 +18,7 @@ Shader "Scraft/FoamShader"
         {
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag 
+            #pragma fragment frag  
 
             #include "UnityCG.cginc"
 

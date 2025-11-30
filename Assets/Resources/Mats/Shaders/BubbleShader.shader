@@ -20,7 +20,7 @@ Shader "Scraft/BubbleShader"
 				#pragma vertex vert
 				#pragma fragment frag 
 
-				#include "UnityCG.cginc"
+				#include "UnityCG.cginc" 
 
 				struct appdata
 				{
@@ -38,6 +38,7 @@ Shader "Scraft/BubbleShader"
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
 				fixed3 _Color;
+				float _CameraSeaLevel;
 
 				v2f vert(appdata v)
 				{
@@ -50,7 +51,7 @@ Shader "Scraft/BubbleShader"
 
 				fixed4 frag(v2f i) : SV_Target
 				{
-					if (i.worldPos.y > 0) {
+					if (_WorldSpaceCameraPos.y > _CameraSeaLevel) {
 						discard;
 					}
 					fixed4 col = tex2D(_MainTex, i.uv);				

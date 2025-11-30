@@ -133,8 +133,8 @@ namespace Scraft.DpartSpace
 
                 forwardDir = -transform.up;
                 Vector3 forwardForce = isOpen ? (MainSubmarine.forwardForce * 3 / propeller_count) * forwardDir : Vector3.zero;
-
-                if (transform.position.y > Buoyancy.waterHeight)
+                float water = Buoyancy.getWaterHeight(transform.position);
+                if (transform.position.y > water+1)
                 {
                     forwardForce *= 0.1f;
                 }

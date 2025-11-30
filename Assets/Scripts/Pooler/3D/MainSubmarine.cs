@@ -45,6 +45,7 @@ namespace Scraft
         static public float rudderTorque;
         static public float sideForce;
         static public float pitchTorque;
+        static public float rollTorque;
 
         //最大值
         static public float maxDeep;
@@ -65,6 +66,7 @@ namespace Scraft
         static public AudioClip[] bgms;
 
         static public float fireAngle;
+        static public float seaLevel;
 
         void Awake()
         {
@@ -113,7 +115,8 @@ namespace Scraft
             camera3D = Camera.main;
             camera2D = GameObject.Find("2D Camera").GetComponent<Camera>();
 
-            rigidbody.velocity = Vector3.zero;
+            rigidbody.velocity = Vector3.zero;           
+            
         }
 
         void FixedUpdate()
@@ -125,9 +128,35 @@ namespace Scraft
                            //更新显示
             speedUpdate();//更新前进速度
             directionUpdate();//更新转向速度
-            balanceRoll();//平衡翻滚
+            //balanceRoll();//平衡翻滚
             updataDeep();//更新垂直速度   
             updateResistance();//更新阻力系数
+        }
+
+        public void SetAllDescendantsToSelfShipTag()
+        {
+            // 设自身Tag
+            gameObject.tag = "self ship";
+            // 递归遍历所有子物体（含孙物体等所有层级）
+            foreach (Transform child in transform)
+            {
+                child.gameObject.tag = "self ship";
+                // 递归处理子物体的子物体
+                foreach (Transform grandChild in child)
+                {
+                    SetAllDescendantsToSelfShipTagRecursive(grandChild);
+                }
+            }
+        }
+
+        // 内部递归辅助（必须保留，否则无法遍历多层级，且不额外暴露给外部）
+        private void SetAllDescendantsToSelfShipTagRecursive(Transform current)
+        {
+            current.gameObject.tag = "self ship";
+            foreach (Transform child in current)
+            {
+                SetAllDescendantsToSelfShipTagRecursive(child);
+            }
         }
 
         public void onDpartMapLoadFinish(GameObject dpartsMap)
@@ -136,6 +165,7 @@ namespace Scraft
             transfromCenter = IUtils.centerOfGameObjects(dpartsMap);
             weightCenter = IUtils.weigthCenterOfGameObjects(dpartsMap, Pooler.massOffsetY);            
             rigidbody.centerOfMass = weightCenter;
+            SetAllDescendantsToSelfShipTag();
         }
 
         /// <summary>
@@ -223,7 +253,9 @@ namespace Scraft
             pitch = Vector3.Dot(transform.right, Vector3.down);
             inversion = Vector3.Dot(transform.up, Vector3.up);
 
-            rigidbody.AddRelativeTorque(Vector3.up * sideForce * rudderTorque);
+            rigidbody.AddRelativeTorque(Vector3.up * sideForce * rudderTorque * 2);
+            rigidbody.AddRelativeTorque(Vector3.forward * sideForce * pitchTorque * 2);
+            rigidbody.AddRelativeTorque(Vector3.right * sideForce * rollTorque * 2);
         }
 
         /// <summary>
@@ -235,14 +267,10 @@ namespace Scraft
             {
                 Vector3 normal = Vector3.Cross(transform.right, Vector3.up);
                 roll = Vector3.Angle(normal, transform.forward);
-
-                if (!isRunSurface)
-                {
-                    Quaternion q = Quaternion.FromToRotation(transform.forward, normal);
-                    Quaternion tq = Quaternion.Lerp(transform.localRotation, q * transform.localRotation, Time.deltaTime * 5f * (1 - Mathf.Abs(pitch)));
-                    transform.localRotation = tq;
-                }
-            }           
+                Quaternion q = Quaternion.FromToRotation(transform.forward, normal);
+                Quaternion tq = Quaternion.Lerp(transform.localRotation, q * transform.localRotation, Time.deltaTime * 5f * (1 - Mathf.Abs(pitch)));
+                transform.localRotation = tq;
+            }
         }
 
         /// <summary>
@@ -252,15 +280,16 @@ namespace Scraft
         {
             poolerUI.deepGauge.setDeep(deep);
             poolerUI.deepGauge.setVerticalSpeed(verticalSpeed);
-
+            seaLevel = Buoyancy.getWaterHeight(transform.position);
             if (deep > maxDeep)
             {
                 maxDeep = deep;
             }
 
             playDeepMusic();
-
-            isRunSurface = transform.TransformPoint(Buoyancy.floatCenter).y > Buoyancy.waterHeight - 0.2f;
+            
+            //isRunSurface = transform.TransformPoint(Buoyancy.floatCenter).y > Buoyancy.waterHeight - 0.2f;
+            isRunSurface = Mathf.Abs(transform.TransformPoint(Buoyancy.floatCenter).y - seaLevel) < 0.5f;
 
             float rg = Mathf.Clamp(-transform.position.y, 0, 300) * 0.0033f;
             lightColor = Color.HSVToRGB(0.5944f, rg, 1);
@@ -313,7 +342,7 @@ namespace Scraft
             baseResistance = Pooler.underwaterCount * Pooler.underwaterCount * 0.03f;
             float tmp = 2 + baseResistance + speed * speed * 0.005f;
             rigidbody.drag = tmp;
-            rigidbody.angularDrag = tmp;
+            rigidbody.angularDrag = 20;
 
         }      
 
@@ -388,12 +417,12 @@ namespace Scraft
             setCoor(new Vector3(locx, 0, locy));
         }
 
-        public static void addTorpedp(float targetAngle)
+        public static void addTorpedp(float targetAngle, float deep)
         {
             float toAngle = targetAngle == 0 ? fireAngle : IUtils.angleRoundIn180(targetAngle + getAngle());
-            Torpedo3DMono.fire(transform.localPosition, speed * 2.5f + 10, getAngle(), toAngle, false);
+            Torpedo3DMono.fire(transform.localPosition, speed * 2.5f + 10, getAngle(), toAngle, false, deep);
             instance.audioSourceFireTorpedo.Play();
-        }
+        } 
 
         /// <summary>
         ///自身受到损坏

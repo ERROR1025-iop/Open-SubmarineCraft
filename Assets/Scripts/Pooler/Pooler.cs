@@ -90,6 +90,8 @@ namespace Scraft
         public static IPoint blocksMoveVector;
         public static int underwaterCount;
 
+        public static float stayTemperture = 25;
+
         List<Block> frameArr;
         public List<IPoint> cargoCoors;
 
@@ -141,7 +143,7 @@ namespace Scraft
             frameArr = new List<Block>();
             cargoCoors = new List<IPoint>();
 
-            audioSource = GameObject.Find("Sound").GetComponent<AudioSource>();
+            audioSource = GameObject.Find("pool_preb/assist/Sound").GetComponent<AudioSource>();
             audioSourceBgm = GameObject.Find("MainCamera").GetComponent<AudioSource>();
             matelcrash01 = Resources.Load("sounds/matelcrash01", typeof(AudioClip)) as AudioClip;
             matelcrash02 = Resources.Load("sounds/matelcrash02", typeof(AudioClip)) as AudioClip;
@@ -161,7 +163,7 @@ namespace Scraft
             recordIsAddCount = new bool[World.mapSize.y];
 
             sonar_ShaderPropertyToIDs = new int[1];
-            sonar_ShaderPropertyToIDs[0] = Shader.PropertyToID("_OpenSonar");           
+            sonar_ShaderPropertyToIDs[0] = Shader.PropertyToID("_OpenSonar");
 
             if (GameSetting.isAndroid)
             {
@@ -171,6 +173,20 @@ namespace Scraft
             {
                 Camera.main.renderingPath = GameSetting.renderMode == 2 ? RenderingPath.DeferredShading : RenderingPath.Forward;
             }
+            
+            if (GameSetting.waveMode > 0)
+            {
+                if (GameSetting.waveMode == 1)
+                {
+                    Instantiate(Resources.Load("Prefabs/Pooler/Ocean1"));
+                }
+                if (GameSetting.waveMode == 2)
+                {
+                    Instantiate(Resources.Load("Prefabs/Pooler/Ocean2"));
+                }
+                GameObject.Find("3D Water")?.SetActive(false);
+                GameObject.Find("Directional Light Water").transform.localEulerAngles = new Vector3(21.5f, 27.34f, -57.5f);
+            }  
 
             m_Open_TerrainAdvSonar = 1;
             setAdvTerrainSonarOpen(false);
@@ -194,10 +210,19 @@ namespace Scraft
             initCargoArea();
             loadPoolerData(); 
             startAiSequence();
+            StartCoroutine(FirstFrameLoad());
 
             startUpdataThread();
 
             UnityAndroidEnter.CallCloseInterstitialAD();
+        }
+
+        System.Collections.IEnumerator FirstFrameLoad()
+        {
+            // 等待一帧
+            yield return null;
+            MainSubmarine.transform.position = ISecretLoad.spwans[0];
+            MainSubmarine.transform.eulerAngles = ISecretLoad.spwans[1];
         }
 
         void Update()
@@ -251,6 +276,7 @@ namespace Scraft
         {
             while (isRunThread)
             {
+                
                 if (World.stopUpdata == false)
                 {
                     if (timer <= 0)
@@ -258,11 +284,12 @@ namespace Scraft
 
                         if (frameDebug && !frameKeyDown)
                         {
+                            Thread.Sleep(2);
                             continue;
                         }
 
                         blocksEngine.threadUpdata(shipRect2);
-
+                        Thread.Sleep(2);
                     }
                 }
             }
@@ -442,6 +469,10 @@ namespace Scraft
         /// </summary>
         public float requireElectric(Block taker, float require)
         {
+            if (Application.isEditor)
+            {
+                return require;
+            }
             float receive = 0;
             int count = Battery.battersArr.Count;
             Battery battery;
@@ -608,13 +639,13 @@ namespace Scraft
         /// <summary>
         /// 发射一枚鱼雷
         /// </summary>
-        public void fireOneTorpedp(Block firer, float targetAngle, Vector3 firePos)
+        public void fireOneTorpedp(Block firer, float targetAngle, Vector3 firePos, float deep)
         {
             //2D画面鱼雷
             GameObject torpedp = Instantiate(Resources.Load("Prefabs/Pooler/torpedp")) as GameObject;
             torpedp.transform.localPosition = firePos;
             //3D画面
-            MainSubmarine.addTorpedp(targetAngle);
+            MainSubmarine.addTorpedp(targetAngle, deep); 
         }
 
         /// <summary>
@@ -740,7 +771,7 @@ namespace Scraft
                 }
             }            
             collectedScientific += result;
-            ScientificSelector.intance.updateBlockValue();
+            ScientificSelector.instance.updateBlockValue();
             return result;           
         }
 
@@ -850,14 +881,14 @@ namespace Scraft
                     dpart = dpartsEngine.createDPart(dpartsManager.getDPartById(dpartId));
                 }
                 dpart.onBuilderModeLoad(dpartData, dpartsEngine);
-                dpart.onPoolerModeCreate();                
+                dpart.onPoolerModeCreate();
             }
 
             wbgOffsetY = IUtils.centerOfGameObjects(dpartsEngine.dpartParentObject).y;
             IUtils.centerOnChildrens(dpartsEngine.dpartParentObject, Vector3.zero);            
             MainSubmarine.instance.onDpartMapLoadFinish(dpartsEngine.dpartParentObject);
-            combineColliderMeshes(dpartsEngine.dpartParentObject, MainSubmarine.transform.GetComponent<MeshCollider>());
-            combineRenderMeshes(dpartsEngine.dpartParentObject);
+            //combineColliderMeshes(dpartsEngine.dpartParentObject, MainSubmarine.transform.GetComponent<MeshCollider>());
+            //combineRenderMeshes(dpartsEngine.dpartParentObject);
 
             shipOffsetY = -(wbgOffsetY - shipPlaneY);
 
@@ -1025,6 +1056,7 @@ namespace Scraft
                 Block block = blocksEngine.createBlock(coor, blockStatic);
                 block.onWorldModeLoad(blockData, coor);
                 block.setPosition(coor);
+                block.setTemperature(25);
                 blocksEngine.setBlock(coor, block);
             }            
         }
@@ -1072,7 +1104,7 @@ namespace Scraft
                 for (int y = shipRect2.y; y < shipRect2.getMaxY(); y++)
                 {
                     Block block = blocksEngine.getBlock(new IPoint(x, y));
-                    if (block != null && !block.isAir())
+                    if (block != null && !block.isAir() && (outsideArea[x, y] == 0 || outsideArea[x, y] == 5))
                     {
                         writer.WritePropertyName("" + blockCount);
                         writer.WriteObjectStart();
@@ -1438,7 +1470,7 @@ namespace Scraft
 
         void chargeAirWhenOnSuffer()
         {
-            float chargeCount = (shipRect2.height - underwaterCount - 6) * 1000;
+            float chargeCount = (shipRect2.height - underwaterCount - 6) * 5000;
             if(chargeCount > 0)
             {
                 chargeAir(chargeCount);                
@@ -1479,7 +1511,9 @@ namespace Scraft
                         {
                             if (block.isAir())
                             {
-                                (block as Air).initAir();
+                                
+                                block.setTemperature(25);
+                                block.setPress(100);
                             }
                             else
                             {
@@ -1489,11 +1523,11 @@ namespace Scraft
                         }
                         else
                         {
-                            if(AreaManager.stayTemperture > 100)
+                            if(stayTemperture > 100)
                             {
                                 if (block.isWaterGas())
                                 {
-                                    block.setTemperature(AreaManager.stayTemperture);
+                                    block.setTemperature(stayTemperture);
                                     block.setPress(MainSubmarine.deep + 100);                                    
                                 }
                                 else
@@ -1505,13 +1539,14 @@ namespace Scraft
                             else
                             {
                                 if (block.isWater())
-                                {
-                                    (block as Water).initWater(MainSubmarine.deep + 100, AreaManager.stayTemperture);
+                                {                                    
+                                    block.setTemperature(stayTemperture);
+                                    block.setPress(MainSubmarine.deep + 100);
+                                    (block as Water).realseAllCompressChild();
                                 }
                                 else
                                 {
-                                    blocksEngine.createBlock(new IPoint(x, y), BlocksManager.instance.water);
-                                    
+                                    blocksEngine.createBlock(new IPoint(x, y), BlocksManager.instance.water);                                    
                                 }
                             }                           
 

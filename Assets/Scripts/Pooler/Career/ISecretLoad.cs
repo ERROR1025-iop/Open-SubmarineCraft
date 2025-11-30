@@ -6,14 +6,11 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Scraft.StationSpace;
-using Scraft.DpartSpace;
 
 namespace Scraft
 {
     public class ISecretLoad
-    {
-        static public string key;
-
+    {  
         static bool isInit = false;
         static bool isEncrypt;
 
@@ -26,6 +23,7 @@ namespace Scraft
         static public string shipsInfoNamePath;
         static public string areasNamePath;
         static public string smallAreasNamePath;
+        static public string sciAreasNamePath;
 
         static public string DataPath;
         static public string Md5Path;
@@ -47,21 +45,21 @@ namespace Scraft
             isEncrypt = true;
 
             if (!isInit)
-            {
-                key = "881B41361G77E061825AF757AF5E0D0A";
-                researchNamePath = "5da25e56aab1d9135b0d8f4d617e5128";
-                sciAndDiaNamePath = "7a4a0cg984784879ae0de1c779728429";
-                stationInfoNamePath = "8729419582jt67e752ac8068c3a57652";
-                mainStationNamePath = "ad34c250a61zf50748bbe5b4801830f9";
-                shipsInfoNamePath = "ce13ehh2de8baec92617489c72eb37c2";
-                areasNamePath = "92d1a55ce3d33928b9a93dag4b3d4edd";
-                smallAreasNamePath = "ad34c250a61d060y54bbe5b4801830f9";
+            {                
+                researchNamePath = "research_name";
+                sciAndDiaNamePath = "sci_name";
+                stationInfoNamePath = "station_info";
+                mainStationNamePath = "station_name";
+                shipsInfoNamePath = "ships_info";
+                areasNamePath = "areas_name";
+                smallAreasNamePath = "small_areas_name";
+                sciAreasNamePath = "sci_areas_name";
                 
 
-                GamePath.init("7B94042C464FA171B0C41BC6B2C04911");
+                GamePath.init();
                 DataPath = GamePath.worldFolder;
                 Md5Path = GamePath.worldFolder;
-                Suffix = ".scd";
+                Suffix = ".json";
 
                 loadScientificAndDiamonds();
 
@@ -76,6 +74,7 @@ namespace Scraft
         {                                 
             saveWithCreateMd5(areasNamePath, AreaManager.saveAreas());
             saveWithCreateMd5(smallAreasNamePath, AreaManager.saveSmallAreas());
+            saveWithCreateMd5(sciAreasNamePath, AreaManager.saveSciAreas());
         }
 
         static public void loadWorldAreaInfo()
@@ -92,6 +91,13 @@ namespace Scraft
             {
                 JsonData jsonData = JsonMapper.ToObject(smallAreasData);
                 AreaManager.smallAreaDatas = jsonData["areas"];
+            }
+
+            string sciAreasData = readWithVerifyMd5(sciAreasNamePath);
+            if (sciAreasData != null)
+            {
+                JsonData jsonData = JsonMapper.ToObject(sciAreasData);
+                AreaManager.sciAreaDatas = jsonData["areas"];
             }
         }
 
@@ -220,8 +226,8 @@ namespace Scraft
 
             if (!Pooler.IS_Form_StationCenter)
             {
-                mainShipNamePath = MD5((Random.value * 1000000).ToString());
-                mainAssNamePath = MD5(mainShipNamePath + "Ass");
+                mainShipNamePath = StringMD5((Random.value * 1000000).ToString());
+                mainAssNamePath = StringMD5(mainShipNamePath + "Ass");
             }
             else
             {
@@ -278,7 +284,7 @@ namespace Scraft
                 }
                 cargoWriter.WriteObjectEnd();
                 cargoWriter.WriteObjectEnd();
-                saveWithCreateMd5(MD5( "cargo" + station.id), cargoWriter.ToString());
+                saveWithCreateMd5(StringMD5( "cargo" + station.id), cargoWriter.ToString());
 
 
                 //保存附属设施
@@ -350,6 +356,7 @@ namespace Scraft
                     else
                     {
                         IPreload preload = Object.Instantiate(stationPrefab).GetComponent<IPreload>();
+                        preload.transform.SetParent(GameObject.Find("runtime_gen").transform, true);
                         preload.setInfo(stationData);
                         preload.OnInstanceFinish += OnInstanceFinish;
                         preload.transform.position = IUtils.vector3Parse(IUtils.getJsonValue2String(stationData, "pos"));
@@ -369,8 +376,6 @@ namespace Scraft
                 if (!Pooler.IS_Form_StationCenter)
                 {
                     spwans = Station.stations[0].getSpawnPosition();
-                    MainSubmarine.transform.position = spwans[0];
-                    MainSubmarine.transform.eulerAngles = spwans[1];
                     Debug.Log(MainSubmarine.transform.position);
                 }       
             }            
@@ -485,26 +490,32 @@ namespace Scraft
 
         static public void saveWithCreateMd5(string NamePath, string data)
         {
-            if (isEncrypt)
-            {
-                data = IEncrypt.AesEncrypt(data, key);
-            }            
-            IUtils.write2txt(DataPath + MD5(NamePath) + Suffix, data);
-            IUtils.write2txt(Md5Path + NamePath + Suffix, MD5(data));
+            // if (isEncrypt)
+            // {
+            //     data = IEncrypt.AesEncrypt(data, key);
+            // }            
+            // IUtils.write2txt(DataPath + MD5(NamePath) + Suffix, data);
+            // IUtils.write2txt(Md5Path + NamePath + Suffix, MD5(data));
+            var filepath = DataPath + NamePath + Suffix;
+            IUtils.write2txt(filepath, data);
+            Debug.Log("Saved: " + filepath);
         }
 
         static public string readWithVerifyMd5(string NamePath)
         {
-            string data = IUtils.readFromTxt(DataPath + MD5(NamePath) + Suffix);
-            string md5 = IUtils.readFromTxt(Md5Path + NamePath + Suffix);
-            if (data != null && md5 != null)
-            {
-                if(MD5(data).Equals(md5))
-                {
-                    return isEncrypt ? IEncrypt.AesDecrypt(data, key) : data;                    
-                }
-            }
-            return null;
+            // string data = IUtils.readFromTxt(DataPath + MD5(NamePath) + Suffix);
+            // string md5 = IUtils.readFromTxt(Md5Path + NamePath + Suffix);
+            // if (data != null && md5 != null)
+            // {
+            //     if(MD5(data).Equals(md5))
+            //     {
+            //         return isEncrypt ? IEncrypt.AesDecrypt(data, key) : data;                    
+            //     }
+            // }
+            // return null;
+            var filepath = DataPath + NamePath + Suffix;
+            Debug.Log("Read: " + filepath);
+            return IUtils.readFromTxt(filepath);            
         }
 
         static public bool isFileExit(string NamePath)
@@ -514,9 +525,9 @@ namespace Scraft
             return fi.Exists;
         }
 
-        public static string MD5(string source)
+        public static string StringMD5(string source)
         {
-            source += "BFE2G63877221ECFSAD195F3D923E966" + GamePath.MID;
+            source += "BFE2D63477221ECFCAD196F3D923E966";
             byte[] sor = Encoding.UTF8.GetBytes(source);
             MD5 md5 = System.Security.Cryptography.MD5.Create();
             byte[] result = md5.ComputeHash(sor);
@@ -528,6 +539,24 @@ namespace Scraft
             string md5Result = strbul.ToString();
             //Debug.Log("source:" + source + ",md5:" + md5Result);
             return md5Result;
+        }
+
+        public static string CalculateFileMD5(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+                return null;
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"文件不存在: {filePath}");
+
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filePath))
+                {
+                    byte[] hashBytes = md5.ComputeHash(stream);
+                    return System.BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                }
+            }
         }
     }
 }

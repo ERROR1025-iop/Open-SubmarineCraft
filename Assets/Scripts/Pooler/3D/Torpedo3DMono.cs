@@ -16,6 +16,7 @@ namespace Scraft
         bool m_isActivity;        
 
         float targetAngle;
+        float targetDeep;
         float startSpeed;
         float startPosY;
         bool isSteering;
@@ -32,7 +33,7 @@ namespace Scraft
 
             m_isBoom = false;
             m_isActivity = false;
-            torpedoMaxLifeTime = 100;
+            torpedoMaxLifeTime = 30;
             lifeTime = 0;
             force = 0;
 
@@ -48,25 +49,26 @@ namespace Scraft
         }
 
 
-        public static Torpedo3DMono fire(Vector3 position, float startSpeed, float angle, float targetAngle, bool isEnemy)
+        public static Torpedo3DMono fire(Vector3 position, float startSpeed, float angle, float targetAngle, bool isEnemy, float deep)
         {
             if (torpedoObject == null)
             {
                 torpedoObject = Resources.Load("Prefabs/Pooler/torpedp3D", typeof(GameObject)) as GameObject;
             }
             Torpedo3DMono torpedp = Instantiate(torpedoObject).GetComponent<Torpedo3DMono>();
-            torpedp.initTorpedo(position, startSpeed, angle, targetAngle, isEnemy);
+            torpedp.initTorpedo(position, startSpeed, angle, targetAngle, isEnemy, deep);
             return torpedp;
         }
 
-        void initTorpedo(Vector3 position, float startSpeed, float angle, float targetAngle, bool isEnemy)
+        void initTorpedo(Vector3 position, float startSpeed, float angle, float targetAngle, bool isEnemy, float deep)
         {
             this.targetAngle = targetAngle;
+            this.targetDeep = deep;
             initTorpedo(position, startSpeed, angle, isEnemy);
             Invoke("activitySteering", 0.5f);
         }
 
-        void initTorpedo(Vector3 position, float startSpeed, float angle, bool isEnemy)
+        void initTorpedo(Vector3 position, float startSpeed, float angle, bool isEnemy) 
         {
             transform.position = position;
             startPosY = position.y;
@@ -113,6 +115,8 @@ namespace Scraft
                 steering();
             }
 
+            toTargetDeep();
+
             if (isNeedRelease())
             {
                 clear();
@@ -124,6 +128,17 @@ namespace Scraft
             Vector3 transAngle = transform.localRotation.eulerAngles;
             float slepQ = Mathf.LerpAngle(transAngle.y, targetAngle - 90, Time.deltaTime);
             transform.localRotation = Quaternion.Euler(new Vector3(transAngle.x, slepQ, transAngle.z));
+        }
+
+        void toTargetDeep()
+        {
+            Vector3 pos = transform.position;
+            float deepDiff = targetDeep - pos.y;
+            if (Mathf.Abs(deepDiff) > 0.1f)
+            {
+                float slepY = Mathf.Lerp(pos.y, targetDeep, Time.deltaTime * 0.1f);
+                transform.position = new Vector3(pos.x, slepY, pos.z);
+            }
         }
 
         void OnTriggerStay(Collider other)
@@ -139,7 +154,8 @@ namespace Scraft
                 }
                 else if (other.tag == "other ship")
                 {
-                    other.gameObject.GetComponent<AISubMono>().onBehit((int)(40 + Random.value * 100));
+                    var ai = other.gameObject.GetComponent<AISubMono>();
+                    ai?.onBehit((int)(40 + Random.value * 100));
                 }
 
                 Rigidbody rigidbody = other.GetComponent<Rigidbody>();

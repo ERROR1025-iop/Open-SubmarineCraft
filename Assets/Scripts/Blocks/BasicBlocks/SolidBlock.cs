@@ -231,11 +231,11 @@ namespace Scraft.BlockSpace
             {
                 if (liquidBlockStatic != null)
                 {
-                    LiquidBlock liquidBlock = blocksEngine.createBlock(getCoor(), liquidBlockStatic, temperature, press) as LiquidBlock;
+                    blocksEngine.createBlock(getCoor(), liquidBlockStatic, press, true);
                 }
                 else
                 {
-                    blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().air, temperature, press);
+                    blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().air, press);
                 }
                 return true;
             }
@@ -376,10 +376,10 @@ namespace Scraft.BlockSpace
         /// 当收集点数时
         /// </summary>
         public virtual void onCollectScientific(CollectedScientificInfo csInfo)
-        {
+        {            
             if(m_csInfo != null)
             {
-                m_csInfo.area.decCollectedScientificLayered(m_csInfo.layered, collectedScientificId);
+                AreaManager.instance.DecCollectedScientificLayeredByName(m_csInfo.name, m_csInfo.layered, collectedScientificId);
             }
             m_csInfo = csInfo;
         }

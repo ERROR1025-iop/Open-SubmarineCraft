@@ -51,7 +51,7 @@ namespace Scraft.DpartSpace
             GameObject colliderGo = new GameObject("Collider Layer");
             colliderGo.transform.SetParent(transform);
             colliderGo.transform.localPosition = Vector3.zero;
-            colliderGo.layer = 12;
+            colliderGo.layer = 16;
 
             Bounds bounds = IUtils.GetBounds(gameObject);
             boxCollider = colliderGo.AddComponent<BoxCollider>();
@@ -97,14 +97,14 @@ namespace Scraft.DpartSpace
         public void onRaycastHit()
         {
             setMainSelecting(true);
-            dpart.setOutline(true);
             PoolerItemSelector.instance.show(true);
         }
 
         public void setMainSelecting(bool s)
         {
             isMainSelecting = s;
-            if (!PoolerItemSelector.isLocal)
+            setSelecting(s);
+            if (!PoolerItemSelector.isLocal || !s)
             {
                 foreach (SelectorRS rs in sameRSList)
                 {
@@ -135,7 +135,7 @@ namespace Scraft.DpartSpace
             {
                 if (!rs.Equals(this))
                 {
-                    rs.isSelecting = !PoolerItemSelector.isLocal;
+                    rs.setSelecting(!PoolerItemSelector.isLocal);
                 }
             }
         }

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Scraft {
-    public class AISpawn : MonoBehaviour
+    public class AISpawn : AreaDetector
     {
         static public List<AISpawn> aISpawns;
-
-        public float radius;
 
         void Awake()
         {
@@ -22,11 +20,6 @@ namespace Scraft {
         private void OnDestroy()
         {
             aISpawns.Remove(this);
-        }
-
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, radius);
         }
     }
 }

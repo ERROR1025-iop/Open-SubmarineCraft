@@ -17,7 +17,7 @@ namespace Scraft.BlockSpace
             density = 12.35f;
             transmissivity = 7.2f;
             max_storeAir = 0;
-            penetrationRate = 0.01f;
+            penetrationRate = 0.001f;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)

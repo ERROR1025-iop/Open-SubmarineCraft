@@ -42,10 +42,11 @@ namespace Scraft.BlockSpace
                     }
                     else
                     {
-                        fire = blocksEngine.createBlock(coor, fireBlockStatic, temperature, press) as Fire;
+                        fire = blocksEngine.createBlock(coor, fireBlockStatic, press) as Fire;
                     }
-                    fire.initFire(blocksEngine.getBlocksManager(), "dieselGas", calorific, 65f, burningPoint);
+                    fire.initFire("dieselGas", calorific, burningPoint);
                     fire.setDensity(density / totalGasChildCount);
+                    SeparationTemperatureCalculation(this, fire);
                     gasChildCount--;
                     return fire;
                 }

@@ -20,7 +20,7 @@ namespace Scraft.BlockSpace
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
         {
             StoneLiquid block = new StoneLiquid(blockId, parentObject, blockObject);
-            block.initLiquidBlock(blocksManager, 2750, 1535, "stoneMushy", "stone", 1);
+            block.initLiquidBlock(blocksManager, 2750, 1300, "stoneMushy", "stone", 1);
             return block;
         }
     }

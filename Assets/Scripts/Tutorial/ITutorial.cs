@@ -29,7 +29,7 @@ namespace Scraft {
             ITutorial.tutorialName = tutorialName;         
             tutorialStep = 0;
             IToast.instance.show("Loading");
-            Application.LoadLevel(sence);
+            SceneManager.LoadScene(sence);
         }
 
         void Start()
@@ -53,7 +53,8 @@ namespace Scraft {
             {
                 steps.Add(transform.GetChild(i).GetComponent<ITutorialStep>());
                 transform.GetChild(i).GetChild(0).GetChild(1).GetComponent<Button>().onClick.AddListener(onNextStepClick);
-                transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = ILang.get(string.Format("{0}.step{1}", abbreviation, i.ToString()), "tutorial");
+                var file = GameSetting.isAndroid ? "tutorial" : "tutorial_pc";
+                transform.GetChild(i).GetChild(0).GetChild(0).GetComponent<Text>().text = ILang.get(string.Format("{0}.step{1}", abbreviation, i.ToString()), file);
                 transform.GetChild(i).gameObject.SetActive(false);
             }
 
@@ -69,7 +70,8 @@ namespace Scraft {
                 {
                     sketchMapName = string.Format("{0}_{1}", abbreviation, tutorialStep);
                 }
-                Sprite sprite = Resources.Load<Sprite>(string.Format("Tutorial/Images/{0}", sketchMapName));
+                var folder = GameSetting.isAndroid ? "Images" : "Images_pc";
+                Sprite sprite = Resources.Load<Sprite>(string.Format("Tutorial/{0}/{1}", folder, sketchMapName));
                 if (sprite != null)
                 {
                     sketchMap.gameObject.SetActive(true);
@@ -117,7 +119,7 @@ namespace Scraft {
             GameSetting.isCareer = orgIsCareer;
             GameSetting.save();
             IToast.instance.show("Loading");
-            Application.LoadLevel("Tutorial");
+            SceneManager.LoadScene("Tutorial");
         }
     }
 }

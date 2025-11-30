@@ -22,7 +22,7 @@
                 float4 vertex : POSITION;             
             };
 
-            struct v2f
+            struct v2f 
             {                    
                 float4 vertex : SV_POSITION;
             };

@@ -14,7 +14,7 @@ namespace Scraft.BlockSpace
             initBlock("air", "null");
             canStoreInTag = 0;
             density = 0.0129f;
-            transmissivity = 1.23f;
+            transmissivity = 21f;
             m_isFluid = false;
             price = 0;
             heatCapacity = 1012f;
@@ -31,13 +31,7 @@ namespace Scraft.BlockSpace
         public override void update(BlocksEngine blocksEngine)
         {
             base.update(blocksEngine);
-            transmissivity = Mathf.Clamp(press * 0.012f, 0.01f, 1.5f);
-        }
-
-        public void initAir()
-        {
-            setTemperature(25);
-            press = 100;
-        }        
+            transmissivity = Mathf.Clamp(press * 0.21f, 0.001f, 22f);
+        }       
     }
 }

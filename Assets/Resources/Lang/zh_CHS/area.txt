@@ -1,11 +1,16 @@
 ﻿{
-	"Haikal Archipelago": "海加尔群岛",  
+	"Haikal Island": "海加尔岛",  
+	"Twin Islands": "双子群岛",  
 	"Dongquan Mine Cave": "冬泉矿洞",  
 	"Necromancy Fortress": "亡灵要塞",  
 	"Zoram": "佐拉姆",  
+	"Azure Island": "碧蓝岛",
 	"Port of Nicaral": "尼加尔港",  
-	"Burning Island": "灼热群岛",  
+	"Burning Island": "灼热岛",  
 	"Stonehammer Island": "石槌岛",  
-	"Sea of oracles": "神谕之海",  
-	"Sea of Fadil": "法迪尔之海"
+	"Sea of Oracles": "神谕之海",  
+	"Sea of Fadil": "法迪尔之海",
+	"Frostveil Trench": "霜幕海沟",
+	"Mist Island": "薄雾岛",
+	"Sea of Stellar": "星辰之海"
 }

@@ -15,7 +15,7 @@ namespace Scraft
         public static int ASSEMBLER_GROUP_MODE = 0;
         public static bool IS_UnitSnapping = false;
         public static bool IS_FORM_POOLER = false;
-        public static bool IS_Show_WeighCenter = true;               
+        public static bool IS_Show_WeighCenter = true;
        
 
         DpartsManager dpartsManager;

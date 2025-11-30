@@ -97,7 +97,7 @@ namespace Scraft.BlockSpace{ public class Uranium : SolidBlock
             int nblockCount = 0;
             for (int i = 0; i < 4; i++)
             {
-                Block nblock = getNeighborBlock(Dir.up);
+                Block nblock = getNeighborBlock(i);
                 if (nblock.equalBlock(this) || nblock.equalBlock(BlocksManager.instance.uraniumLiquid))
                 {
                     nblockCount++;
@@ -140,13 +140,9 @@ namespace Scraft.BlockSpace{ public class Uranium : SolidBlock
             float dt = selftAt;
             if (isInspire)
             {
-                dt = inspireAt + temperature * 100;
+                dt = inspireAt + temperature * 500;
             }
             addHeatQuantity(dt);
-            getNeighborBlock(Dir.up).addHeatQuantity(dt);
-            getNeighborBlock(Dir.right).addHeatQuantity(dt);
-            getNeighborBlock(Dir.down).addHeatQuantity(dt);
-            getNeighborBlock(Dir.left).addHeatQuantity(dt);
         }
 
         void probabilityMethod()

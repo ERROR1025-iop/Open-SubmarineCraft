@@ -53,7 +53,7 @@ namespace Scraft
         void drawCard()
         {
             cardObject = Object.Instantiate(Resources.Load("Prefabs/Builder/card")) as GameObject;
-            cardObject.transform.SetParent(dpartSelector.transform);
+            cardObject.transform.SetParent(dpartSelector.transform, false);
             cardObject.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-25f, -51.3f - 35 * rank, 0);
 
             cardObject.GetComponent<Button>().onClick.AddListener(onCardClick);

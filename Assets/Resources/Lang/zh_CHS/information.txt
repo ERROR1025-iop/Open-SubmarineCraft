@@ -1,7 +1,7 @@
 ﻿{   		
 	"dieselEngine":"吸收周围液体燃料，转换成动能",
 	"electorEngine":"将电能转换成动能，耗电78u/t",
-	"torpedpTube":"可通过输入数字信号来控制鱼雷的转向角",
+	"torpedpTube":"可通过输入数字信号来控制鱼雷的转向角，可以设定目标深度，当<0时，则以潜艇当前深度作为目标深度",
 	"stirlingEngine":"输出动能由方块上下的温差决定",
 	"neutron":"激活核燃料",
 	"uranium":"可被中子激发产生大量热，自身会缓慢释放中子",
@@ -86,6 +86,9 @@
 	"charcoal":"木头无氧下加热至400度获得，比木头更多的热值",
 	"mineralDetector":"获得当前区域矿物的富集度",
 	"sampleCollector":"用于获取科研点数",
-	"temperatureSensor":"用于获取科研点数",
-	"advElectorHeater":"可以加热到更高的温度"
+	"thermometer":"用于获取科研点数",
+	"advElectorHeater":"可以加热到更高的温度",
+
+	"itemExtractor":"当停泊在基地时，会从基地仓库取出（与蓝边相同方块）的物品，放置在黄边的位置，并消耗电力",
+	"itemDepositor":"当停泊在基地时, 会将黄边物品存入基地的仓库中，并消耗电力"
 }

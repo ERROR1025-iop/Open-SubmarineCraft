@@ -16,7 +16,7 @@ namespace Scraft {
             instance = this;
             shotCamera = GetComponent<Camera>();
             shotCamera.enabled = false;
-            preShotParent = GameObject.Find("PreShotParent").transform;
+            preShotParent = GameObject.Find("pool_preb/3d game objects/PreShotParent").transform;
         }
 
         public Texture2D shot(Vector3 position,Vector3 eulerAngle ,float size,string savePath, Rect rect)

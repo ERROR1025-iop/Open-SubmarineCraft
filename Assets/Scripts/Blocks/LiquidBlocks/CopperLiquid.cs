@@ -19,7 +19,7 @@ namespace Scraft.BlockSpace
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
         {
             CopperLiquid block = new CopperLiquid(blockId, parentObject, blockObject);
-            block.initLiquidBlock(blocksManager, 2750, 1535, "copperMushy", "copper", 1);
+            block.initLiquidBlock(blocksManager, 2750, 1357, "copperMushy", "copper", 1);
             return block;
         }
     }

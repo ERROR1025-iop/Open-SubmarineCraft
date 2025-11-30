@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 namespace Scraft {
     public class Setting : MonoBehaviour
@@ -15,7 +16,10 @@ namespace Scraft {
         public ISettingButton renderUnderwaterEffectButton;
         public ISettingButton renderLightbeamButton;
 
-        public Button resetCareerButton;
+        public Button resetCareerButton;       
+        public IMultValueButton waveButton; 
+        public Button controlSettingButton;
+        public Button openUserButton;
 
         void Start()
         {
@@ -47,7 +51,13 @@ namespace Scraft {
             renderLightbeamButton.setValue(GameSetting.renderLightbeam);
             renderLightbeamButton.setClickListener(onRenderLightbeamButtonClick);
 
-            resetCareerButton.onClick.AddListener(onResetCareerButtonClick);
+            resetCareerButton.onClick.AddListener(onResetCareerButtonClick);            
+            controlSettingButton.onClick.AddListener(onControlSettingButtonClick);
+            openUserButton.onClick.AddListener(onOpenUserButtonClick);
+
+            waveButton.init(3);
+            waveButton.selectValue(GameSetting.waveMode);
+            waveButton.setClickListener(onWaveButtonClick);
 
             GameObject.Find("Canvas/Back").GetComponent<Button>().onClick.AddListener(onBackButtonClick);
         }
@@ -117,6 +127,36 @@ namespace Scraft {
             Directory.Delete(GamePath.SDPATH + "world", true);
             //IUtils.createFolder(GamePath.worldFolder);
             IToast.instance.show("setting.reset successed", 100);
+        }
+
+        void onControlSettingButtonClick()
+        {
+            SceneManager.LoadScene("ControlSetting");
+        }
+
+        void onOpenUserButtonClick()
+        {
+            string folderPath = GamePath.SDPATH.Substring(0, GamePath.SDPATH.LastIndexOf("/"));
+            // 确保路径格式正确
+            folderPath = Path.GetFullPath(folderPath);
+
+            try
+            {
+                // 使用file://协议打开文件夹
+                Application.OpenURL("file://" + folderPath);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to open folder: " + e.Message);
+                IToast.instance.show("Failed to open folder: " + e.Message);
+            }
+        }
+
+        void onWaveButtonClick()
+        {            
+            waveButton.moveToNextValue();
+            GameSetting.waveMode = waveButton.getSelectIndex();
+            GameSetting.save();
         }
     }
 }

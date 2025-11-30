@@ -12,6 +12,8 @@ namespace Scraft.BlockSpace{ public class TorpedpTube : LargeBlock
         float predictorData;
         float targetAngle;
 
+        static float targetDeep = 0;
+
         public TorpedpTube(int id, GameObject parentObject, GameObject blockObject)
             : base(id, parentObject, blockObject)
         {
@@ -85,7 +87,13 @@ namespace Scraft.BlockSpace{ public class TorpedpTube : LargeBlock
             {
                 if (Pooler.instance.takeOneTorpedp(this))
                 {
-                    Pooler.instance.fireOneTorpedp(this, targetAngle,  getBlockObject().transform.localPosition + new Vector3(-0.32f, 0.16f, 0));
+                    var firePos = getBlockObject().transform.localPosition + new Vector3(-0.32f, 0.16f, 0);
+                    float deep = targetDeep;
+                    if (deep < 0)
+                    {
+                        deep = MainSubmarine.deep;
+                    }
+                    Pooler.instance.fireOneTorpedp(this, targetAngle, firePos, -deep / 10);
                     setIsReady(false, BlocksEngine.instance);
                     targetAngle = 0;
                     return true;
@@ -145,6 +153,31 @@ namespace Scraft.BlockSpace{ public class TorpedpTube : LargeBlock
         public override int getSyntIconSpriteIndex()
         {
             return 22;
+        }
+
+        public override int isCanSettingValue()
+        {
+            return 2;
+        }
+
+        public override int[] getSettingValueRank()
+        {
+            return new int[2] { -100, 1000 };
+        }
+
+        public override void onSettingValueChange()
+        {
+            targetDeep = currentSettingValue;
+        }
+
+        public override int getCurrentSettingValue()
+        {
+            return (int)targetDeep;
+        }
+
+        public override string getSettingValueName()
+        {
+            return "Deep";
         }
     }
 }

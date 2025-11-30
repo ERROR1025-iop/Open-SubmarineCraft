@@ -114,16 +114,12 @@ namespace Scraft.BlockSpace
 
         void heatNeighborBlock(BlocksEngine blocksEngine)
         {
-            float dt = Uranium.selftAt + temperature * 100;
+            float dt = Uranium.selftAt + temperature * 1000;
             if (isInspire)
             {
-                dt = Uranium.inspireAt + temperature * 200;
+                dt = Uranium.inspireAt + temperature * 2000;
             }
             addHeatQuantity(dt);
-            getNeighborBlock(Dir.up).addHeatQuantity(dt);
-            getNeighborBlock(Dir.right).addHeatQuantity(dt);
-            getNeighborBlock(Dir.down).addHeatQuantity(dt);
-            getNeighborBlock(Dir.left).addHeatQuantity(dt);
         }
 
         void probabilityMethod()

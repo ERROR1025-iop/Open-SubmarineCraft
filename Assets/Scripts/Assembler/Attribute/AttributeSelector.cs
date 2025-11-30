@@ -1,4 +1,5 @@
-﻿using Battlehub.RTHandles;
+﻿using System.Collections.Generic;
+using Battlehub.RTHandles;
 using Scraft.DpartSpace;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ namespace Scraft
             transform.GetChild(4).GetComponent<Button>().onClick.AddListener(onCancelMirrorButtonClick);
             transform.GetChild(5).GetComponent<Button>().onClick.AddListener(onGroupButtonClick);
             transform.GetChild(6).GetComponent<Button>().onClick.AddListener(onUngroupButtonClick);
+            transform.GetChild(7).GetComponent<Button>().onClick.AddListener(onParentButtonClick);
+            transform.GetChild(8).GetComponent<Button>().onClick.AddListener(onUnParentButtonClick);
 
             btnSprites = Resources.LoadAll<Sprite>("assembler/select-contor");
             multButton = transform.GetChild(2).GetComponent<ISwitchImageTextButton>();
@@ -156,6 +159,65 @@ namespace Scraft
                     IRT.Selection.objects = gos;
                 }
             }
+        }
+
+        void onParentButtonClick()
+        {
+            GameObject[] selection = IRT.Selection.gameObjects;
+            if (selection == null || selection.Length < 2)
+            {
+                return;
+            }
+
+            Dpart parent = selection[0].GetComponent<DpartParent>().getDpart();
+            List<int> linkedUid = new List<int>();
+            for (int i = 1; i < selection.Length; ++i)
+            {
+                GameObject selectedObj = selection[i];
+                if (selectedObj != null && selectedObj.activeSelf)
+                {
+                    Dpart dpart = selectedObj.GetComponent<DpartParent>().getDpart();
+                    linkedUid.Add(dpart.uid);
+                    if (dpart.linkedUid.Contains(parent.uid)){
+                        dpart.linkedUid.Remove(parent.uid);
+                    }
+                }
+            }            
+            
+            parent.linkedUid = linkedUid;
+            parent.drawArc = false;
+            parent.DrawLinkedLine();
+        }
+
+        void onUnParentButtonClick()
+        {
+            GameObject[] selection = IRT.Selection.gameObjects;
+            if (selection == null || selection.Length <= 0)
+            {
+                return;
+            }
+
+            Dpart parent = selection[0].GetComponent<DpartParent>().getDpart();
+            if(selection.Length < 2)
+            {
+                parent.linkedUid.Clear();
+            }
+            else
+            {                
+                for (int i = 1; i < selection.Length; ++i)
+                {
+                    GameObject selectedObj = selection[i];
+                    if (selectedObj != null && selectedObj.activeSelf)
+                    {
+                        Dpart dpart = selectedObj.GetComponent<DpartParent>().getDpart();                    
+                        if (parent.linkedUid.Contains(dpart.uid)){
+                            parent.linkedUid.Remove(dpart.uid);
+                        }
+                    }
+                }
+            }            
+            parent.drawArc = false;
+            parent.DrawLinkedLine();
         }
     }
 }

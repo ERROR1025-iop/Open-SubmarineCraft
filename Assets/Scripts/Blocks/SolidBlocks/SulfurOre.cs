@@ -28,7 +28,10 @@ namespace Scraft.BlockSpace
             return block;
         }   
 
-
+        public override SyntInfo[] getSyntInfo(BlocksManager blocksManager)
+        {            
+            return null;
+        }
 
         public override bool isRootUnlock()
         {

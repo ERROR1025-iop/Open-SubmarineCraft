@@ -16,7 +16,7 @@ namespace Scraft
         public float maxOrthoSize = 15.8f;
 
         [Header("调试")]
-        public bool enableDebug = true;
+        public bool enableDebug = false;
 
         private Camera mainCamera;
         private float currentSize;
@@ -33,12 +33,7 @@ namespace Scraft
 
             // ✅ 从当前摄像机读取 orthographicSize，而不是硬编码
             currentSize = mainCamera.orthographicSize;
-            Debug.Log($"[CameraMove] 初始化缩放值: {currentSize:F2}");
-
-            if (GameSetting.isAndroid)
-            {
-                enabled = false;
-            }
+            Debug.Log($"[CameraMove] 初始化缩放值: {currentSize:F2}");            
         }
 
         void Update()

@@ -14,7 +14,7 @@ namespace Scraft.BlockSpace
         public Hydrogen(int id, GameObject parentObject, GameObject blockObject)
             : base(id, parentObject, blockObject)
         {
-            initBlock("hydrogen", "material");            
+            initBlock("hydrogen", "material");
             transmissivity = 0.52f;
             heatCapacity = 1430f;
             density = 0.0899f;
@@ -22,6 +22,7 @@ namespace Scraft.BlockSpace
             burningAir = 400;
             calorific = 2900;
             isInit = false;
+            canStoreInTag = 2;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -53,7 +54,7 @@ namespace Scraft.BlockSpace
                 gasFuel.Add(this);
                 isInit = true;
             }
-            
+
         }
 
         bool burnRule(BlocksEngine blocksEngine)
@@ -64,16 +65,19 @@ namespace Scraft.BlockSpace
                 if (receive > burningAir * 0.9f)
                 {
                     Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                    Fire fire = blocksEngine.createBlock(getCoor(), fireBlockStatic, temperature, press) as Fire;
-                    fire.initFire(blocksEngine.getBlocksManager(), getName(), calorific, 65f, burningPoint);
+                    Fire fire = blocksEngine.createBlock(getCoor(), fireBlockStatic, press) as Fire;
+                    fire.initFire(getName(), calorific, burningPoint);
                     fire.setFireColor(3);
                     fire.setBurnedBlock(BlocksManager.instance.waterGas);
                     return true;
                 }
             }
             return false;
-        }         
+        }
 
-
+        public override bool isRootUnlock()
+        {
+            return true;
+        }
     }
 }

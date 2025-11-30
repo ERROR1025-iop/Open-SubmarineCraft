@@ -5,14 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Policy.unity
+  - enabled: 0
+    path: Assets/Scenes/Vice/Policy.unity
     guid: 64e05f1c097200841b9ed1cca76f4043
   - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: 68cfbb2c2b7489747ade645d29e8420a
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Vice/Menu.unity
     guid: 2abb1d37ec2c9964c941c6aedf2a93b7
   - enabled: 1
     path: Assets/Scenes/Builder.unity
@@ -21,33 +21,42 @@ EditorBuildSettings:
     path: Assets/Scenes/Pooler.unity
     guid: 1c1f8eb05fe8deb4b9cca1763fc2ce55
   - enabled: 1
-    path: Assets/Scenes/Achievement.unity
+    path: Assets/Scenes/Vice/Achievement.unity
     guid: ff7840ed2fc378a4c89ffca0c3c28a3d
   - enabled: 1
-    path: Assets/Scenes/Loading.unity
+    path: Assets/Scenes/Vice/Loading.unity
     guid: 3d83f3f0a1dc6674f98d165b8959fa70
   - enabled: 1
     path: Assets/Scenes/Assembler.unity
     guid: 7d3780e994b4f87468b906a65b1e5f68
   - enabled: 1
-    path: Assets/Scenes/Research.unity
+    path: Assets/Scenes/Vice/Research.unity
     guid: 83bb5b8515d4f594a8b4311418e4bdb4
   - enabled: 1
-    path: Assets/Scenes/Crafts.unity
+    path: Assets/Scenes/Vice/Crafts.unity
     guid: 058cf95d0285ed54298927caadd1b95c
   - enabled: 1
-    path: Assets/Scenes/Stations.unity
+    path: Assets/Scenes/Vice/Stations.unity
     guid: fee4a372f24b15746820b62a139cd464
   - enabled: 1
-    path: Assets/Scenes/Shop.unity
+    path: Assets/Scenes/Vice/Shop.unity
     guid: 9f4b18ca8480ff04bb8db2ff91c77d5e
   - enabled: 1
-    path: Assets/Scenes/Setting.unity
+    path: Assets/Scenes/Vice/Setting.unity
     guid: ce03defeeb1cba848a6c9f7a0a660a3c
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
+    path: Assets/Scenes/Vice/Tutorial.unity
     guid: d7661fe91fc37434083ca8c81c7b0880
   - enabled: 1
-    path: Assets/Scenes/Mod.unity
+    path: Assets/Scenes/Vice/Mod.unity
     guid: 4e2ad2294953ef546b0fea47300afba6
+  - enabled: 1
+    path: Assets/Scenes/Vice/ShipDownload.unity
+    guid: 8241b0138488e244cb81e649973e2fb9
+  - enabled: 1
+    path: Assets/Scenes/Vice/ControlSetting.unity
+    guid: 286f531ec3fdfda47b218653824c5955
+  - enabled: 1
+    path: Assets/Scenes/Vice/GameMap.unity
+    guid: c5f376fedb6ccaf44b82e78ef2e14cb3
   m_configObjects: {}

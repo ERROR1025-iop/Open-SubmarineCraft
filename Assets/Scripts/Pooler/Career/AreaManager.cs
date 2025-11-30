@@ -14,85 +14,74 @@ namespace Scraft
 
         static public List<Area> areas;
         static public List<SmallArea> smallAreas;
+        static public List<SciArea> sciAreas;
 
         static public int smallAreaId;
 
         static public JsonData areasDatas;
         static public JsonData smallAreaDatas;
-
-        static public float stayTemperture;
+        static public JsonData sciAreaDatas;
 
         void Awake()
         {
             instance = this;
-
             areas = new List<Area>();
             smallAreas = new List<SmallArea>();
-
+            sciAreas = new List<SciArea>();
             smallAreaId = 0;
-
-            stayTemperture = 25;
-
-            StartCoroutine(onUpdate());
         }
 
-        IEnumerator onUpdate()
+        public void RegisterArea(Area area)
         {
-            while (true)
+            areas.Add(area);
+            area.onEnter.AddListener(OnEnterArea);
+            area.onExit.AddListener(OnExitArea);
+        }
+
+        public void RegisterSciArea(SciArea area)
+        {
+            sciAreas.Add(area);
+        }
+
+        public void OnEnterArea(Area area)
+        {
+            staySmallArea = area;
+            stayArea = area;
+            stayArea.UpdateLayered();
+        }
+
+        public void DecCollectedScientificLayeredByName(string name, int layered, int csId)
+        {
+            foreach (SciArea area in sciAreas)
             {
-                bool isInSmallArea = false;
-                foreach (SmallArea area in smallAreas)
+                if (area.GetName() == name)
                 {
-                    if (Vector3.Distance(MainSubmarine.transform.position, area.transform.position) < area.radius)
-                    {
-                        isInSmallArea = true;
-                        staySmallArea = area;
-                        break;
-                    }                    
+                    area.decCollectedScientificLayered(csId, layered);
+                    return;
                 }
-
-                if (!isInSmallArea)
-                {
-                    staySmallArea = null;
-                }
-
-
-                foreach (Area area in areas)
-                {                  
-
-                    if (Vector3.Distance(MainSubmarine.transform.position, area.transform.position) < area.radius)
-                    {
-                        if (stayArea != null)
-                        {
-                            if (!stayArea.Equals(area))
-                            {
-                                stayArea.onExit();
-                                area.onEnter();
-                                stayArea = area;
-                            }                            
-                        }
-                        else
-                        {
-                            stayArea = area;
-                            area.onEnter();                           
-                        }
-                        break;
-                    }                    
-                }
-                            
-
-                if (staySmallArea != null)
-                {
-                    stayTemperture = staySmallArea.getTemperture();
-                }
-                else if (stayArea != null)
-                {
-                    stayTemperture = stayArea.getTemperture();
-                    stayArea.UpdateLayered();
-                }
-
-                yield return new WaitForSeconds(5f);
             }
+            foreach (Area area in areas)
+            {
+                if (area.name == name)
+                {
+                    area.decCollectedScientificLayered(layered, csId);
+                    return;
+                }
+            }
+        }
+
+        void Update()
+        {
+            if (stayArea != null)
+            {
+                stayArea.UpdateLayered();
+            }
+        }
+
+        public void OnExitArea(Area area)
+        {
+            staySmallArea = null;
+            stayArea = null;
         }
 
         static public string saveAreas()
@@ -110,6 +99,30 @@ namespace Scraft
                 writer.WriteObjectStart();
                 area.onSave(writer);
                 writer.WriteObjectEnd();
+            }
+            writer.WriteObjectEnd();
+            writer.WriteObjectEnd();
+            return writer.ToString();
+        }
+
+        static public string saveSciAreas()
+        {
+            JsonWriter writer = new JsonWriter();
+            writer.WriteObjectStart();
+
+            IUtils.keyValue2Writer(writer, "count", sciAreas.Count);
+            writer.WritePropertyName("areas");
+            writer.WriteObjectStart();
+
+            foreach (SciArea area in sciAreas)
+            {
+                if (area.collected)
+                {
+                    writer.WritePropertyName(area.GetName());
+                    writer.WriteObjectStart();
+                    area.onSave(writer);
+                    writer.WriteObjectEnd();
+                }                
             }
             writer.WriteObjectEnd();
             writer.WriteObjectEnd();

@@ -171,6 +171,7 @@ namespace Scraft.DpartSpace
             Vector3 sca = dpartTrans.localScale;
 
             IUtils.keyValue2Writer(writer, "id", dpartId);
+            IUtils.keyValue2Writer(writer, "uid", uid);
             IUtils.keyValue2Writer(writer, "pos", IUtils.vector3Serialize(pos));
             IUtils.keyValue2Writer(writer, "rot", IUtils.vector3Serialize(rot));
             IUtils.keyValue2Writer(writer, "sca", IUtils.vector3Serialize(sca));
@@ -194,6 +195,11 @@ namespace Scraft.DpartSpace
 
         public override void onBuilderModeLoad(JsonData dpartData, DpartsEngine dpartsEngine)
         {
+            uid = IUtils.getJsonValue2Int(dpartData, "uid", getUid());
+            if (uid >= gUid)
+            {
+                gUid = uid + 1;
+            }
             dpartTrans.localPosition = IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "pos"));
             dpartTrans.localRotation = Quaternion.Euler(IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "rot")));
             dpartTrans.localScale = IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "sca"));

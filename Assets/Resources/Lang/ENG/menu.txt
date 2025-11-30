@@ -7,6 +7,7 @@
 	"Crafts":"Dispatch Center",
 	"Stations":"Stations",	
 	"Shop":"Shop",
+	"Map":"Map",
 	"Thanks and statement":"Thanks and statement",
 	"Wiki":"Game wiki",
 	"Exit game":"Exit game",	
@@ -58,6 +59,9 @@
 	"create deep":"Run vertical speed",
 	"100 channel":"100 channel",
 	"music":"Background music",
+	"wave":"Sea wave",
+	"Huge wave":"Huge wave",
+	"Calm":"Calm",
 
 	"current select":"Current select",
 	"current bind":"Current bind",
@@ -80,10 +84,10 @@
 	"assmode1":"<color=#ffff00>Mirror place</color>",
 	"assmode2":"<color=#00ff00>middle place</color>",
 		
-	"display0": "Ones digit",
-	"display1": "Tens digit",
-	"display2": "Hundr digit",
-	"display3": "Thous digit",
+	"display0": "Ones",
+	"display1": "Tens",
+	"display2": "Hundr",
+	"display3": "Thous",
 
 	"setting value": "Setting value",
 	"alert value": "Alert value",
@@ -247,7 +251,9 @@
 	"Cancel Select":"Cancel Select",
 	"Cancel Mirror":"Cancel Mirror",
 	"Group":"Group",
-	"Ungroup":"Un\ngroup",
+	"Ungroup":"Un-\ngroup",
+	"Parent":"Link",
+	"Un-Parent":"Un-\nLink",
 	"move":"Move",
 	"rotate":"Rotate",
 	"scale":"Scale",
@@ -356,7 +362,13 @@
 	"layered_4":"Abyss",
 	"layered_5":"Supper Abyss",
 	"layered_6":"Superdomain",
-	"layered_7":"Unkonw Area",
+	"layered_7": "Abyssal Veil",
+	"layered_8": "Chasm of Echoes",
+	"layered_9": "The Forgotten Trench",
+	"layered_10": "Nether Abyss",
+	"layered_11": "Void Core",
+	"layered_12": "Origin Depth",
+	"layered_13":"Unkonw Area",
 
 	"view ad1":"you can get ",
 	"view ad2":"after watching a small video. Whether to watch or not? ",
@@ -390,9 +402,9 @@
 	"setting.reset career tap":"After resetting, you will lose all archives of your career mode, including scientific points and diamonds. Are you sure to reset?",
 	"setting.reset successed":"Reset successed！",
 	"setting.button.control":"Control setting",
-	"setting.button.user":"Open User folder",
+	"setting.button.user":"Open User Data folder",
 
-	"text & image tutorial":"scraft.91miaoyue.com",
+	"text & image tutorial":"text & image tutorial",
 	"tutorial tap 1":"tap 1：Free/Career mode can switch in setting。Free mode is used in the tutorial. In the career mode, the blocks need to be unlocked in the research, and the number of blocks is limited.",	
 	"tutorial tap 2":"tap 2：Be sure to follow the instructions of the guidelines, otherwise it may result in the inability to complete the teaching. ",	
 	"text tutorial tap":"More tutorial and blocks wiki, you can browse the URL below",
@@ -409,7 +421,15 @@
 	"Uploading":"Uploading",
 	"Workshop note":"Note:the Workshop item file will not cover local file when they have a same name.",
 
-	"view tutorial":"Do you want to browse the tutorial before you start the game?"
+	"view tutorial":"Do you want to browse the tutorial before you start the game?",
 
-
+	"Activited":"Activated",
+	"Submit":"Submit",
+	"mod.note":"Note: Removing or disabling Mods may cause save incompatibility",
+	"mod.Off":"Off",
+	"mod.Activite":"Activate",
+	"mod.author":"Mod Author:",
+	"mod.mod_version":"Mod Version:",
+	"mod.game_version":"Supported Game Version:",
+	"mod.count":"MOD Count:"
 }

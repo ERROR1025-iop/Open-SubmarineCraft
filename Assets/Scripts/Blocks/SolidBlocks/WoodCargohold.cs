@@ -17,7 +17,6 @@ namespace Scraft.BlockSpace {
             burningPoint = 270;
             isBurning = false;
             calorific = 395;
-            unityCalorific = 4;
 
             m_normalSpriteIndex = 0;
             m_buringSpriteIndex = 1;

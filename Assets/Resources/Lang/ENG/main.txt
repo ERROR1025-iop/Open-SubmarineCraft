@@ -141,6 +141,9 @@
 	"thermometer":"Thermometer",
 	"advElectorHeater":"Adv electric Heater",
 	"depthChargeThrowerCore":"Depth Charge Thrower Core",
-	"depthCharge":"depthCharge"
+	"depthCharge":"Depth Charge",
+
+	"itemExtractor":"Item Extractor",
+	"itemDepositor":"Item Depositor"
 	
 }

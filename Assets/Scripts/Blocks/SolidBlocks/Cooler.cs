@@ -25,26 +25,5 @@ namespace Scraft.BlockSpace
             block.initSolidBlock(blocksManager, "copperLiquid", 1357, 1120);
             return block;
         }
-
-        public override int getSyntIconSpriteIndex()
-        {
-            return 4;
-        }
-
-        public override void threadUpdate(BlocksEngine blocksEngine)
-        {
-            base.threadUpdate(blocksEngine);
-            //coolerRule(blocksEngine);
-        }
-
-        protected virtual void coolerRule(BlocksEngine blocksEngine)
-        {
-            Block leftBlock = getRelativeNeighborBlock(Dir.left);
-            Block rightBlock = getRelativeNeighborBlock(Dir.right);
-
-            float tmp = leftBlock.getTemperature();
-            leftBlock.setTemperature(rightBlock.getTemperature());
-            rightBlock.setTemperature(tmp);
-        }
     }
 }

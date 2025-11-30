@@ -22,8 +22,9 @@ namespace Scraft
         public event CancelButtonClickDelegate OnCancelButtonClick;
         public delegate void CancelByHitOtherDelegate();
         public event CancelByHitOtherDelegate OnCancelByHitOther;
-               
+
         RectTransform mainTrans;
+        Vector3 startPosition;
         bool isShow;
 
         public IJoystick joystick1;
@@ -48,6 +49,7 @@ namespace Scraft
             instance = this;
 
             mainTrans = GetComponent<RectTransform>();
+            startPosition = mainTrans.anchoredPosition;
 
             localButton = transform.GetChild(0).GetComponent<IChangeImageButton>();
             localText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
@@ -71,7 +73,7 @@ namespace Scraft
 
             Camera3DWorld = Camera.main;
 
-            item3DLayer = 1 << 12;
+            item3DLayer = (1 << 12) | (1 << 16);
         }
 
         public IJoystick GetJoystick1()
@@ -201,7 +203,7 @@ namespace Scraft
             isShow = show;
             if (show)
             {
-                mainTrans.anchoredPosition = new Vector2(88.32f, -165f);
+                mainTrans.anchoredPosition = startPosition;
             }
             else
             {

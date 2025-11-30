@@ -15,7 +15,7 @@ namespace Scraft.BlockSpace
 
             thumbnailColor = new Color(0f, 0f, 1f);
             canStoreInTag = 0; 
-            density = 10f;
+            density = 1f;
             transmissivity = 0.35f;
             maxDynamicBoilingPoint = 374;
             heatCapacity = 4180f;
@@ -26,12 +26,6 @@ namespace Scraft.BlockSpace
             Water block = new Water(blockId, parentObject, blockObject);
             block.initLiquidBlock(blocksManager, 100, 0, "waterMushy", "ice", 20);
             return block;
-        }
-
-        public void initWater(float press, float temperture)
-        {
-            setTemperature(temperture);
-            setPress(press);
         }
 
         public override bool isRootUnlock()

@@ -9,7 +9,7 @@ namespace Scraft.DpartSpace
     public class AirscrewRS : PropellerRS
     {
         void Update()
-        {
+        {            
             if (World.GameMode == World.GameMode_Freedom)
             {
                 force = isOpen ? MainSubmarine.forwardForce : 0;
@@ -20,7 +20,8 @@ namespace Scraft.DpartSpace
                 }
                 if (propellerTrans != null)
                 {
-                    propellerTrans.Rotate(-forwardAxis, speed * Time.deltaTime * (transform.position.y < Buoyancy.waterHeight ? 0.1f : 100));
+                    float water = Buoyancy.getWaterHeight(transform.position);
+                    propellerTrans.Rotate(-forwardAxis, speed * Time.deltaTime * (transform.position.y < water ? 0.1f : 100));
                 }
             }
         }
@@ -36,8 +37,8 @@ namespace Scraft.DpartSpace
 
                 forwardDir = -transform.up;
                 Vector3 forwardForce = isOpen ? (MainSubmarine.forwardForce * 3 / propeller_count) * forwardDir : Vector3.zero;
-
-                if (transform.position.y < Buoyancy.waterHeight)
+                float water = Buoyancy.getWaterHeight(transform.position);    
+                if (transform.position.y < water+1)
                 {
                     forwardForce *= 0.1f;
                 }

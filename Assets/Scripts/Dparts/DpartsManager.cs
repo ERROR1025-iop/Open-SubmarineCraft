@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using LitJson;
+using Scraft;
 namespace Scraft.DpartSpace
 {
     public class DpartsManager
@@ -130,6 +131,13 @@ namespace Scraft.DpartSpace
             registerDPart("drill_2", "function");
             registerDPart("drill_3", "function");
             registerDPart("depth_charge_thrower_1", "function");
+            
+            registerDPart("rotating_platform_1", "function");
+            registerDPart("claw_1", "function");
+            registerDPart("telescopic_rod_1", "function");
+            registerDPart("magnetic_connector", "function");
+            registerDPart("cardan_joint_1", "function");
+            registerDPart("cardan_joint_2", "function");
 
         
 

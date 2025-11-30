@@ -57,7 +57,14 @@ namespace Scraft
         {
             string shipData = assembler.saveDpart(GamePath.cacheFolder, "upload.cache");
             AssemblerUtils.createGameObjectThumbnailImage(World.dpartParentObject, assembler.shotCamera, GamePath.cacheFolder + "thumbnail.cache", new Rect(0, 0, 800, 480));
-            UnityAndroidEnter.CallUploadShip(World.dpartName, true);
+            ShipUploader shipUploader = ShipUploader.instance;
+            shipUploader.isAssembler = true;
+            shipUploader.titleInput.text = World.dpartName;
+            shipUploader.SetCover(GamePath.cacheFolder + "thumbnail.cache");
+            shipUploader.Show();
+            show(false);
+            //UnityAndroidEnter.CallUploadShip(World.dpartName, true);
+            //AlertBox.ShowNotImplemented();
         }
 
         void onGotoBuilderButtonClick()
@@ -69,7 +76,9 @@ namespace Scraft
 
         void onOpenWikiButtonClick()
         {
-            UnityAndroidEnter.CallWiki();
+            //AlertBox.ShowNotImplemented();
+            Tutorial.OpenWikiWeb();
+            show(false);
         }
 
         void onSettingButtonClick()
@@ -81,7 +90,8 @@ namespace Scraft
         void onExportObjButtonClick()
         {
             show(false);
-            AssExportObj.Start(World.dpartParentObject, World.dpartName);
+            //AssExportObj.Start(World.dpartParentObject, World.dpartName);
+            AlertBox.ShowNotImplemented();
         }
 
         void onBackToMenuButtonClick()

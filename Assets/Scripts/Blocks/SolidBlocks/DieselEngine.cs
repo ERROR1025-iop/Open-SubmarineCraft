@@ -27,7 +27,7 @@ namespace Scraft.BlockSpace
             density = 10.3f;
             storeFuel = 0;
             outputMe = 0;
-            maxMeOutput = 5200;
+            maxMeOutput = 10000;
             outPutAcc = 0;
             lastOutputMe = 0;
             powerBarValue = 0;
@@ -85,7 +85,14 @@ namespace Scraft.BlockSpace
                     block.onWorldModeClick();
                 }
             }
+        }
 
+        public override void onPreesButtonClick(bool isClick)
+        {
+            if (isClick)
+            {                
+                onWorldModeClick();
+            }
         }
 
         public override void onPowerBarPush(float value)
@@ -106,7 +113,7 @@ namespace Scraft.BlockSpace
             if (getIsBroken())
             {
                 blocksEngine.putMe(this, getPutMeCoor(), 0);
-                PoolerEngineSound.electorEngineVolume = powerDirection;
+                //PoolerEngineSound.electorEngineVolume = powerDirection;
                 return;
             }
 
@@ -117,7 +124,7 @@ namespace Scraft.BlockSpace
         public override void onWorldModeDestroy()
         {
             base.onWorldModeDestroy();
-            PoolerEngineSound.electorEngineVolume = 0;
+            //PoolerEngineSound.electorEngineVolume = 0;
         }
 
         protected virtual bool putMeRule(BlocksEngine blocksEngine)
@@ -135,7 +142,9 @@ namespace Scraft.BlockSpace
                     }
 
                     blocksEngine.putMe(this, getPutMeCoor(), outputMe * getEfficiency());
-                    decFuel(outputMe * 0.005f);
+                    float df = Fire.HQ2C(outputMe);
+                    //decFuel(outputMe * 0.002f);
+                    decFuel(df * 2.5f);
                     if (Mathf.Abs(outputMe) < 300)
                     {
                         outPutAcc = (maxMeOutput * powerDirection * powerBarValue - outputMe) * 0.3f;
@@ -230,8 +239,10 @@ namespace Scraft.BlockSpace
 
         public override int[] getBindArr()
         {
-            return new int[1] { 3 };
+            return new int[3] { 3, 4, 5 };
         }
+
+        
 
 
         protected virtual void setDiseselTexture(bool isLight)

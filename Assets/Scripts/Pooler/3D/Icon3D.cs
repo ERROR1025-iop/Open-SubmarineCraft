@@ -5,6 +5,7 @@ namespace Scraft
 {
     public class Icon3D : MonoBehaviour
     {
+        public static GameObject s_TempIcon;
         public GameObject iconGameObject;
         public bool hasDistanceTxt;
         public bool transparentWithDistance;
@@ -27,6 +28,10 @@ namespace Scraft
 
         void Awake()
         {
+            if(iconGameObject == null)
+            {
+                iconGameObject = s_TempIcon;
+            }
             iconGameObject = Instantiate(iconGameObject);
             iconGameObject.layer = 8;
             if (CanvasTrans == null)

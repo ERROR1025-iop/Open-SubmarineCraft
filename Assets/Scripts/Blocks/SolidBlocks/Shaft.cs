@@ -66,9 +66,15 @@ namespace Scraft.BlockSpace
             BlocksEngine.instance.putMe(this, getCoor().getDirPoint(putterDir + 2), me);
         }
 
-        public override bool isCanReceiveMe()
+        public override bool isCanReceiveMe(Block putter)
         {
-            return true;
+            IPoint left = getRelativeDirPoint(Dir.left);
+            IPoint right = getRelativeDirPoint(Dir.right);
+            if (putter.getCoor().equal(left) || putter.getCoor().equal(right))
+            {
+                return true;
+            }
+            return false;
         }
 
         public override bool isRootUnlock()

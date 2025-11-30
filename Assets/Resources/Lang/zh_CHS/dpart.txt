@@ -90,7 +90,16 @@
 	"turret_4": "炮塔_4",
 	"cube_ring_1":"方块_环_1",
 	"cylinder_ring_1": "圆环_1",
-	"depth_charge_thrower_1":"深水炸弹投射器_1"
+	"depth_charge_thrower_1":"深水炸弹投射器_1",
+
+	"rotating_platform_1":"旋转平台_1",
+	"claw_1":"爪子_1",
+	"telescopic_rod_1":"伸缩杆_1",
+	"magnetic_connector":"磁力连接盘",
+	"cardan_joint_1":"万向节_1",
+	"cardan_joint_2":"万向节_2"
+
+
 
 
 }

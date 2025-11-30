@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Scraft.BlockSpace;
 using Scraft.StationSpace;
+using UnityEngine.SceneManagement;
 
 namespace Scraft
 {
@@ -64,14 +65,7 @@ namespace Scraft
             string backgroundPath = string.Format("Menu/Loading/{0}{1}", GameSetting.isCreateAi ? "n" : "s", (int)(Random.value * 2.9f));
             AsyncLoadScene.sprite = Resources.Load(backgroundPath, typeof(Sprite)) as Sprite;
             UnityAndroidEnter.CallShowInterstitialAD();           
-            if (GameSetting.isAndroid)
-            {
-                AsyncLoadScene.asyncloadScene("Pooler");
-            }
-            else
-            {
-                Application.LoadLevel("Pooler");
-            }
+            SceneManager.LoadScene("Pooler");
         }
 
 
@@ -85,7 +79,7 @@ namespace Scraft
             IToast.instance.show("Loading");
             Builder.IS_LOAD_LAST = true;
             UnityAndroidEnter.CallShowInterstitialAD();
-            Application.LoadLevel("Builder");
+            SceneManager.LoadScene("Builder");
         }
 
         void onRevertAssemblerButtonClick()
@@ -95,7 +89,7 @@ namespace Scraft
             Assembler.IS_LOAD_LAST = true;
             Assembler.IS_FORM_POOLER = true;
             UnityAndroidEnter.CallShowInterstitialAD();
-            Application.LoadLevel("Assembler");
+            SceneManager.LoadScene("Assembler");
         }      
 
         void onBackToMenuButtonClick()
@@ -107,14 +101,14 @@ namespace Scraft
                     Pooler.isRunThread = false;
                     IToast.instance.show("Loading");
                     Pooler.instance.savePoolerData(false);
-                    Application.LoadLevel("Menu");
+                    SceneManager.LoadScene("Menu");
                 }
             }
             else
             {
                 Pooler.isRunThread = false;
                 IToast.instance.show("Loading");
-                Application.LoadLevel("Menu");
+                SceneManager.LoadScene("Menu");
             }
            
         }
@@ -141,7 +135,7 @@ namespace Scraft
             IPoint[] coors;
             //Pooler.instance.getCargos(blocks, counts, out coors, false);
             //if(true)
-            if (Pooler.instance.getCargos(blocks, counts, out coors, false) || !GameSetting.isCareer)
+            if (Pooler.instance.getCargos(blocks, counts, out coors, false) || !GameSetting.isCareer || Application.isEditor)
             {
                 Station station = (Object.Instantiate(Resources.Load("Stations/Prefabs/station 01")) as GameObject).GetComponent<Station>();
                 station.setIsNewPlace();

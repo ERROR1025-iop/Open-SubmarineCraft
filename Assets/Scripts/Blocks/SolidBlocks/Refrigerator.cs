@@ -17,7 +17,7 @@ namespace Scraft.BlockSpace
             transmissivity = 3.2f;
             density = 10.3f;
             comsume = 1.0f;
-            currentSettingValue = 0;
+            currentSettingValue = -200;
             isWork = false;
         }
 
@@ -77,7 +77,8 @@ namespace Scraft.BlockSpace
                     float ot = getTemperature();
                     if (ot > currentSettingValue)
                     {
-                        decHeatQuantity(receive * 10000);
+                        //e * 100 = hq
+                        addHeatQuantity(-receive * 100 / 3);
                     }
                     setSpriteRect(2);
                 }
@@ -120,7 +121,7 @@ namespace Scraft.BlockSpace
 
         public override int[] getSettingValueRank()
         {
-            return new int[2] { -40, 500 };
+            return new int[2] { -200, 500 };
         }
 
         public override string getSettingValueName()

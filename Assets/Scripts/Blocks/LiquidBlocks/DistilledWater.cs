@@ -14,7 +14,7 @@ namespace Scraft.BlockSpace
 
             thumbnailColor = new Color(0f, 0f, 1f);
             canStoreInTag = 2;
-            density = 10f;
+            density = 1f;
             transmissivity = 0.35f;
             maxDynamicBoilingPoint = 374;
             heatCapacity = 4180f;

@@ -74,14 +74,17 @@ namespace Scraft.BlockSpace
             {
                 if(temperature < meltingPoint * 0.9f)
                 {
-                    float real_comsume = Mathf.Abs(currentSettingValue * comsume * 0.28f);
+                    float real_comsume = Mathf.Abs(currentSettingValue * comsume * 0.3f);
                     float receive = Pooler.instance.requireElectric(this, real_comsume);
                     if (receive > real_comsume * 0.9f)
                     {
                         float ot = getTemperature();
                         if (ot < currentSettingValue)
                         {
-                            addHeatQuantity(receive * 2800);
+                            //e * 100 = hq
+                            float hq = receive * 100;
+                            Debug.Log("Heater hq:" + hq);
+                            getNeighborBlock(Dir.up).addHeatQuantity(hq);
                         }
                         setSpriteRect(1);
                     }

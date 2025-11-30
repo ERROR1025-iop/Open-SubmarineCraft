@@ -64,7 +64,7 @@ namespace Scraft.BlockSpace{ public class TerrainSonar : SolidBlock
             getTerrainHeightMethod(blocksEngine);
             Pooler.isOpen_TerrainSonar = true;
 
-            int index = Mathf.Clamp( (int)(distance / 1000), 0, 7);
+            int index = Mathf.Clamp( (int)(distance / 700), 0, 7);
             setSpriteRect(index);
         }
 

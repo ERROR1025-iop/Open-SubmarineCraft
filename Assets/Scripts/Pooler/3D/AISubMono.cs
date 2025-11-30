@@ -45,7 +45,7 @@ namespace Scraft
             isSink = false;
             AI_Count++;
 
-            aiList.Add(this);
+            aiList.Add(this);            
         }
 
         public static void createAi(int count)
@@ -60,10 +60,11 @@ namespace Scraft
         {
             bool isShip = Random.value < 0.5f;
             string shipModeName = isShip ? "AIShip" : "AISub";
-            int maxShipMode = isShip ? 2 : 4;
-            int shipModeIndex = (int)(Random.value * (float)maxShipMode);
+            int maxShipMode = isShip ? 1 : 3;
+            int shipModeIndex = (int)(Random.value * (float)maxShipMode) + 1;
             string modeAllName = shipModeName + shipModeIndex;
-            AISubMono aiSubMono = (Instantiate(Resources.Load("Prefabs/Pooler/Ships/" + modeAllName)) as GameObject).GetComponent<AISubMono>();
+            var go = Instantiate(Resources.Load("Prefabs/Pooler/Ships/" + modeAllName)) as GameObject;
+            AISubMono aiSubMono = go.GetComponent<AISubMono>();  
             Vector3 position = randomPosition(isShip);
             float aiAngle = Random.value * 360;
             aiSubMono.initAiShip(isShip, shipModeIndex, position, aiAngle);
@@ -72,29 +73,14 @@ namespace Scraft
 
         public static Vector3 randomPosition(bool isShip)
         {
-            Vector3 position;
-            int stack = 0;
-            do
+            int randomIndex = Random.Range(0, AISpawn.aISpawns.Count);
+            AISpawn s = AISpawn.aISpawns[randomIndex];
+            var p = s.GetRandomPointInArea();
+            if (isShip)
             {
-                float locx = MainSubmarine.instance.getLocation().x + (Random.value * 2 - 1) * 6000;
-                float locy = MainSubmarine.instance.getLocation().y + (Random.value * 2 - 1) * 6000;
-                float aiDeep = isShip ? 0 : -Random.value * 600;
-                position = new Vector3(locx, aiDeep, locy);
-            } while (!isInSea(position) && stack < 50);
-            Debug.Log("randomPosition time:" + stack);
-            return position;
-        }
-
-        public static bool isInSea(Vector3 position)
-        {
-            foreach (AISpawn aISpawn in AISpawn.aISpawns)
-            {
-                if (Vector3.Distance(IUtils.coor2DConvert3D(position), aISpawn.transform.position) < aISpawn.radius)
-                {
-                    return true;
-                }
+                p.y = 0;
             }
-            return false;
+            return p;
         }
 
         public void initAiShip(bool isShip, int shipModeIndex, Vector3 position, float angle)
@@ -106,7 +92,7 @@ namespace Scraft
             {
                 divingDeep = Random.value * 200 + 200;
             }
-            transform.localPosition = IUtils.coor2DConvert3D(position);
+            transform.localPosition = position;
             setAngle(angle);
         }
 
@@ -237,13 +223,14 @@ namespace Scraft
 
         void fireTorpedp(float angle)
         {
+            var tDeep = MainSubmarine.deep / 10;
             if (isShip)
-            {
-                Torpedo3DMono.fire(transform.localPosition + new Vector3(0, 1, 0), 20, angle + 90, angle + 90, true);
+            {                
+                Torpedo3DMono.fire(transform.localPosition + new Vector3(0, 1, 0), 20, angle + 90, angle + 90, true, tDeep);
             }
             else
             {
-                Torpedo3DMono.fire(transform.localPosition, 0, angle + 90, angle + 90, true);
+                Torpedo3DMono.fire(transform.localPosition, 0, angle + 90, angle + 90, true, tDeep);
             }
 
         }

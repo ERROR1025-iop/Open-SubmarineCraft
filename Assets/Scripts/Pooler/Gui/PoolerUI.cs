@@ -39,9 +39,11 @@ namespace Scraft
         public IChangeImageButton lightButton;
         public IChangeImageButton directionButton;
         public IChangeImageButton autoPitchButton;
-        public BarHorizontal rudder;
+        //public BarHorizontal rudder;
+        public BarHorizontal rollBar;
+        //public PitchBar pitchBar;
         public BarVertical powerBar;
-        public PitchBar pitchBar;
+        public IJoystick dirController;
         public RectTransform radarRect;
         public RectTransform radarTextRect;
         public Image fireButtonImage;
@@ -76,6 +78,9 @@ namespace Scraft
 
         float subRotoZ;
 
+        public static float canvasW;
+        public static float canvasH;
+
         public PoolerUI()
         {
             instance = this;
@@ -89,9 +94,9 @@ namespace Scraft
 
             upButton = GameObject.Find("Canvas/up").GetComponent<IPressButton>();
             downButton = GameObject.Find("Canvas/down").GetComponent<IPressButton>();
-            rudder = GameObject.Find("Canvas/h bar").GetComponent<BarHorizontal>();
+            dirController = GameObject.Find("Canvas/dirController").GetComponent<IJoystick>();
             powerBar = GameObject.Find("Canvas/power bar").GetComponent<BarVertical>();
-            pitchBar = GameObject.Find("Canvas/pitch bar").GetComponent<PitchBar>();
+            rollBar = GameObject.Find("Canvas/h bar").GetComponent<BarHorizontal>();
             autoButton = GameObject.Find("Canvas/auto").GetComponent<IChangeImageButton>();
             periscopeButton = GameObject.Find("Canvas/periscope").GetComponent<IChangeImageButton>();
             viewButton = GameObject.Find("Canvas/view").GetComponent<IChangeImageButton>();
@@ -110,6 +115,10 @@ namespace Scraft
             fireButtonImage = fireButton.transform.GetComponent<Image>();
             fireButtonSprites = Resources.LoadAll<Sprite>("Pooler/fire");
 
+            var canvasScaler = GameObject.Find("Canvas").GetComponent<CanvasScaler>();
+            canvasW = canvasScaler.referenceResolution.x;
+            canvasH = canvasScaler.referenceResolution.y;
+
 
 
             radarRect = GameObject.Find("Canvas/radar rect").GetComponent<RectTransform>();
@@ -123,9 +132,10 @@ namespace Scraft
 
             upButton.setValueChangeListener(onUpButtonValueChanged);
             downButton.setValueChangeListener(onDownButtonValueChanged);
-            rudder.addListener(onRudderPush);
+            rollBar.addListener(onRollBarPush);
+            //rudder.addListener(onRudderPush);
+            //pitchBar.addListener(onPitchBarPush);
             powerBar.addListener(onPowerBarPush);
-            pitchBar.addListener(onPitchBarPush);
             autoButton.addListener(onAutoButtonClick);
             autoPitchButton.addListener(onAutoPitchButtonClick);
             periscopeButton.addListener(onPeriscopeButtonClick);
@@ -147,11 +157,11 @@ namespace Scraft
 
             GameObject.Find("Canvas/radar rect/radar text rect/menu btn").GetComponent<Button>().onClick.AddListener(onMenuButtonClick);
             GameObject.Find("Canvas/radar rect/radar text rect/wharf").GetComponent<Button>().onClick.AddListener(onWharfButtonClick); ;
-            
+
 
 
             poolerMenu = new PoolerMenu(pooler);
-            poolerGameOver = new PoolerGameOver(pooler);            
+            poolerGameOver = new PoolerGameOver(pooler);
 
             initHitText();
 
@@ -582,23 +592,38 @@ namespace Scraft
             }
         }
 
-        public void onRudderPush()
-        {
-            MainSubmarine.rudderTorque = (rudder.getValue() - 0.5f) * 2;
-        }
+        // public void onRudderPush()
+        // {
+        //     MainSubmarine.rudderTorque = (rudder.getValue() - 0.5f) * 2;
+        // }
 
-        public void onPitchBarPush()
+        // public void onPitchBarPush()
+        // {
+        //     MainSubmarine.pitchTorque = (pitchBar.getValue() - 0.5f) * 2;
+        // }
+
+        public void onRollBarPush()
         {
-            MainSubmarine.pitchTorque = (pitchBar.getValue() - 0.5f) * 2;
+            MainSubmarine.rollTorque = (rollBar.getValue() - 0.5f) * 2;
         }
 
         public void updata()
         {
+            updateMainJoyController();
             electricMeter.updataPower();
             balanceVSpeed();
-            balancePitch();
+            //balancePitch();
             updataTime();
             updateHitLabel();
+        }
+
+        void updateMainJoyController()
+        {
+            if (dirController.changing)
+            {
+                MainSubmarine.rudderTorque = Mathf.Clamp(dirController.x * 3, -1, 1);
+                MainSubmarine.pitchTorque = Mathf.Clamp(dirController.y * 3, -1, 1);
+            }
         }
 
         void updateHitLabel()
@@ -654,45 +679,45 @@ namespace Scraft
             }
         }
 
-        void balancePitch()
-        {
-            if (autoPitchButton.value)
-            {
-                if (!(pitchBar.isClickBar() || PoolerPCInput.isPitchBarClick))
-                {
-                    float ZSpeed = MainSubmarine.transform.InverseTransformVector(MainSubmarine.rigidbody.angularVelocity).z * MainSubmarine.forward;
-                    float dz = (MainSubmarine.transform.localEulerAngles.z - subRotoZ) * MainSubmarine.forward;
-                    float maxPitchForce = MainSubmarine.speed;
-                    float value = 0;
-                    if (Mathf.Abs(maxPitchForce) > 0.5f)
-                    {
-                        value = ZSpeed * 100 / maxPitchForce;
+        // void balancePitch()
+        // {
+        //     if (autoPitchButton.value)
+        //     {
+        //         if (!(pitchBar.isClickBar() || PoolerPCInput.isPitchBarClick))
+        //         {
+        //             float ZSpeed = MainSubmarine.transform.InverseTransformVector(MainSubmarine.rigidbody.angularVelocity).z * MainSubmarine.forward;
+        //             float dz = (MainSubmarine.transform.localEulerAngles.z - subRotoZ) * MainSubmarine.forward;
+        //             float maxPitchForce = MainSubmarine.speed;
+        //             float value = 0;
+        //             if (Mathf.Abs(maxPitchForce) > 0.5f)
+        //             {
+        //                 value = ZSpeed * 100 / maxPitchForce;
 
-                    }
-                    else
-                    {
-                        value = ZSpeed;
-                    }
-                    value += Mathf.Sin(dz);
-                    value = -value + 0.5f;
-                    value = Mathf.Clamp01(value);
-                    //pitchBar.setValue(value);
-                    float torque = (value - 0.5f) * 2;
-                    torque = Mathf.Lerp(MainSubmarine.pitchTorque, torque, 0.1f);
-                    MainSubmarine.pitchTorque = torque;
-                }
-                else
-                {
-                    subRotoZ = MainSubmarine.transform.localEulerAngles.z;
-                }
+        //             }
+        //             else
+        //             {
+        //                 value = ZSpeed;
+        //             }
+        //             value += Mathf.Sin(dz);
+        //             value = -value + 0.5f;
+        //             value = Mathf.Clamp01(value);
+        //             //pitchBar.setValue(value);
+        //             float torque = (value - 0.5f) * 2;
+        //             torque = Mathf.Lerp(MainSubmarine.pitchTorque, torque, 0.1f);
+        //             MainSubmarine.pitchTorque = torque;
+        //         }
+        //         else
+        //         {
+        //             subRotoZ = MainSubmarine.transform.localEulerAngles.z;
+        //         }
 
-            }
-            else if (!autoPitchButton.value)
-            {
-                onPitchBarPush();
-                subRotoZ = MainSubmarine.transform.localEulerAngles.z;
-            }
-        }
+        //     }
+        //     else if (!autoPitchButton.value)
+        //     {
+        //         onPitchBarPush();
+        //         subRotoZ = MainSubmarine.transform.localEulerAngles.z;
+        //     }
+        // }
 
 
 

@@ -22,7 +22,7 @@
 			fixed4 _Diffuse;
 			fixed4 _Specular;
 			float _Gloss;
-
+ 
 			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;				

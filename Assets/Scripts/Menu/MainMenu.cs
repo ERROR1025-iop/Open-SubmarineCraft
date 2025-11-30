@@ -24,6 +24,7 @@ namespace Scraft
         public Button stationsButton;
         public Button craftsButton;
         public Button shopButton;
+        public Button mapButton;
         public Button shipsDownloadButton;
         public Button BackButton;
 
@@ -35,6 +36,7 @@ namespace Scraft
         {
             Time.timeScale = 1;
             GameSetting.init();
+            ISecretLoad.init();
             if (!ILang.isLoaded)
             {
                 ILang.loadLangData();
@@ -55,6 +57,7 @@ namespace Scraft
             stationsButton.onClick.AddListener(onStationsButtonClick);
             craftsButton.onClick.AddListener(onCraftsButtonClick);
             shopButton.onClick.AddListener(onShopButtonClick);
+            mapButton.onClick.AddListener(onMapButtonClick);
             shipsDownloadButton.onClick.AddListener(onShipsDownloadButtonClick);
             BackButton.onClick.AddListener(onBackButtonClick);
 
@@ -69,24 +72,7 @@ namespace Scraft
 
         void onStartGameButtonClick()
         {
-            if (GameSetting.isViewTutorial)
-            {
-                buttonsRectTarget = Vector2.zero;
-            }
-            else
-            {
-                IConfigBox.instance.show(ILang.get("view tutorial"), onViewTutorialComfirm, onViewTutorialCancel);
-            }                    
-        }
-
-        void onViewTutorialComfirm()
-        {
-            onTutorialButtonClick();
-        }
-
-        void onViewTutorialCancel()
-        {
-            buttonsRectTarget = Vector2.zero;
+            buttonsRectTarget = Vector2.zero;                   
         }
 
         void onSettingButtonClick()
@@ -148,7 +134,6 @@ namespace Scraft
 
         void onStationsButtonClick()
         {          
-
             if (ISecretLoad.isFileExit(ISecretLoad.stationInfoNamePath))
             {
                 toast.show("Loading");
@@ -164,18 +149,26 @@ namespace Scraft
         {
             if (ISecretLoad.isFileExit(ISecretLoad.stationInfoNamePath))
             {
-                toast.show("Loading");
-                SceneManager.LoadScene("Shop");
+                //toast.show("Loading");
+                //SceneManager.LoadScene("Shop");
+                AlertBox.ShowNotImplemented();
             }
             else
             {
                 toast.show("No access", 100);
-            }       
+            }
+        }
+
+        void onMapButtonClick()
+        {            
+            SceneManager.LoadScene("GameMap");
         }
 
         void onShipsDownloadButtonClick()
         {
-            UnityAndroidEnter.CallSavesMain();
+            //UnityAndroidEnter.CallSavesMain();
+            //AlertBox.ShowNotImplemented();
+            SceneManager.LoadScene("ShipDownload");
         }
 
         void onBackButtonClick()

@@ -10,6 +10,7 @@ namespace Scraft
         float lerpSpeed = 5;
 
         new Rigidbody rigidbody;
+        
 
         void Start()
         {
@@ -27,6 +28,7 @@ namespace Scraft
 
             if (openGravityStabilization)
             {
+                seaLevel = Buoyancy.getWaterHeight(transform.position);
                 rigidbody.useGravity = transform.localPosition.y > seaLevel;
             }
 

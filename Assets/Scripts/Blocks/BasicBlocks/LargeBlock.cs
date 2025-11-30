@@ -226,7 +226,6 @@ namespace Scraft.BlockSpace{ public class LargeBlock : SolidBlock
                     orgBlock.setIsBroken(isBroken);
                 }
             }
-
         }
 
         public bool getIsBroken()

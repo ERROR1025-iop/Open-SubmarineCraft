@@ -6,11 +6,8 @@ using UnityEditor;
 
 namespace Scraft.BlockSpace
 {
-    public class Block
+    public class Block: PreBlockParticle
     {
-
-        protected int blockId;
-        protected string blockName;
         protected int price;        
         protected string attributeCardName;
         protected string texturePath;
@@ -19,7 +16,6 @@ namespace Scraft.BlockSpace
 
         protected IPoint mapSize;
         GameObject parentObject;
-        IPoint coor;
         protected Color thumbnailColor;
         protected Color normalColor;
         protected bool m_isNeedDelete;
@@ -32,19 +28,12 @@ namespace Scraft.BlockSpace
         protected int pState;
         protected bool m_isFluid;
         protected bool m_isLargeBlock;
-
-        protected float density;
-        protected float temperature;
-        protected float transmissivity;
-        protected float heatCapacity;
-        protected float heatQuantity;
         protected float press;
         protected float calorific;
         protected int quality;
         protected float max_storeAir;
         protected float storeAir;
-        protected ParticleBlock particleBlockLayer;
-        protected float penetrationRate;         
+    
 
         /// <summary>
         /// 是否可以存储在仓库?0:不可存储;1:存于固体;2:存于液体
@@ -392,52 +381,6 @@ namespace Scraft.BlockSpace
             return density;
         }
 
-        public void setDensity(float d)
-        {
-            if (d <= 0)
-            {
-                Debug.Log("Warning: density <= 0");
-                return;
-            }
-            density = d;
-        }
-
-        public void setTemperature(float t)
-        {
-            temperature = t;
-            heatQuantity = temperature2HeatQuantity(temperature);
-        }
-
-        public void setHeatQuantity(float q)
-        {
-            heatQuantity = q;
-            if ((getHeatNoMassCapacity()) < 1)
-            {
-                Debug.Log(getName() + ":" + getHeatNoMassCapacity());
-            }
-            temperature = heatQuantity2Temperature(heatQuantity);
-        }
-
-        public float heatQuantity2Temperature(float heatQuantity)
-        {
-            return heatQuantity / getHeatNoMassCapacity();
-        }
-
-        public float temperature2HeatQuantity(float temperature)
-        {
-            return getHeatNoMassCapacity() * temperature;
-        }
-
-        public float getTemperature()
-        {
-            return temperature;
-        }
-
-        public float getHeatQuantity()
-        {
-            return heatQuantity;
-        }
-
         public void setPress(float p)
         {
             press = p;
@@ -456,59 +399,7 @@ namespace Scraft.BlockSpace
         public virtual float getOusidePress()
         {
             return press;
-        }
-
-        public void setTransmissivity(float t)
-        {
-            transmissivity = t;
-        }
-
-        public float getTransmissivity()
-        {
-            return transmissivity;
-        }
-
-        [System.Obsolete("use addHeatQuantity")]
-        public void addTemperature(float add_t)
-        {
-            setTemperature(temperature + add_t);
-        }
-
-        [System.Obsolete("use decHeatQuantity")]
-        public void decTemperature(float dec_t)
-        {
-            setTemperature(temperature - dec_t);
-        }
-
-        public void addHeatQuantity(float add_q)
-        {
-            if (add_q < 0)
-            {
-                Debug.Log("add_q < 0(" + blockName + "):" + add_q);
-                return;
-            }
-            setHeatQuantity(heatQuantity + add_q);
-        }
-
-        public void decHeatQuantity(float dec_q)
-        {
-            if (dec_q < 0)
-            {
-                Debug.Log("dec_q < 0(" + blockName + "):" + dec_q);
-                return;
-            }
-            setHeatQuantity(heatQuantity - dec_q);
-        }
-
-        public float getHeatCapacity()
-        {
-            return heatCapacity;
-        }
-
-        public float getHeatNoMassCapacity()
-        {
-            return density * heatCapacity;
-        }
+        } 
 
         public void addPress(float add_p)
         {
@@ -735,11 +626,8 @@ namespace Scraft.BlockSpace
         /// </summary>
         public virtual void update(BlocksEngine blocksEngine)
         {
-            heatMapRule();
-            if(particleBlockLayer != null)
-            {
-                particleBlockLayer.insideUpdate(blocksEngine, this);
-            }
+            base.update(blocksEngine);
+            heatMapRule();            
         }
 
         public virtual void heatMapRule()
@@ -771,17 +659,9 @@ namespace Scraft.BlockSpace
                         isChangeMaterial = false;
                         break;
                 }
-                
+
             }
             spriteRenderer.sharedMaterial = Pooler.shareMaterials[isChangeMaterial ? 1 : 0];
-        }
-
-        /// <summary>
-        /// 线程更新
-        /// </summary>
-        public virtual void threadUpdate(BlocksEngine blocksEngine)
-        {
-            temperatureRule();
         }
 
         /// <summary>
@@ -790,83 +670,6 @@ namespace Scraft.BlockSpace
         public virtual bool frameUpdate()
         {
             return false;
-        }
-
-
-        /// <summary>
-        /// 温度传递规律（热传冷，传递系数由热方块决定）
-        /// </summary>
-        public virtual void temperatureRule()
-        {
-            float minTemperature;
-            Block neighbor = getNeighborMinTemperatureBlock(out minTemperature);
-            if (neighbor != null && minTemperature < temperature)
-            {
-                float dt = (temperature - neighbor.getTemperature()) * (transmissivity * 0.04f);
-                float avgT = (temperature + neighbor.getTemperature()) * 0.5f;
-                float giveQ = temperature2HeatQuantity(dt);
-                float preT = preheating(this, -giveQ);
-                float preNT = preheating(neighbor, giveQ);
-
-                float pt = temperature;
-                float npt = neighbor.getTemperature();
-
-                float NMinGiveQ = giveQ;
-                if (preT < avgT || preNT > avgT)
-                {
-                    float NGiveQ = temperature2HeatQuantity(temperature - avgT);
-                    float NNReceiverQ = neighbor.temperature2HeatQuantity(avgT - neighbor.getTemperature());
-                    NMinGiveQ = Mathf.Min(Mathf.Abs(NGiveQ), Mathf.Abs(NNReceiverQ));
-                }
-                decHeatQuantity(NMinGiveQ);
-                neighbor.addHeatQuantity(NMinGiveQ);
-
-                if (neighbor.getTemperature() > avgT)
-                {
-                    neighbor.setTemperature(avgT);
-                }
-
-                if (temperature < avgT)
-                {
-                    setTemperature(avgT);
-                }
-            }
-        }
-
-        protected float preheating(Block block, float addQ)
-        {
-            return block.heatQuantity2Temperature(block.getHeatQuantity() + addQ);
-        }
-
-        private Block getNeighborMinTemperatureBlock(out float minTemperature)
-        {
-            Block up_block = getNeighborBlock(Dir.up);
-            Block right_block = getNeighborBlock(Dir.right);
-            Block down_block = getNeighborBlock(Dir.down);
-            Block left_block = getNeighborBlock(Dir.left);
-
-            minTemperature = Mathf.Min(new float[4]{up_block.getTemperature(),
-                                right_block.getTemperature(),
-                                down_block.getTemperature(),
-                                left_block.getTemperature()});
-
-            if (minTemperature == up_block.getTemperature())
-            {
-                return up_block;
-            }
-            else if (minTemperature == right_block.getTemperature())
-            {
-                return right_block;
-            }
-            else if (minTemperature == down_block.getTemperature())
-            {
-                return down_block;
-            }
-            else if (minTemperature == left_block.getTemperature())
-            {
-                return left_block;
-            }
-            return null;
         }
 
         /// <summary>
@@ -899,40 +702,9 @@ namespace Scraft.BlockSpace
             moveTo(coor.getDirPoint(dir));
         }
 
-        /// <summary>
-        ///粒子方块进入
-        /// </summary>
-        public void particleMoveIn(ParticleBlock block, bool isPlaceIn)
-        {
-            particleBlockLayer = block;
-            block.onInsideOtherBlock(this);
-            if (!isPlaceIn)
-            {
-                BlocksEngine.instance.removeBlock(block.getCoor(), false, block.getPress());
-            }   
-        }
+        
 
-        public void particleMoveOut(Block outBlock)
-        {
-            particleBlockLayer.onOutOtherBlock();          
-            particleBlockLayer.setTemperature(outBlock.getTemperature());
-            particleBlockLayer.setPress(outBlock.getPress());
-            BlocksEngine.instance.placeBlock(outBlock.getCoor(), particleBlockLayer);
-            particleBlockLayer = null;
-        }
 
-        public ParticleBlock particlePushOut()
-        {
-            particleBlockLayer.onOutOtherBlock();
-            ParticleBlock particleBlock = particleBlockLayer;
-            particleBlockLayer = null;
-            return particleBlock;
-        }
-
-        public bool isContainParticleBlock()
-        {
-            return particleBlockLayer != null;
-        }
 
         /// <summary>
         /// 世界模式下被摧毁时调用
@@ -961,8 +733,6 @@ namespace Scraft.BlockSpace
         {
             setCoor(coor);
             storeAir = IUtils.getJsonValue2Float(blockData, "sa", 0);
-            //setTemperature(IUtils.getJsonValue2Float(blockData, "t"));
-            //press = IUtils.getJsonValue2Float(blockData, "p");
         }
 
         /// <summary>
@@ -1032,12 +802,10 @@ namespace Scraft.BlockSpace
         /// <summary>
         /// 是否可以输入机械能
         /// </summary>
-        public virtual bool isCanReceiveMe()
+        public virtual bool isCanReceiveMe(Block putter)
         {
             return false;
-        }
-
-    
+        }    
 
         /// <summary>
         /// 是否可发送无线信号
@@ -1118,13 +886,7 @@ namespace Scraft.BlockSpace
         }
 
 
-        /// <summary>
-        /// 当被粒子碰撞的时候
-        /// </summary>
-        public virtual void onParticleCollide(ParticleBlock particleBlock)
-        {
 
-        }
 
         /// <summary>
         /// 建造模式下的点击
@@ -1147,7 +909,7 @@ namespace Scraft.BlockSpace
         /// </summary>
         public virtual void onPoolerModeInitFinish()
         {
-            setTemperature(25);           
+                    
         }       
 
         /// <summary>
@@ -1166,7 +928,7 @@ namespace Scraft.BlockSpace
         {
             BlocksManager.instance.addConsumeCargoCount(this, -1);
             CardManager.instance.updatecargoCount();
-            CardManager.instance.setDrawerActivited(CardManager.instance.getDrawerByBlockId(blockId), false);
+            //CardManager.instance.setDrawerActivited(CardManager.instance.getDrawerByBlockId(blockId), false);
         }
 
         /// <summary>
@@ -1209,14 +971,7 @@ namespace Scraft.BlockSpace
             return false;
         }
 
-        public void clearParticleBlockLayer()
-        {
-            if (particleBlockLayer != null)
-            {
-                particleBlockLayer.clear(true);
-                particleBlockLayer = null;
-            }
-        }
+
 
         /// <summary>
         /// （由引擎调用）销毁方块

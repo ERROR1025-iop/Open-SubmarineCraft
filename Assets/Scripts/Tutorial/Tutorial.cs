@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 namespace Scraft {
     public class Tutorial : MonoBehaviour
@@ -19,8 +20,8 @@ namespace Scraft {
         public Button circuitFoundationButton;
         public Button craneButton;
         public Button construction3DButton;
-        public Button useOfTurretsButton;  
-        
+        public Button useOfTurretsButton;
+
 
         void Start()
         {
@@ -37,7 +38,7 @@ namespace Scraft {
             circuitFoundationButton.onClick.AddListener(onCircuitFoundationButtonClick);
             craneButton.onClick.AddListener(onCraneButtonClick);
             construction3DButton.onClick.AddListener(onConstruction3DButtonClick);
-            useOfTurretsButton.onClick.AddListener(onUseOfTurretsButtonClick);            
+            useOfTurretsButton.onClick.AddListener(onUseOfTurretsButtonClick);
 
             GameObject.Find("Canvas/Back").GetComponent<Button>().onClick.AddListener(onBackButtonClick);
 
@@ -46,12 +47,25 @@ namespace Scraft {
                 GameSetting.isViewTutorial = true;
                 GameSetting.save();
             }
-                
+
+        }
+        
+        public static void OpenWikiWeb()
+        {
+            if(GameSetting.lang == 2)
+            {
+                Application.OpenURL("https://scraft.aipie.cool");
+            }
+            else
+            {
+                Application.OpenURL("https://scraft.aipie.cool?lang=en");
+            }
         }
 
         void onTextTutorialButtonClick()
         {
-            UnityAndroidEnter.CallWiki();
+            OpenWikiWeb();
+            //AlertBox.ShowNotImplemented();            
         }
 
         void onInterfaceOperationButtonClick()
@@ -116,7 +130,7 @@ namespace Scraft {
 
         void onBackButtonClick()
         {
-            Application.LoadLevel("Menu");
+            SceneManager.LoadScene("Menu");
         }
     }
 }

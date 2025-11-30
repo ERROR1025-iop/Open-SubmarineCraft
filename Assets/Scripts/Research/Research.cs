@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Scraft.BlockSpace;
+using UnityEngine.SceneManagement;
 
 namespace Scraft
 {
@@ -67,17 +68,17 @@ namespace Scraft
             smeltingPreliminary = registerResearchPoint("smeltingPreliminary", 25, miningTechnology, new Block[] { bm.stoneFurnace, bm.sulfur, bm.sulphuricAcid, bm.sulfurDioxide, bm.fineSteel });
            
             shipFoundation = registerResearchPoint("shipFoundation", 110, primarySubmersible, new Block[] { bm.dieselEngine, bm.dieselGenerator, bm.diesel, bm.propeller, bm.sidePropeller });
-            deepExploration = registerResearchPoint("deepExploration", 310, primarySubmersible, new Block[] { bm.advPump, bm.terrainSonar, bm.searchlight, bm.thermometer });
+            deepExploration = registerResearchPoint("deepExploration", 180, primarySubmersible, new Block[] { bm.advPump, bm.terrainSonar, bm.searchlight, bm.thermometer });
 
             motorPreliminary = registerResearchPoint("motorPreliminary", 75, powerGenerationTechnology, new Block[] { bm.smallElectorEngine });
 
-            refinementPreliminary = registerResearchPoint("refinementPreliminary", 150, smeltingPreliminary, new Block[] { bm.grinder, bm.coarseIronOre, bm.coarseCopperOre, bm.coarseSulfurOre, bm.dinas });
+            refinementPreliminary = registerResearchPoint("refinementPreliminary", 150, smeltingPreliminary, new Block[] { bm.grinder, bm.itemExtractor, bm.itemDepositor, bm.coarseIronOre, bm.coarseCopperOre, bm.coarseSulfurOre, bm.dinas });
             materialScience = registerResearchPoint("materialScience", 75, smeltingPreliminary, new Block[] { bm.silicon, bm.siliconCarbide, bm.charcoal, bm.semiconductor, bm.circuitBoard, bm.asphalt , bm.coalDiansMixture});
 
-            advancedMachinery = registerResearchPoint("advancedMachinery", 355, refinementPreliminary, new Block[] { bm.ironFurnace, bm.electorHeater });            
-            highTemperatureSmelting = registerResearchPoint("highTemperatureSmelting", 750, advancedMachinery, new Block[] { bm.steelFurnace, bm.temperatureInfraredSensor, bm.advElectorHeater});
-            centrifugalTechnology = registerResearchPoint("centrifugalTechnology", 1155, highTemperatureSmelting, new Block[] { bm.centrifuge, bm.fineIronOre, bm.fineCopperOre, bm.fineSulfurOre, bm.ironPowder, bm.copperPowder, bm.sulfurPowder, bm.uraniumPowder, bm.coalPowder, bm.sulfurPowder });
-            electrolysisTechnology = registerResearchPoint("electrolysisTechnology", 1155, advancedMachinery, new Block[] { bm.electrolyser, bm.refrigerator,  bm.hydrogen, bm.chlorine, bm.distilledWater });
+            advancedMachinery = registerResearchPoint("advancedMachinery", 210, refinementPreliminary, new Block[] { bm.ironFurnace, bm.electorHeater, bm.vacuumPump });            
+            highTemperatureSmelting = registerResearchPoint("highTemperatureSmelting", 550, advancedMachinery, new Block[] { bm.steelFurnace, bm.temperatureInfraredSensor, bm.advElectorHeater});
+            centrifugalTechnology = registerResearchPoint("centrifugalTechnology", 710, highTemperatureSmelting, new Block[] { bm.centrifuge, bm.fineIronOre, bm.fineCopperOre, bm.fineSulfurOre, bm.ironPowder, bm.copperPowder, bm.sulfurPowder, bm.uraniumPowder, bm.coalPowder, bm.sulfurPowder });
+            electrolysisTechnology = registerResearchPoint("electrolysisTechnology", 750, advancedMachinery, new Block[] { bm.electrolyser, bm.refrigerator,  bm.hydrogen, bm.chlorine, bm.distilledWater });
             smeltingAutomationTechnology = registerResearchPoint("smeltingAutomationTechnology", 355, refinementPreliminary, new Block[] { bm.conveyor, bm.conveyorCorner, bm.transfer, bm.crane, bm.pushCrane , bm.machineBattery, bm.goodsSensor});
           
            
@@ -87,10 +88,10 @@ namespace Scraft
             advancedShipTechnology = registerResearchPoint("advancedShipTechnology", 1250, largeMotor, new Block[] { bm.steamTurbine, bm.auxiliaryGenerator });
            
             deepSeaVoyage = registerResearchPoint("deepSeaVoyage", 750, deepExploration, new Block[] { bm.stirlingEngine, bm.compressedAir});
-            heightCircuitTechnology = registerResearchPoint("heightCircuitTechnology", 550, circuitPreliminary, new Block[] { bm.addGate, bm.decGate, bm.mulGate, bm.divGate, bm.remainderGate });
+            heightCircuitTechnology = registerResearchPoint("heightCircuitTechnology", 550, circuitPreliminary, new Block[] { bm.addGate, bm.decGate, bm.mulGate, bm.divGate, bm.remainderGate, bm.remoteSignalReceiver, bm.remoteSignalTransmitter, bm.wifi });
             advancedCircuitTechnology = registerResearchPoint("advancedCircuitTechnology", 950, heightCircuitTechnology, new Block[] { bm.functionGenerator });
             sensorTechnology = registerResearchPoint("sensorTechnology", 750, heightCircuitTechnology, new Block[] { bm.temperatureSensor, bm.pressSensor, bm.shaftSensor, bm.advGoodsSensor });
-            nuclearEnergy = registerResearchPoint("nuclearEnergy", 1750, sensorTechnology, new Block[] { bm.uranium, bm.controlRod, bm.alarm });
+            nuclearEnergy = registerResearchPoint("nuclearEnergy", 1750, sensorTechnology, new Block[] { bm.uranium, bm.controlRod, bm.alarm, bm.neutronReflector });
             
           
             armedTechnology = registerResearchPoint("armedTechnology", 1550, electrolysisTechnology, new Block[] { bm.torpedp, bm.smallTorpedp, bm.torpedpTube,bm.turretCore, bm.turretShell });
@@ -102,6 +103,9 @@ namespace Scraft
             instance = this;
             bm = new BlocksManager();
             ISecretLoad.init();
+            ISecretLoad.loadScientificAndDiamonds();
+            if(ScientificView.instance != null)
+                ScientificView.instance.UpdateScientificCount();
             researchPoints = new List<ResearchPoint>();
 
             GameObject.Find("Canvas/Back").GetComponent<Button>().onClick.AddListener(onBackButtonClick);
@@ -171,7 +175,8 @@ namespace Scraft
                     ISecretLoad.saveResearch(researchPoints);
                     ISecretLoad.loadResearch();
                     ISecretLoad.setScientific(scientific - consume);
-                    IScientificAndDiamonds.instance.UpdateNumberText();
+                    if(ScientificView.instance != null)
+                        ScientificView.instance.UpdateScientificCount();
                     informationResearchButtonImage.sprite = researchButtonSprite2;
                 }
                 else
@@ -212,7 +217,7 @@ namespace Scraft
 
         void onBackButtonClick()
         {
-            Application.LoadLevel("Menu");
+            SceneManager.LoadScene("Menu");
         }
     }
 }

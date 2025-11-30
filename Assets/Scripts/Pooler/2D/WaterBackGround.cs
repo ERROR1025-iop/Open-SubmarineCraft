@@ -19,7 +19,8 @@ namespace Scraft
             float deep = MainSubmarine.deep;
             if (deep < 50)
             {
-                transform.localPosition = new Vector3(0, -50f + Pooler.wbgOffsetY - MainSubmarine.transform.position.y, 10);
+                //transform.localPosition = new Vector3(0, -50f + Pooler.wbgOffsetY - MainSubmarine.transform.position.y, 10);
+                transform.localPosition = new Vector3(0, -50f + Pooler.wbgOffsetY - MainSubmarine.transform.position.y + MainSubmarine.seaLevel, 10);
             }
             else if (deep > 50)
             {

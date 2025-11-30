@@ -8,8 +8,9 @@ using TapSDK.Compliance;
 using System.Threading.Tasks;
 using System;
 using UnityEngine.SceneManagement;
+using Scraft;
 
-public class TapSdk : MonoBehaviour
+public class TapSdkLogin : MonoBehaviour
 {
     public Button TapTapLoginButton;
 
@@ -17,7 +18,11 @@ public class TapSdk : MonoBehaviour
 
     async void Awake()
     {
-
+        var preferredLanguage = TapTapLanguageType.en;
+        if (GameSetting.lang == 2 || GameSetting.isAndroid)
+        {
+            preferredLanguage = TapTapLanguageType.zh_Hans;
+        }
         // 核心配置
         TapTapSdkOptions coreOptions = new TapTapSdkOptions
         {
@@ -28,9 +33,9 @@ public class TapSdk : MonoBehaviour
             // 地区，CN 为国内，Overseas 为海外
             region = TapTapRegionType.CN,
             // 语言，默认为 Auto，默认情况下，国内为 zh_Hans，海外为 en
-            preferredLanguage = TapTapLanguageType.zh_Hans,
+            preferredLanguage = preferredLanguage,
             // 是否开启日志，Release 版本请设置为 false
-            enableLog = true
+            enableLog = false
         };
         // TapSDK 初始化
         TapTapSDK.Init(coreOptions);
@@ -70,6 +75,8 @@ public class TapSdk : MonoBehaviour
 
             case 500: // 玩家未受限制，可正常进入
                 hasCheckedCompliance = true;
+                Debug.Log("Can enter game");
+                LoginHandle.via = "tap";
                 SceneManager.LoadScene("Menu");
                 // TODO: 显示开始游戏按钮
                 break;
@@ -79,7 +86,8 @@ public class TapSdk : MonoBehaviour
                 () =>
                 {
                     TapTapLoginButton.gameObject.SetActive(true);
-                }, "退出游戏", ()=> {
+                }, "退出游戏", () =>
+                {
                     TapTapLoginButton.gameObject.SetActive(true);
                 }, null);
                 TapTapLoginButton.gameObject.SetActive(true);
@@ -93,8 +101,8 @@ public class TapSdk : MonoBehaviour
         hasCheckedCompliance = false;
         TapTapCompliance.Startup(userIdentifier);
     }
-    
-        /// <summary>
+
+    /// <summary>
     /// 开启合规认证检查
     /// </summary>
     public async Task StartCheckCompliance()
@@ -147,7 +155,7 @@ public class TapSdk : MonoBehaviour
             if (!hasCheckedCompliance)
             {
                 // 开始合规认证检查
-               await StartCheckCompliance();
+                await StartCheckCompliance();
             }
         }
     }

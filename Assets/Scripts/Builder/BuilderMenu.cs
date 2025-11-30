@@ -63,8 +63,16 @@ namespace Scraft
             Texture2D texture2D = builder.createThumbnailTexture2D(JsonMapper.ToObject(shipData));
             byte[] png = texture2D.EncodeToPNG();
             File.WriteAllBytes(GamePath.cacheFolder + "thumbnail.cache", png);
+            ShipUploader shipUploader = ShipUploader.instance;
+            shipUploader.isAssembler = false;
+            shipUploader.titleInput.text = World.mapName;
+            shipUploader.SetCover(GamePath.cacheFolder + "thumbnail.cache");
+            shipUploader.Show();
+            show(false);
+            //UnityAndroidEnter.CallUploadShip(World.mapName, false);
+            //AlertBox.ShowNotImplemented();
 
-            UnityAndroidEnter.CallUploadShip(World.mapName, false);
+
         }
 
         void onAssemblerButtonClick()
@@ -77,7 +85,9 @@ namespace Scraft
 
         void onOpenWikiButtonClick()
         {
-            UnityAndroidEnter.CallWiki();
+            //AlertBox.ShowNotImplemented();
+            Tutorial.OpenWikiWeb();
+            show(false);
         }
 
         void onSettingButtonClick()

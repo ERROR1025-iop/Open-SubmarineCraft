@@ -42,6 +42,13 @@ namespace Scraft.BlockSpace{ public class Valve : RotationBlock
             return syntInfos;
         }
 
+        public override void onPoolerModeInitFinish()
+        {
+            base.onPoolerModeInitFinish();
+            isTurnOn = getCurrentBindId() == 6;
+            isStateChanged = true;
+        }
+
         public override void onPreesButtonClick(bool isClick)
         {
             if (isTurnOn != isClick)
@@ -146,7 +153,7 @@ namespace Scraft.BlockSpace{ public class Valve : RotationBlock
 
         public override int[] getBindArr()
         {
-            return new int[4] { 1, 2, 4, 5 };
+            return new int[5] { 1, 2, 4, 5, 6 };
         }      
     }
 }

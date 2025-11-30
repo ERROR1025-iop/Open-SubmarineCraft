@@ -34,7 +34,7 @@
 			};
 
             v2f vert (a2v v)
-            {
+            { 
 				v2f o;				
 				o.pos = UnityObjectToClipPos(v.vertex);
 				if (_Open > 0) {

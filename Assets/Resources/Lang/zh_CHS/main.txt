@@ -152,6 +152,8 @@
     "selector":"筛选器",
     "remoteSignalReceiver":"远程信号接收器",
     "remoteSignalTransmitter":"远程信号发送器",
-	"neutronReflector":"中子反射板"
-	
+	"neutronReflector":"中子反射板",
+
+	"itemExtractor":"仓库提取器",
+	"itemDepositor":"仓库存放器"
 }

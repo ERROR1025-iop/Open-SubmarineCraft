@@ -64,11 +64,11 @@ namespace Scraft.BlockSpace
                 {
                     if(temperature > 1000)
                     {
-                        blocksEngine.createBlock(getCoor(), BlocksManager.instance.siliconCarbide);
+                        blocksEngine.createBlock(getCoor(), BlocksManager.instance.siliconCarbide, true);
                     }
                     else
                     {
-                        blocksEngine.createBlock(getCoor(), BlocksManager.instance.silicon);
+                        blocksEngine.createBlock(getCoor(), BlocksManager.instance.silicon, true);
                     }                    
                 }
                 else

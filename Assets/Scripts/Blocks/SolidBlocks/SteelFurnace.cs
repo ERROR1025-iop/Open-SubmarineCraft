@@ -13,7 +13,6 @@ namespace Scraft.BlockSpace
             initBlock("steelFurnace", "industry");
             transmissivity = 1.72f;
             density = 13.5f;
-            unityFuelRate = 0.45f;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)

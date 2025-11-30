@@ -1,11 +1,16 @@
 ﻿{
-	"Haikal Archipelago": "Haikal Archipelago",  
-	"Dongquan Mine Cave": "Winter Mine Cave",  
+	"Haikal Island": "Haikal Island",  
+	"Twin Islands": "Twin Islands",  
+	"Dongquan Mine Cave": "Dongquan Mine Cave",  
 	"Necromancy Fortress": "Necromancy Fortress",  
 	"Zoram": "Zoram",  
+	"Azure Island": "Azure Island",  
 	"Port of Nicaral": "Port of Nicaral",  
 	"Burning Island": "Burning Island",  
-	"Stonehammer Island": "Stonehammer Island",  
-	"Sea of oracles": "Sea of oracles",  
-	"Sea of Fadil": "Sea of Fadil"
+	"Stonehammer Island": "Stonehammer Island",
+	"Sea of Oracles": "Sea of Oracles",  
+	"Sea of Fadil": "Sea of Fadil",
+	"Frostveil Trench": "Frostveil Trench",
+	"Mist Island": "Mist Island",
+	"Sea of Stellar": "Sea of Stellar"
 }

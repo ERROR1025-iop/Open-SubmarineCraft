@@ -7,7 +7,8 @@ namespace Scraft.DpartSpace
     public class RudderRS : RunScript
     {
         public Transform rudderTrans;
-        public Vector3 rotateAxis, forceAxis;
+        public Vector3 rotateAxis;
+        public Vector3 forceAxis;
 
         protected int front, right;
         protected float verticalComponent, horizontalComponent, axisComponent;
@@ -53,7 +54,7 @@ namespace Scraft.DpartSpace
 
                 rotateWorldAxis = transform.TransformDirection(rotateAxis);
                 verticalComponent = Mathf.Abs(Vector3.Dot(rotateWorldAxis, Vector3.up));
-                horizontalComponent = 1 - verticalComponent;
+                horizontalComponent = Mathf.Abs(Vector3.Dot(rotateWorldAxis, Vector3.forward));
 
                 forceWorldAxis = transform.TransformDirection(forceAxis);
                 axisComponent = Vector3.Dot(forceWorldAxis, Vector3.right);
@@ -82,21 +83,29 @@ namespace Scraft.DpartSpace
 
             float forwardTorque = MainSubmarine.speed * 10;
             //垂直分量                   
-            float rotateAngle = MainSubmarine.rudderTorque * 30 * verticalComponent;
+            float rotateAngle = MainSubmarine.rudderTorque * 30 * verticalComponent * front;
 
-            //水平分量       
-            rotateAngle += MainSubmarine.pitchTorque * 30 * horizontalComponent;
-            rudderTrans.localEulerAngles = rotateAngle * axisComponent * front * rotateAxis;
+            //水平分量
+            rotateAngle += MainSubmarine.pitchTorque * -30 * horizontalComponent;
+
+            //滚转
+            rotateAngle += MainSubmarine.rollTorque * 30 * horizontalComponent * right;
+
+            rudderTrans.localEulerAngles = rotateAngle * axisComponent * rotateAxis;
+
+
+            
 
             Vector3 forceDir = Quaternion.AngleAxis(180, transform.TransformDirection(forceAxis)) * rudderTrans.TransformDirection(forceAxis) * (MainSubmarine.forward);
             Vector3 force = (forwardTorque * verticalComponent + forwardTorque * horizontalComponent) * forceDir * (Mathf.Abs(rotateAngle) / 30);
             force *= size;
             Debug.DrawLine(transform.position, transform.position + forceDir);
-            if (transform.position.y > Buoyancy.waterHeight)
+            float water = Buoyancy.getWaterHeight(transform.position);    
+            if (transform.position.y > water+1)
             {
                 force *= 0.1f;
             }
-            MainSubmarine.rigidbody.AddForceAtPosition(force, transform.position);
+            MainSubmarine.rigidbody.AddForceAtPosition(force * 3f, transform.position);
         }
 
 

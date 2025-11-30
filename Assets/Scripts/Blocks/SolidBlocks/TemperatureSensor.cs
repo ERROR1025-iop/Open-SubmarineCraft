@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scraft.BlockSpace{ public class TemperatureSensor : RotationBlock
+namespace Scraft.BlockSpace{
+    public class TemperatureSensor : RotationBlock
     {
 
         float nt;
@@ -110,6 +111,6 @@ namespace Scraft.BlockSpace{ public class TemperatureSensor : RotationBlock
         public override bool isCanSendWifi()
         {
             return true;
-        }     
+        }
     }
 }

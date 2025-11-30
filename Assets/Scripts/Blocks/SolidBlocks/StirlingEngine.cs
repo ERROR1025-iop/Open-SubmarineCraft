@@ -13,7 +13,8 @@ namespace Scraft.BlockSpace{ public class StirlingEngine : LargeBlock
 
         int updataFrameDelayPerUnit;
         int updataFrameDelayStack;
-        int updataFrameStack;
+        int updataFrameStack;        
+        protected float lastOutput;
 
         public StirlingEngine(int id, GameObject parentObject, GameObject blockObject)
             : base(id, parentObject, blockObject)
@@ -105,11 +106,28 @@ namespace Scraft.BlockSpace{ public class StirlingEngine : LargeBlock
         {
             Block block1 = blocksEngine.getBlock(getReviseBlockCoor(new IPoint(1, 0)));
             Block block2 = blocksEngine.getBlock(getReviseBlockCoor(new IPoint(1, 2)));
+            // 缓存温度，避免重复访问属性
+            float temp1 = block1.temperature;
+            float temp2 = block2.temperature;
+            // 一次性确定高温块和低温块
+            Block highTempBlock = temp1 > temp2 ? block1 : block2;
+            Block lowTempBlock  = temp1 <= temp2 ? block1 : block2;
+            // 计算平均温度
+            float highToLowRatio = 0.8f;
+            float tarTemp = highTempBlock.temperature - 
+                   (highTempBlock.temperature - lowTempBlock.temperature) * (1-highToLowRatio);
+            // 单位热容量（每单位体积或质量的热容）
+            float uhq = density * heatCapacity;
+            // 可用热能（高温部分向平均温度传递时可释放的能量）
+            float hq = (highTempBlock.temperature - tarTemp) * uhq * 0.20f;
+            // 最终输出
+            float output = hq * powerDirection * getEfficiency();
+            highTempBlock.setTemperature(tarTemp);
 
-            float dt = block1.getTemperature() - block2.getTemperature();
-            blocksEngine.putMe(this, getReviseBlockCoor(new IPoint(3, 1)), Mathf.Abs(dt) * 30 * powerDirection * getEfficiency());
+            float realOutPut = Mathf.Abs(Mathf.Lerp(lastOutput, output, 0.01f));
+            blocksEngine.putMe(this, getReviseBlockCoor(new IPoint(3, 1)), realOutPut);
+            lastOutput = realOutPut;
 
-            float absDt = Mathf.Abs(dt);
             for (int offsetx = 0; offsetx < size.x; offsetx++)
             {
                 for (int offsety = 0; offsety < size.y; offsety++)
@@ -120,13 +138,13 @@ namespace Scraft.BlockSpace{ public class StirlingEngine : LargeBlock
                     {
                         continue;
                     }
-                    if (absDt > 200)
+                    if (realOutPut > 5000)
                     {
                         offsetBlock.setUpdataFrameDelayPerUnit(0);
                     }
-                    else if (absDt > 0)
+                    else if (realOutPut > 0)
                     {
-                        offsetBlock.setUpdataFrameDelayPerUnit((int)(200 / absDt));
+                        offsetBlock.setUpdataFrameDelayPerUnit((int)(5000 / realOutPut));
                     }
                     else
                     {

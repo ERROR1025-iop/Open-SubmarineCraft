@@ -38,7 +38,7 @@
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			fixed4 frag(v2f i) : SV_Target 
 			{				
 				return _Luminou;
 			}

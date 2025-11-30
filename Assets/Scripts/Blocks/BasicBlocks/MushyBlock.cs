@@ -27,7 +27,6 @@ namespace Scraft.BlockSpace
         public override void update(BlocksEngine blocksEngine)
         {
             heatMapRule();
-            temperatureRule();
             liquildMoveRule();
             liquildPressRule();
             liquildCompressChildRealseRule(blocksEngine);
@@ -39,7 +38,7 @@ namespace Scraft.BlockSpace
         {
             if (liquidBlockStatic != null && temperature < boilingPoint)
             {
-                LiquidBlock liquidBlock = (LiquidBlock)blocksEngine.createBlock(getCoor(), liquidBlockStatic, temperature, press);
+                LiquidBlock liquidBlock = (LiquidBlock)blocksEngine.createBlock(getCoor(), liquidBlockStatic, press);
                 liquidBlock.setCalorific(calorific / totalGasChildCount);
                 liquidBlock.setGasChildCount(gasChildCount);
                 liquidBlock.setDensity(density + 0.1f - 0.001f);
@@ -113,7 +112,7 @@ namespace Scraft.BlockSpace
             }
             else
             {
-                blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().air, temperature, press);
+                blocksEngine.createBlock(getCoor(), blocksEngine.getBlocksManager().air, press);
             }
 
         }
@@ -127,12 +126,14 @@ namespace Scraft.BlockSpace
             }
             else
             {
-                gasBlock = blocksEngine.createBlock(coor, gasBlockStatic, blocksEngine.getBlock(coor).getTemperature(), press) as GasBlock;
+                gasBlock = blocksEngine.createBlock(coor, gasBlockStatic, press) as GasBlock;
             }
-            gasBlock.setCalorific(calorific);
+            float unityCalorific = calorific / totalGasChildCount;
+            calorific -= unityCalorific;
+            gasBlock.setCalorific(unityCalorific);
             gasBlock.setAtChildrensIndex(gasChildCount);
             gasBlock.setDensity(density / totalGasChildCount);
-            //decHeatQuantity(gasBlock.getHeatQuantity());蒸发吸热
+            SeparationTemperatureCalculation(this, gasBlock);
             gasChildCount--;
             return gasBlock;
         }

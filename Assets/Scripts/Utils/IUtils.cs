@@ -2,6 +2,7 @@
 using Scraft.BlockSpace;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -85,7 +86,20 @@ namespace Scraft
                 data[i - 1] = int.Parse(datas[i]);
             }
             return data;
-        }
+        } 
+
+        static public int[] unserializeIntArrayWithDefault(string datastr)
+        {
+            try
+            {
+                return unserializeIntArray(datastr);
+            }
+            catch
+            {
+                return new int[0];
+            }
+        } 
+        
 
         static public void initializedArray<T>(T[] array, T value)
         {
@@ -133,7 +147,24 @@ namespace Scraft
 
         static public bool isPointGUI()
         {
-            bool isPoint = GameSetting.isAndroid ? Input.touchCount > 0 ? EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) : false : EventSystem.current.IsPointerOverGameObject();
+            bool isPoint;
+            // if (GameSetting.isAndroid)
+            // {
+            //     if (Input.touchCount > 0)
+            //     {
+            //         isPoint = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+            //     }
+            //     else
+            //     {
+            //         isPoint = false;
+            //     }
+            // }
+            // else
+            // {
+            //     isPoint = EventSystem.current.IsPointerOverGameObject();
+            // }
+            isPoint = EventSystem.current.IsPointerOverGameObject();
+
             if (isPoint)
             {
                 return true;
@@ -691,9 +722,9 @@ namespace Scraft
             return r * 57.29577f;
         }
 
-        static public Vector3 reviseMousePos(Vector3 pos)
+        static public Vector3 reviseMousePos(Vector3 pos, float CanvasW)
         {
-            float dx = 800f / Screen.width;
+            float dx = CanvasW / Screen.width;
             pos.x = pos.x * dx;
             pos.y = pos.y * dx;
             return pos;
@@ -741,11 +772,16 @@ namespace Scraft
 
         static public void write2txt(string path, string data)
         {
-            FileInfo fi = new FileInfo(path);
-            StreamWriter sw = fi.CreateText();
-            sw.Write(data);
-            sw.Dispose();
-            sw.Close();
+            string dir = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))
+            {
+                sw.Write(data);
+            }
         }
 
         static public string readFromTxt(string path)
@@ -949,6 +985,75 @@ namespace Scraft
             catch
             {
                 return errorFloat;
+            }
+        }
+
+        /// <summary>
+        /// 将指定文件夹压缩为ZIP文件
+        /// </summary>
+        /// <param name="folderPath">要压缩的文件夹路径</param>
+        /// <param name="zipFilePath">生成的ZIP文件路径</param>
+        public static void ZipFolder(string folderPath, string zipFilePath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException($"文件夹不存在: {folderPath}");
+            }
+
+            // 如果ZIP文件已存在，先删除
+            if (File.Exists(zipFilePath))
+            {
+                File.Delete(zipFilePath);
+            }
+
+            try
+            {
+                // 创建ZIP存档
+                using (var archive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+                {
+                    // 遍历文件夹中的所有文件和子文件夹
+                    foreach (string file in Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories))
+                    {
+                        // 计算相对于源文件夹的相对路径
+                        string relativePath = Path.GetRelativePath(folderPath, file).Replace('\\', '/');
+
+                        // 添加文件到ZIP归档
+                        archive.CreateEntryFromFile(file, relativePath);
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw new System.Exception($"压缩文件夹失败: {e.Message}", e);
+            }
+        }
+
+        /// <summary>
+        /// 解压ZIP文件到指定文件夹
+        /// </summary>
+        /// <param name="zipFilePath">ZIP文件路径</param>
+        /// <param name="toFolderPath">解压目标文件夹路径</param>
+        public static void UnZip(string zipFilePath, string toFolderPath)
+        {
+            if (!File.Exists(zipFilePath))
+            {
+                throw new FileNotFoundException($"ZIP文件不存在: {zipFilePath}");
+            }
+
+            // 确保目标文件夹存在
+            if (!Directory.Exists(toFolderPath))
+            {
+                Directory.CreateDirectory(toFolderPath);
+            }
+
+            try
+            {
+                // 解压ZIP文件
+                ZipFile.ExtractToDirectory(zipFilePath, toFolderPath);
+            }
+            catch (System.Exception e)
+            {
+                throw new System.Exception($"解压ZIP文件失败: {e.Message}", e);
             }
         }
     }

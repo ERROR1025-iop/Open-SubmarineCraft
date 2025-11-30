@@ -30,7 +30,7 @@ namespace Scraft
             radarTrans = GameObject.Find("Canvas/radar rect/radar").transform;
             pointParent = radarTrans.GetChild(0);
             lineRectTrans = radarTrans.GetChild(5).GetComponent<RectTransform>();
-            speedText = GameObject.Find("Canvas/radar rect/radar text rect/speed").GetComponent<Text>();
+            speedText = GameObject.Find("Canvas/speed").GetComponent<Text>();
             posText = GameObject.Find("Canvas/radar rect/radar text rect/coor").GetComponent<Text>();
 
             upArrObject = radarTrans.GetChild(1).gameObject;

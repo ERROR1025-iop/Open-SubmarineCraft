@@ -18,7 +18,7 @@ namespace Scraft {
                 if(langSprite[GameSetting.lang] != null)
                 {
                     image = GetComponent<Image>();
-                    image.sprite = langSprite[GameSetting.lang]; 
+                    image.sprite = langSprite[GameSetting.lang];
                 }                
             }   
         }

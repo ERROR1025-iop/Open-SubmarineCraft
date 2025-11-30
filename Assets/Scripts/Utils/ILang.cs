@@ -40,16 +40,23 @@ namespace Scraft
             loadLangFile(folder, "research.txt");
             loadLangFile(folder, "station.txt");
             loadLangFile(folder, "tutorial.txt");
+            loadLangFile(folder, "tutorial_pc.txt");
             isLoaded = true;
         }
 
         static public void loadLangFile(string folder, string fileName)
         {
-            string type = Path.GetFileNameWithoutExtension(fileName);
-            string filePath = folder + type;
-            TextAsset textAsset = Resources.Load(filePath) as TextAsset;
-            JsonData data = JsonMapper.ToObject(textAsset.text);
-            jsonDataArr.Add(type, data);
+            try{
+                string type = Path.GetFileNameWithoutExtension(fileName);
+                string filePath = folder + type;
+                TextAsset textAsset = Resources.Load(filePath) as TextAsset;
+                JsonData data = JsonMapper.ToObject(textAsset.text);
+                jsonDataArr.Add(type, data);
+            }
+            catch(System.Exception e)
+            {
+                Debug.LogError(folder + "/" + fileName + ":" + e.ToString());
+            }
         }
 
         static public void loadLangFileFromExternal(string path, string type)

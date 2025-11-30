@@ -22,8 +22,8 @@ public class PoolerEngineSound : MonoBehaviour
         dieselEngineVolume = Mathf.Clamp01(dieselEngineVolume);
         electorEngineVolume = Mathf.Clamp01(electorEngineVolume);
 
-        dieselEngineAudioSource.volume = dieselEngineVolume * 0.9f;
-        electorEngineAudioSource.volume = electorEngineVolume * 0.9f;
+        dieselEngineAudioSource.volume = dieselEngineVolume;
+        electorEngineAudioSource.volume = electorEngineVolume;
 
         dieselEngineVolume -= 0.05f;
         electorEngineVolume -= 0.05f;

@@ -144,7 +144,8 @@ namespace Scraft.DpartSpace
         {
             if (selectorRS.isSelecting)
             {
-                if (Pooler.instance.fireWeapon >= 1 && transform.position.y > Buoyancy.waterHeight)
+                float water = Buoyancy.getWaterHeight(transform.position);    
+                if (Pooler.instance.fireWeapon >= 1 && transform.position.y > water)
                 {
                     TurretCore turretCore = BlocksEngine.instance.getBlock(turretCoor) as TurretCore;
                     if (turretCore != null && turretCore.getId() == turretCoreBlockId && turretCore.fire())
@@ -168,10 +169,11 @@ namespace Scraft.DpartSpace
             {
                 return;
             }
-
+            
+            float water = Buoyancy.getWaterHeight(transform.position);       
             if (selectorRS.isMainSelecting)
-            {             
-                if (transform.position.y > Buoyancy.waterHeight)
+            {                       
+                if (transform.position.y > water)
                 {
                     ShellTargetPlane.show(true);
                     calculateTarget();
@@ -184,7 +186,7 @@ namespace Scraft.DpartSpace
                 calculateAimData();
             }
 
-            if (isOpenAssistAim && transform.position.y > Buoyancy.waterHeight)
+            if (isOpenAssistAim && transform.position.y > water)
             {
                 AimAssist();
             }

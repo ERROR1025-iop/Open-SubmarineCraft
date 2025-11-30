@@ -73,9 +73,9 @@ namespace Scraft.BlockSpace
             }
         }
 
-        public override bool isCanReceiveMe()
+        public override bool isCanReceiveMe(Block putter)
         {
-            return true;
+            return true; 
         }
     }
 }

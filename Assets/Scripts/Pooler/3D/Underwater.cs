@@ -7,8 +7,10 @@ namespace Scraft
 
         public Material downWater;
         public Light directorLight;
+        public Light directorLightWater;
+        public static float maxLight = 1; 
 
-        private int underwaterLevel = 0;
+        private float underwaterLevel = 0;
         private float fogDensity = 0.005F;
         private Skybox skybox;
         private Camera camera3d;
@@ -21,11 +23,13 @@ namespace Scraft
             camera3d = GetComponent<Camera>();
             camera3d.backgroundColor = new Color(0.1450f, 0.2549f, 0.3137f, 1);
             directorLight = GameObject.Find("Directional light").GetComponent<Light>();
+            directorLightWater = GameObject.Find("Directional Light Water").GetComponent<Light>();
             subTrans = MainSubmarine.transform;
         }
 
         void Update()
         {
+            underwaterLevel = SubCamera.seaLevel;
             if (transform.position.y <= underwaterLevel + 0.02f)
             {
                 float CameraY = transform.position.y;
@@ -35,13 +39,23 @@ namespace Scraft
                 //摄像机及灯光背景颜色
                 if (minY > -15)
                 {
-                    camera3d.backgroundColor = new Color(0.1450f + minY * 0.00967f, 0.2549f + minY * 0.017f, 0.3137f + minY * 0.02091f, 1);
-                    directorLight.intensity = minY * 0.067f;
+                    if (maxLight == 0)
+                    {
+                         camera3d.backgroundColor = Color.black;                         
+                        directorLightWater.intensity = 0;
+                    }
+                    else
+                    {
+                        camera3d.backgroundColor = new Color(0.1450f + minY * 0.00967f, 0.2549f + minY * 0.017f, 0.3137f + minY * 0.02091f, 1);                        
+                        directorLightWater.intensity = 1+minY * 0.067f * maxLight;
+                    }
+                    directorLight.intensity = minY * 0.067f * maxLight;
                 }
                 else
                 {
                     camera3d.backgroundColor = Color.black;
                     directorLight.intensity = 0;
+                    directorLightWater.intensity = 0;
                 }
                 //海底背景颜色变换
                 if (minY > -20)
@@ -59,8 +73,9 @@ namespace Scraft
             else
             {
                 skybox.enabled = true;
-                camera3d.farClipPlane = 1000;
-                directorLight.intensity = 1;
+                camera3d.farClipPlane = 2000;
+                directorLight.intensity = maxLight;
+                directorLightWater.intensity = maxLight;
             }
         }
     }

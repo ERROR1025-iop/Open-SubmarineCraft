@@ -15,7 +15,6 @@ namespace Scraft
                 AndroidJavaClass jc = new AndroidJavaClass("com.miaoyue91.submarine.UnityEnterActivity");
                 jc.CallStatic("CallCheckSDPermission", currentActivity);
             }
-
         }
 
         public static void CallSavesMain()
@@ -27,8 +26,7 @@ namespace Scraft
                 AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
                 AndroidJavaClass jc = new AndroidJavaClass("com.miaoyue91.submarine.UnityEnterActivity");
                 jc.CallStatic("CallSavesMain", currentActivity);
-            }
-
+            }    
         }
 
         public static void CallWiki()

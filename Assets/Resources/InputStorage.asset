@@ -97,5 +97,23 @@ MonoBehaviour:
   - name: Value minus
     key: 269
     alternativeKey: 0
+  - name: Roll Left
+    key: 113
+    alternativeKey: 0
+  - name: Roll Right
+    key: 101
+    alternativeKey: 0
+  - name: Joint 1 Up
+    key: 273
+    alternativeKey: 0
+  - name: Joint 1 Right
+    key: 275
+    alternativeKey: 0
+  - name: Joint 1 Down
+    key: 274
+    alternativeKey: 0
+  - name: Joint 1 Left
+    key: 276
+    alternativeKey: 0
   axis: []
   usingAxis: []

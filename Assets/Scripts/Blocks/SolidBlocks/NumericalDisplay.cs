@@ -52,7 +52,7 @@ namespace Scraft.BlockSpace{ public class NumericalDisplay : SolidBlock
                 if (rbd != null)
                 {
                     int rsv = rbd.getCurrentSettingValue();
-                    if (rsv < 4)
+                    if (rsv < 7)
                     {
                         currentSettingValue = rsv + 1;
                     }
@@ -145,6 +145,20 @@ namespace Scraft.BlockSpace{ public class NumericalDisplay : SolidBlock
                         showNumber = 10;
                     }
                     break;
+                case 6:
+                    showNumber = (int)voltage / 1000000 % 10;
+                    if (voltage > -1000000 && voltage < -100000)
+                    {
+                        showNumber = 10;
+                    }
+                    break;    
+                case 7:
+                    showNumber = (int)voltage / 10000000 % 10;
+                    if (voltage > -10000000 && voltage < -1000000)
+                    {
+                        showNumber = 10;
+                    }
+                    break;
             }
         }
 
@@ -155,7 +169,7 @@ namespace Scraft.BlockSpace{ public class NumericalDisplay : SolidBlock
 
         public override int[] getSettingValueRank()
         {
-            return new int[2] { 0, 4 };
+            return new int[2] { 0, 7 };
         }
 
         public override string getSettingValueName()

@@ -60,13 +60,13 @@ namespace Scraft
         {
             if (Input.GetMouseButtonDown(0))
             {
-                isClickBar = rect.Contains(IUtils.reviseMousePos(Input.mousePosition));
+                isClickBar = rect.Contains(IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW));
             }
             if (Input.GetMouseButton(0))
             {
                 if (isClickBar)
                 {
-                    float barY = IUtils.reviseMousePos(Input.mousePosition).y - startPos;
+                    float barY = IUtils.reviseMousePos(Input.mousePosition, PoolerUI.canvasW).y - startPos;
                     if (barY < 0)
                     {
                         barRectTrans.anchoredPosition = new Vector2(barRectTrans.anchoredPosition.x, 0);

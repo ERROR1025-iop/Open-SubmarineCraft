@@ -8,6 +8,13 @@
 	"sub_rudder_2": "Torque is proportional to volume",
 	"sub_rudder_3": "Torque is proportional to volume",
 	"sub_rudder_4": "Torque is proportional to volume",
-	"cargo_hold_1":"The blocks corresponding to the 2D drawing will be set to the cargo blocks"
+	"cargo_hold_1":"The blocks corresponding to the 2D drawing will be set to the cargo blocks",
+
+	"rotating_platform_1":"Horizontal rotating platform; can be linked with other parts",
+	"claw_1":"Risk of clipping through meshes; using a magnetic connector plate is recommended",
+	"telescopic_rod_1":"Two-stage telescopic rod with forward/backward extension; can be linked with other parts",
+	"magnetic_connector":"When two magnetic plates come close they connect; used for towing/rescuing other vessels",
+	"cardan_joint_1":"Universal joint; can be linked with other parts",
+	"cardan_joint_2":"Can be linked with other parts"
 
 }

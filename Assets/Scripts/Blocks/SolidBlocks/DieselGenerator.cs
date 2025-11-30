@@ -17,11 +17,12 @@ namespace Scraft.BlockSpace
             density = 10.3f;
             storeFuel = 0;
             outputMe = 0;
-            maxMeOutput = 1200;
+            maxMeOutput = 2200;
             outPutAcc = 0;
             lastOutputMe = 0;
             powerBarValue = 0;
             powerDirection = 1;
+            comsumeAir = 700;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -92,7 +93,7 @@ namespace Scraft.BlockSpace
                     }
 
                     Pooler.instance.chargeElectric(this, outputMe * getEfficiency() * 0.009f);
-                    decFuel(outputMe * 0.005f);
+                    decFuel(outputMe * 0.002f);
                     if (Mathf.Abs(outputMe) < 300)
                     {
                         outPutAcc = (maxMeOutput * powerDirection * powerBarValue - outputMe) * 0.3f;

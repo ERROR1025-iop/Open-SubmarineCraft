@@ -40,15 +40,35 @@ namespace Scraft.DpartSpace
 
             joystick1 = PoolerItemSelector.instance.GetJoystick1();
 
-            startHeadAngles = getVector3Component(headTransform.localEulerAngles, headAxis);
-            startBaseAngles = getVector3Component(baseTransform.localEulerAngles, baseAxis);
+            if (headTransform != null)
+            {
+                startHeadAngles = getVector3Component(headTransform.localEulerAngles, headAxis);
+                enableHeadContron = true;
+            }
+            else
+            {
+                startHeadAngles = 0f;
+                enableHeadContron = false;
+            }
 
-            enableHeadContron = true;
-            enableBaseContron = true;
+            if (baseTransform != null)
+            {
+                startBaseAngles = getVector3Component(baseTransform.localEulerAngles, baseAxis);
+                enableBaseContron = true;
+            }
+            else
+            {
+                startBaseAngles = 0f;
+                enableBaseContron = false;
+            }
         }
 
         public void setHeadAngle(float angle)
         {
+            if (headTransform == null)
+            {
+                return;
+            }
             setAngle(angle, headTransform, startHeadAngles, headRotateLimit, headAxis, headSpeed * 0.5f);
             enableHeadContron = false;
         }
@@ -61,6 +81,10 @@ namespace Scraft.DpartSpace
 
         public void setAngle(float angle, Transform rotateTransform, float startAngle, float[] rotateLimit, Vector3 axis, float speed)
         {
+            if (rotateTransform == null)
+            {
+                return;
+            }
             Vector3 orgEulerAngles = rotateTransform.localEulerAngles;
             float targetAngle = rotatelimit(startAngle + angle, rotateLimit);
             float orgAngles = IUtils.angleRoundIn180(getVector3Component(rotateTransform.localEulerAngles, axis));           
@@ -94,6 +118,11 @@ namespace Scraft.DpartSpace
 
         void headRotate()
         {            
+            if (headTransform == null)
+            {
+                return;
+            }
+
             if (enableHeadContron)
             {
                 headEulerAngles = headTransform.localEulerAngles;

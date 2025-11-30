@@ -84,7 +84,7 @@ namespace Scraft.BlockSpace{ public class Wireless : SolidBlock
         public override void onCollectScientific(CollectedScientificInfo csInfo)
         {
             base.onCollectScientific(csInfo);
-            collectedScientific = csInfo.area.layeredScientific;
+            collectedScientific = csInfo.point;
         }
     }
 }

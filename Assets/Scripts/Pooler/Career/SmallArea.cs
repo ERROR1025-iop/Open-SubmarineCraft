@@ -7,10 +7,8 @@ using UnityEditor;
 
 namespace Scraft
 {
-    public class SmallArea : MonoBehaviour
-    {
-        public float radius;
-
+    public class SmallArea : AreaDetector
+    { 
         [Header("Ore probability")]
         [Range(0, 1)] public float stone;
         [Range(0, 1)] public float soil;
@@ -22,9 +20,7 @@ namespace Scraft
         [Range(0, 1)] public float oil;
         [Range(0, 1)] public float naturalGas;
         [Range(0, 1)] public float gasHydrate;
-
-        [Header("Ore probability")]
-        public float temperture;
+        
 
         [Header("Read only")]
         public int id;
@@ -71,7 +67,7 @@ namespace Scraft
             oreProbabilities = new List<OreProbability>();
             blocksManager = BlocksManager.instance;
             registerProbabilitys();
-            poor = radius;
+            poor = 500;
         }
 
         void registerProbabilitys()
@@ -90,7 +86,7 @@ namespace Scraft
 
         protected void updateOreRatio()
         {
-            poorRatio = poor / radius;
+            poorRatio = poor / 500;
             sumProbabilitie = 0;
             foreach (OreProbability p in oreProbabilities)
             {
@@ -151,16 +147,6 @@ namespace Scraft
             return blocksManager.stone;
         }
 
-        public virtual float getTemperture()
-        {
-            return temperture;
-        }
-
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, radius);
-        }
-
         public virtual void onSave(JsonWriter writer)
         {
             IUtils.keyValue2Writer(writer, "poor", poor);
@@ -168,7 +154,7 @@ namespace Scraft
 
         public virtual void onLoad(JsonData jsonData)
         {
-            poor = IUtils.getJsonValue2Float(jsonData, "poor", radius);
+            poor = IUtils.getJsonValue2Float(jsonData, "poor", 500);
         }
     }
 

@@ -113,8 +113,8 @@ namespace Scraft
             {
                 return;
             }
-
-            if (transform.position.y < Buoyancy.waterHeight)
+            float water = Buoyancy.getWaterHeight(transform.position);       
+            if (transform.position.y < water)
             {
                 rigidbody.AddForce(new Vector3(0, -0.1f, 0));
                 isPhysicalRun = true;

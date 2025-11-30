@@ -44,7 +44,11 @@ namespace Scraft
                     break;
                 }
 
-                transform.position = new Vector3(entityFoamSpawn.worldFrontPoint.x + Random.Range(-randomRange, randomRange), 0, entityFoamSpawn.worldFrontPoint.z + Random.Range(-randomRange, randomRange)) + entityFoamSpawn.transform.forward * offsetX;
+                transform.position = new Vector3(
+                        entityFoamSpawn.worldFrontPoint.x + Random.Range(-randomRange, randomRange),
+                        0,
+                        entityFoamSpawn.worldFrontPoint.z + Random.Range(-randomRange, randomRange)
+                    ) + entityFoamSpawn.transform.forward * offsetX;
                 transform.eulerAngles = new Vector3(0, entityFoamSpawn.angle, 0);
                 particleSystem.enableEmission = entityFoamSpawn.enableEmission;
                 yield return new WaitForSeconds(0.3f);

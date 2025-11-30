@@ -13,7 +13,7 @@ namespace Scraft.BlockSpace
             initBlock("neutron", "nuclear");
 
             thumbnailColor = new Color(0f, 0f, 1f);
-            density = 1.5f;
+            density = 0.0129f;
             transmissivity = 3.62f;            
         }
 

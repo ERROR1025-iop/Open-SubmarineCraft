@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Scraft.BlockSpace;
 using LitJson;
+using UnityEngine.Events;
 
 namespace Scraft
 {
@@ -18,12 +19,19 @@ namespace Scraft
         public int[] collectedScientificLayered;
 
         int last_stayLayered;
+        private bool isInside = false;
 
+        [Header("Callbacks")]
+        [Tooltip("当主角进入区域时触发（可在Inspector中绑定方法）")]
+        public UnityEvent<Area> onEnter;    
+
+        [Tooltip("当主角离开区域时触发（可在Inspector中绑定方法）")]
+        public UnityEvent<Area> onExit;
         void Start()
         {
             stayLayered = 0;
             last_stayLayered = 0;                             
-            AreaManager.areas.Add(this);
+            AreaManager.instance.RegisterArea(this);
 
             onStart();
 
@@ -37,22 +45,48 @@ namespace Scraft
             }
             updateOreRatio();
             updateEnrichment();
+
+            
         } 
 
-        public void onEnter()
+        private void Update()
         {
-            Debug.Log(string.Format("[Area]Enter Area <{0}>_{1}", name, stayLayered));
-            ScientificSelector.intance.updateAreaValue(this);
+            // 运行时持续检测主角是否在区域中
+            if (MainSubmarine.instance == null || MainSubmarine.transform == null) return;
+
+            bool nowInside = IsPointInArea(MainSubmarine.transform.position);
+
+            if (nowInside && !isInside)
+            {
+                // 发生进入
+                isInside = true;
+                onEnter?.Invoke(this);
+                OnEnterArea();
+            }
+            else if (!nowInside && isInside)
+            {
+                // 发生离开
+                isInside = false;
+                onExit?.Invoke(this);
+                OnExitArea();
+            }
         }
 
-        public void onExit()
+        public void OnEnterArea()
         {
+            Debug.Log(string.Format("[Area]Enter Area <{0}>_{1}", name, stayLayered));
+            ScientificSelector.instance.OnAreaEnter(this);
+        }
 
+        public void OnExitArea()
+        {
+            Debug.Log(string.Format("[Area]Exit Area <{0}>_{1}", name, stayLayered));
+            ScientificSelector.instance.OnAreaLeave(this);
         }
 
         public void onLayeredChanged()
         {
-            ScientificSelector.intance.updateAreaValue(this);
+            ScientificSelector.instance.UpdateAreaValue();
         }
 
         public bool getIsCollectedScientific(int layered, int csId)
@@ -98,7 +132,7 @@ namespace Scraft
         public void UpdateLayered()
         {
             float deep = MainSubmarine.deep;
-            stayLayered = deep < 5 ? 0 : Mathf.Clamp((int)(deep / 1000) + 1, 0, 7);
+            stayLayered = deep < 5 ? 0 : Mathf.Clamp((int)(deep / 700) + 1, 0, 13);
             layeredScientific = (scientific + 1) * (stayLayered + 1) * (stayLayered + 1) * 0.5f;
 
             if(stayLayered != last_stayLayered)
@@ -106,11 +140,6 @@ namespace Scraft
                 onLayeredChanged();
             }
             last_stayLayered = stayLayered;
-        }
-
-        public override float getTemperture()
-        {
-            return Mathf.Clamp(temperture - MainSubmarine.deep * 0.1f, 1f, 1000);
         }
 
         public override void onSave(JsonWriter writer)

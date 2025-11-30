@@ -45,8 +45,8 @@ namespace Scraft.BlockSpace
                 if (receive > burningAir * 0.9f)
                 {
                     Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                    Fire fire = blocksEngine.createBlock(getCoor(), fireBlockStatic, temperature, press) as Fire;
-                    fire.initFire(blocksEngine.getBlocksManager(), this.getName(), calorific, 35f, burningPoint);
+                    Fire fire = blocksEngine.createBlock(getCoor(), fireBlockStatic, press) as Fire;
+                    fire.initFire(getName(), calorific, burningPoint);
                     fire.setFireColor(1);
                     fire.setBurnedBlock(BlocksManager.instance.sulfurDioxide);
                     return true;

@@ -20,7 +20,15 @@ namespace Scraft.BlockSpace
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
         {
             FineSteelLiquid block = new FineSteelLiquid(blockId, parentObject, blockObject);
-            block.initLiquidBlock(blocksManager, 2750, 1535, "steelMushy", "fineSteel", 1);
+            // 10% 概率使用 "steelMushy"，其余 90% 使用 "steel"
+            if (Random.value < 0.1f)
+            {
+                block.initLiquidBlock(blocksManager, 2750, 1535, "steelMushy", "fineSteel", 1);
+            }
+            else
+            {
+                block.initLiquidBlock(blocksManager, 2750, 1535, "steelMushy", "steel", 1);
+            }
             return block;
         }
     }

@@ -17,14 +17,15 @@ namespace Scraft
 
         bool lastValue;
 
-        Rect rect;
+        RectTransform rt;
+        Canvas parentCanvas;
         Image image;
         UnityAction call;
 
         void Start()
         {
-            RectTransform rt = transform.GetComponent<RectTransform>();
-            rect = new Rect(new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y), rt.sizeDelta);
+            rt = transform.GetComponent<RectTransform>();
+            parentCanvas = GetComponentInParent<Canvas>();
             image = transform.GetComponent<Image>();
         }
 
@@ -53,20 +54,26 @@ namespace Scraft
 
         void Update()
         {
-            if (rect.Contains(IUtils.reviseMousePos(Input.mousePosition)))
+            Camera cam = null;
+            if (parentCanvas != null && parentCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+            {
+                cam = parentCanvas.worldCamera;
+            }
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(rt, Input.mousePosition, cam))
             {
                 if (Input.GetMouseButtonDown(0))
                 {
                     value = true;
                     setImageValue(value);
-                    call();
+                    if (call != null) call();
                 }
             }
             if (value == true && Input.GetMouseButtonUp(0))
             {
                 value = false;
                 setImageValue(value);
-                call();
+                if (call != null) call();
             }
         }
     }

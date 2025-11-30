@@ -23,6 +23,13 @@ namespace Scraft
             hide();
             timeStack = 0;
             enabled = update;
+            // 防止重复创建
+            // if (instance != null && instance != this)
+            // {
+            //     Destroy(gameObject);
+            //     return;
+            // }
+            // DontDestroyOnLoad(gameObject);
         }
 
         public void showWithoutILang(string str, int time)

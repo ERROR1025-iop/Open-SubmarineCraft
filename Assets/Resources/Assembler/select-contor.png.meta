@@ -24,7 +24,7 @@ TextureImporter:
       213: 21300012
     second: select-contor_6
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -162,7 +162,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -181,9 +181,9 @@ TextureImporter:
       name: select-contor_1
       rect:
         serializedVersion: 2
-        x: 167
+        x: 166
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -202,9 +202,9 @@ TextureImporter:
       name: select-contor_2
       rect:
         serializedVersion: 2
-        x: 334
+        x: 332
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -223,9 +223,9 @@ TextureImporter:
       name: select-contor_3
       rect:
         serializedVersion: 2
-        x: 501
+        x: 498
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -244,9 +244,9 @@ TextureImporter:
       name: select-contor_4
       rect:
         serializedVersion: 2
-        x: 668
+        x: 664
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -265,9 +265,9 @@ TextureImporter:
       name: select-contor_5
       rect:
         serializedVersion: 2
-        x: 835
+        x: 830
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -286,9 +286,9 @@ TextureImporter:
       name: select-contor_6
       rect:
         serializedVersion: 2
-        x: 1002
+        x: 996
         y: 0
-        width: 167
+        width: 166.88889
         height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -299,6 +299,48 @@ TextureImporter:
       bones: []
       spriteID: bfa9ade8e6b09034aa250e70434838b4
       internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: select-contor_7
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 0
+        width: 166.88889
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89b1259007387a447ba2a2badfc3c22d
+      internalID: 566296430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: select-contor_8
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 0
+        width: 166.88889
+        height: 168
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f1f63b57c48984bb9011ce31dd082b
+      internalID: 1714888685
       vertices: []
       indices: 
       edges: []
@@ -321,6 +363,8 @@ TextureImporter:
       select-contor_4: 21300008
       select-contor_5: 21300010
       select-contor_6: 21300012
+      select-contor_7: 566296430
+      select-contor_8: 1714888685
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

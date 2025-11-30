@@ -7,6 +7,7 @@ using System.IO;
 using LitJson;
 using Scraft.BlockSpace;
 using Scraft.DpartSpace;
+using Scraft;
 
 namespace Scraft {
     public class ModLoader : MonoBehaviour
@@ -179,6 +180,15 @@ namespace Scraft {
             IUtils.keyValue2Writer(writer, "pid", pid.ToString());
             writer.WriteObjectEnd();
             IUtils.write2txt(path, writer.ToString());
+        }
+
+        public string GetFolderPath()
+        {
+            return string.Format("{0}{1}/", GamePath.modFolder, name);
+        }
+        public string GetZipPath()
+        {
+            return string.Format("{0}{1}.zip", GamePath.cacheFolder, name);
         }
     }
 }

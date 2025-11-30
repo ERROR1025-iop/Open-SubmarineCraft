@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using Battlehub.RTCommon;
+using Scraft;
 
 namespace Scraft.DpartSpace
 {
     public class Dpart
     {
-
+        public static int gUid = 0;
+        public int uid; 
         protected int dpartId;
         protected int identifyId;
         protected string dpartName;
@@ -30,9 +32,12 @@ namespace Scraft.DpartSpace
         public bool temporary;
         protected ModInfo modInfo;
         public bool isMod;
+        public List<int> linkedUid = new List<int>();
+        public bool drawArc = false; 
 
         public Dpart(int id, GameObject parentObject)
         {
+            uid = getUid();
             dpartId = id;
             gameParentObject = parentObject;
             isSelecting = false;
@@ -44,11 +49,16 @@ namespace Scraft.DpartSpace
         public void initDpart(string dpartName, string attributeCardName, ModInfo modInfo)
         {
             this.dpartName = dpartName;
-            this.attributeCardName = attributeCardName;
+            this.attributeCardName = attributeCardName; 
             this.modInfo = modInfo;
             isMod = modInfo != null;
 
             createDpartObject();
+        }
+
+        public static int getUid()
+        {
+            return gUid++;
         }
 
         void createDpartObject()
@@ -203,7 +213,9 @@ namespace Scraft.DpartSpace
                 }
                 IRT.Selection.objects = gos;
             }
-        }
+
+            DrawLinkedLine();
+        }   
 
         public virtual void onBuilderModeUnSelecting()
         {
@@ -211,12 +223,52 @@ namespace Scraft.DpartSpace
             {
                 //dpartParent.changeDpartChindrens(go => go.setOutline(false));
             }
+
+            drawArc = false;
         }
 
         public virtual void LateUpdate()
         {
 
         }
+
+        
+
+        public void DrawLinkedLine()
+        {
+            if (drawArc)
+            {
+                return;
+            }
+            drawArc = true;
+            if (linkedUid.Count > 0)
+            {
+                var coordinates = new List<ArcDrawer.VectorPair>();
+                for (int i = 0; i < linkedUid.Count; i++)
+                {
+                    DpartParent[] allParents = GameObject.Find("/3D DParts Map").GetComponentsInChildren<DpartParent>(true);
+                    for (int j = 0; j < allParents.Length; j++)
+                    {
+                        DpartParent dp = allParents[j];
+                        Dpart dpD = dp.getDpart();
+                        if (linkedUid.Contains(dpD.uid))
+                        {
+                            var vp = new ArcDrawer.VectorPair();
+                            vp.a = dpartObject.transform.position;
+                            vp.b = dp.transform.position;
+                            coordinates.Add(vp);
+                        }
+                    }
+                }
+                ArcDrawer.instance.coordinates = coordinates;
+                ArcDrawer.instance.Regenerate();
+            }
+            else
+            {
+                ArcDrawer.instance.coordinates = new List<ArcDrawer.VectorPair>();
+                ArcDrawer.instance.Regenerate();
+            }
+        }     
 
         public void setMirrorDpart(Dpart mirroredDpart)
         {
@@ -443,6 +495,7 @@ namespace Scraft.DpartSpace
             Vector3 sca = dpartTrans.localScale;
 
             IUtils.keyValue2Writer(writer, "id", dpartId);
+            IUtils.keyValue2Writer(writer, "uid", uid);
             IUtils.keyValue2Writer(writer, "mat", getMaterialName());
             IUtils.keyValue2Writer(writer, "pos", IUtils.vector3Serialize(pos));
             IUtils.keyValue2Writer(writer, "rot", IUtils.vector3Serialize(rot));
@@ -450,6 +503,7 @@ namespace Scraft.DpartSpace
             IUtils.keyValue2Writer(writer, "m", mirrorDpart != null);
             IUtils.keyValue2Writer(writer, "col1", color[0] == null ? "null" : ColorUtility.ToHtmlStringRGB(color[0]));
             IUtils.keyValue2Writer(writer, "col2", color[1] == null ? "null" : ColorUtility.ToHtmlStringRGB(color[1]));
+            IUtils.keyValue2Writer(writer, "linked", IUtils.serializeIntArray(linkedUid.ToArray()));
 
             return writer;
         }
@@ -459,6 +513,11 @@ namespace Scraft.DpartSpace
         /// </summary>
         public virtual void onBuilderModeLoad(JsonData dpartData, DpartsEngine dpartsEngine)
         {
+            uid = IUtils.getJsonValue2Int(dpartData, "uid", getUid());
+            if (uid >= gUid)
+            {
+                gUid = uid + 1;
+            }
             dpartTrans.localPosition = IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "pos"));
             dpartTrans.localRotation = Quaternion.Euler(IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "rot")));
             dpartTrans.localScale = IUtils.vector3Parse(IUtils.getJsonValue2String(dpartData, "sca"));
@@ -495,6 +554,7 @@ namespace Scraft.DpartSpace
                 Dpart md = dpartsEngine.createMirrorDPart(this);
                 md.onBuilderModeCreate();
             }
+            linkedUid = new List<int>(IUtils.unserializeIntArrayWithDefault(IUtils.getJsonValue2String(dpartData, "linked")));
         }
 
         public virtual void clear()

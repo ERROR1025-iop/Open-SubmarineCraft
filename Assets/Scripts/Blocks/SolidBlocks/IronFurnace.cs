@@ -9,7 +9,6 @@ namespace Scraft.BlockSpace{ public class IronFurnace : SolidBlock
         protected float storeFuel;
         protected float fuelTotalCalorific;
         protected float comsumeAir;
-        protected float unityFuelRate;
 
         public IronFurnace(int id, GameObject parentObject, GameObject blockObject)
             : base(id, parentObject, blockObject)
@@ -20,7 +19,6 @@ namespace Scraft.BlockSpace{ public class IronFurnace : SolidBlock
             storeFuel = 0;
             isCanChangeRedAndCrackTexture = false;
             comsumeAir = 300;
-            unityFuelRate = 0.35f;
         }
 
         public override Block clone(GameObject parentObject, BlocksManager blocksManager, GameObject blockObject)
@@ -75,17 +73,17 @@ namespace Scraft.BlockSpace{ public class IronFurnace : SolidBlock
                 if (receive > comsumeAir * 0.9f)
                 {
                     Block up_block = getNeighborBlock(Dir.up);
-                    float unityFuel = fuelTotalCalorific * 0.01f;
-                    storeFuel -= unityFuel * unityFuelRate;
+                    float unityFuel = fuelTotalCalorific / 100;
+                    storeFuel -= unityFuel;
                     if (up_block.isAir())
                     {
                         Block fireBlockStatic = blocksEngine.getBlocksManager().fire;
-                        Fire fire = blocksEngine.createBlock(up_block.getCoor(), fireBlockStatic, temperature, press) as Fire;
-                        fire.initFire(blocksEngine.getBlocksManager(), "null", unityFuel * 60, unityFuel, 0);
+                        Fire fire = blocksEngine.createBlock(up_block.getCoor(), fireBlockStatic, press) as Fire;                        
+                        fire.initFire("null", unityFuel);
                     }
                     else
                     {
-                        up_block.addHeatQuantity(unityFuel * 8000);
+                        up_block.addHeatQuantity(Fire.C2HQ(unityFuel));
                     }
                     setSpriteRect(1);
                 }

@@ -62,9 +62,10 @@ namespace Scraft
 
         void addFoam(float offset)
         {
-            EntityFoam entityFoam = (Instantiate(foam) as GameObject).GetComponent<EntityFoam>();
+            EntityFoam entityFoam = Instantiate(foam).GetComponent<EntityFoam>();
+            entityFoam.transform.SetParent(GameObject.Find("runtime_gen").transform, true);
             entityFoam.gameObject.layer = 8;
-            entityFoam.initialized(this, radius, randomRange, offset);
+            entityFoam.initialized(this, radius, randomRange, offset); 
         }
 
         void FixedUpdate()

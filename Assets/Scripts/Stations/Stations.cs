@@ -23,7 +23,9 @@ namespace Scraft {
         public Text blockNameText;
         public Button switchButton;
         public Button syntButton;
-        public Button delButton;
+        public Button del10Button;
+        public Button del100Button;
+        public Button del1000Button;
         public Text syncButtonText;        
         public IGridScrollView syntClassScrollView;
         public IGridScrollView syntScrollView;
@@ -32,7 +34,7 @@ namespace Scraft {
         public Text syntOneText;
         public Text syntClassNameText;
         public Text syntMaterialsText;
-        public Text syntBlockInfoText;
+        public TMPro.TextMeshProUGUI syntBlockInfoText;
 
         BlocksManager blocksManager;
 
@@ -55,12 +57,13 @@ namespace Scraft {
 
             if(BlocksManager.instance == null)
             {
-                blocksManager = new BlocksManager();
+                blocksManager = new BlocksManager();                
             }
             else
             {
                 blocksManager = BlocksManager.instance;
             }
+            blocksManager.loadUnlockData();
 
             ISecretLoad.init();
             loadStationInfos();
@@ -97,7 +100,9 @@ namespace Scraft {
             syntButton.onClick.AddListener(onSyntButtonClick);
             syntOneButton.onClick.AddListener(onSyntOneButtonClick);
             synt64Button.onClick.AddListener(onSynt64ButtonClick);
-            delButton.onClick.AddListener(onBlockDelButtonClick);
+            del10Button.onClick.AddListener(onBlockDel10ButtonClick);
+            del100Button.onClick.AddListener(onBlockDel100ButtonClick);
+            del1000Button.onClick.AddListener(onBlockDel1000ButtonClick);
         }
 
         void initializedSynt()
@@ -107,11 +112,8 @@ namespace Scraft {
             List<CardInfo> cardInfos = cardsRegister.cardInfos;
             foreach (CardInfo cardInfo in cardInfos)
             {
-                if (!cardInfo.isUnlock)
-                {
-                    SyntClass syntClass = new SyntClass(cardInfo);
-                    syntClasses.Add(syntClass);
-                }
+                SyntClass syntClass = new SyntClass(cardInfo);
+                syntClasses.Add(syntClass);
             }
 
             for (int i = 0; i < BlocksManager.MAX_BLOCK_ID; i++)
@@ -192,6 +194,10 @@ namespace Scraft {
                         initializedStoreCargoCell(selectedStationInfo.cargoCounts);
                     }
                 }
+                else
+                {
+                    IToast.instance.show("Not enough materials", 100);
+                }
             }
         }
 
@@ -218,7 +224,15 @@ namespace Scraft {
                     }
                     else
                     {
-                        break;
+                        if(produeCount > 0)
+                        {
+                            IToast.instance.show("Insufficient materials, only partially synthesized", 100);
+                            break;
+                        }
+                        else
+                        {
+                            IToast.instance.show("Not enough materials", 100);
+                        }                        
                     }
 
                     if (produeCount >= 64)
@@ -229,11 +243,26 @@ namespace Scraft {
             }
         }
 
-        void onBlockDelButtonClick()
+        void onBlockDel10ButtonClick()
+        {
+            delBlock(10);
+        }
+
+        void onBlockDel100ButtonClick()
+        {
+            delBlock(100);
+        }
+
+        void onBlockDel1000ButtonClick()
+        {
+            delBlock(1000);
+        }
+
+        void delBlock(int count)
         {
             if (selectBlockId > 0 && selectedStationInfo != null)
             {
-                selectedStationInfo.removeCargos(selectBlockId, 10);
+                selectedStationInfo.removeCargos(selectBlockId, count);
                 initializedStoreCargoCount();
                 initializedStoreCargoCell(selectedStationInfo.cargoCounts);
             }

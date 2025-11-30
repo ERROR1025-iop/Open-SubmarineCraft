@@ -48,12 +48,18 @@ namespace Scraft.DpartSpace
             {
                 foreach (DrillCore core in DrillCore.drillCores)
                 {
-                    int t_distance = core.getCoor().getFrameDistance(coor2d);
-                    if (core.getCoor().getStraightDistance(coor2d) < distance)
+                    if (!core.isAttachDrillRS)
                     {
-                        distance = t_distance;
-                        drillCore = core;
-                    }
+                        int t_distance = core.getCoor().getFrameDistance(coor2d);
+                        if (core.getCoor().getStraightDistance(coor2d) < distance)
+                        {
+                            distance = t_distance;
+                            drillCore = core;
+                            core.isAttachDrillRS = true;
+                            gameObject.name = "DrillCore_attach";
+                            break;
+                        }
+                    }                    
                 }
             }
 

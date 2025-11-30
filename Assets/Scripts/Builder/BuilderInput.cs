@@ -152,6 +152,10 @@ namespace Scraft
                     }
                 }
             }
+            if (Input.GetMouseButton(1))
+            {
+                Builder.instance.delBlock(coor);
+            }
 
         }
 
