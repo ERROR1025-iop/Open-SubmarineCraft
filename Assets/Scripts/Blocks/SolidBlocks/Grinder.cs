@@ -69,6 +69,7 @@ namespace Scraft.BlockSpace
             if (compositeMethod(blocksManager.ironOre, blocksManager.coarseIronOre, 3, inBlock)) return;
             if (compositeMethod(blocksManager.copperOre, blocksManager.coarseCopperOre, 3, inBlock)) return;
             if (compositeMethod(blocksManager.sulfurOre, blocksManager.coarseSulfurOre, 3, inBlock)) return;
+            if (compositeMethod(blocksManager.leadOre, blocksManager.coarseLeadOre, 3, inBlock)) return;
             if (compositeMethod(blocksManager.coal, blocksManager.coalPowder, 2, inBlock)) return;
             if (compositeMethod(blocksManager.steel, blocksManager.ironPowder, 2, inBlock)) return;
             if (compositeMethod(blocksManager.copper, blocksManager.ironPowder, 2, inBlock)) return;
